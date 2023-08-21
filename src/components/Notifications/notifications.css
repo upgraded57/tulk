@@ -1,0 +1,123 @@
+.notifications {
+  padding-inline: min(2vw, 10px);
+}
+
+.notifications-header {
+  display: flex;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #00000030;
+  position: sticky;
+  top: 0;
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8f8f8;
+}
+
+.notifications-header img {
+  height: 20px;
+}
+
+.notif-loader {
+  padding: 10px;
+}
+
+.notification {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding-block: 10px;
+  border-bottom: 1px solid #00000030;
+}
+
+.notification-user-image {
+  min-width: 80px;
+  min-height: 80px;
+  width: 80px;
+  height: 80px;
+  max-width: 80px;
+  max-height: 80px;
+  border-radius: var(--inputField-radius);
+  overflow: hidden;
+}
+
+.notification-user-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.notification-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.notification-action-btns {
+  align-self: flex-end;
+}
+
+.notification-action-btns .accept,
+.notification-action-btns .reject {
+  padding: 4px 15px;
+  border-radius: var(--inputField-radius);
+  outline: none;
+  border: 1px solid #00000030;
+}
+
+.notification-action-btns .accept:hover,
+.notification-action-btns .reject:hover {
+  background: #00000030;
+}
+
+.notification-action-btns .accept {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.notification-action-btns .reject {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* notification poput */
+
+.notification-popup {
+  position: fixed;
+  width: 400px;
+  height: calc(100% - 100px);
+  top: 80px;
+  right: 3vw;
+  background: #f8f8f8;
+  border-radius: var(--inputField-radius);
+  box-shadow: 0 0 10px 10px #00000010;
+  overflow-y: scroll;
+  z-index: 1000;
+}
+
+.notification-popup::-webkit-scrollbar {
+  width: 5px;
+}
+
+.notification-popup::-webkit-scrollbar-thumb {
+  background: #00000030;
+  border-radius: 10px;
+}
+
+.notification-close-btn {
+  width: 25px;
+  height: 25px;
+  background: #d2cfcf;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+}
+
+.notification-close-btn:hover {
+  background: #a8a8a8;
+}

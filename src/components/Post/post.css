@@ -1,0 +1,376 @@
+.postDiv {
+  border-radius: var(--inputField-radius);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  margin-block: 20px;
+  background: white;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.postDiv:hover {
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.post {
+  width: 100%;
+}
+
+.post-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  padding-bottom: 0;
+}
+
+.post-head a {
+  text-decoration: none !important;
+}
+
+.post-action-btns {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: relative;
+}
+
+.post-action-btn-icon {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.post-action-btn-icon:hover {
+  background: #eee;
+}
+
+.post-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: absolute;
+  z-index: 100;
+  top: 40px;
+  background: white;
+  padding: 10px;
+  border-radius: var(--inputField-radius);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary.delete-post {
+  background: darkred;
+  color: white;
+}
+
+.poster-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-image: url("../../images/noAvatar.jpeg");
+  background-position: center;
+  background-size: cover;
+}
+
+.poster-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.post-img {
+  width: 100%;
+  aspect-ratio: 2/1.3;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-desc {
+  margin-bottom: 10px;
+  padding: 10px;
+  padding-bottom: 0;
+}
+
+.post-action {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  padding-top: 0;
+  border-bottom: 1px solid #d2d0d0;
+}
+
+.post-comments {
+  padding-inline: 10px;
+}
+
+.load-more-comments {
+  text-align: right;
+  font-size: 14px;
+  margin-block: 5px;
+  color: grey;
+  cursor: pointer;
+}
+
+.load-more-comments:hover {
+  color: #3b3b3b;
+  text-decoration: underline;
+}
+
+.post-like-comment {
+  display: flex;
+  gap: 10px;
+}
+
+.post-like-comment-btn,
+.post-repost {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.post-interaction {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+  border-bottom: 1px solid #d2d0d0;
+  padding: 3px;
+}
+
+.post-interaction-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 5px 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: none;
+  border-radius: 3px;
+}
+
+.post-interaction-btn:hover {
+  background-color: #f1f1f1;
+}
+
+.post-interaction-icon {
+  font-size: 20px;
+}
+
+/* If post is liked */
+.post-interaction-btn.liked .post-interaction-icon {
+  animation: animateLikeIcon 0.8s linear forwards;
+}
+
+@keyframes animateLikeIcon {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.5) rotate(-20deg);
+    color: #b4042a;
+  }
+
+  50% {
+    transform: scale(1.5) rotate(0deg);
+    color: white;
+  }
+
+  75% {
+    transform: scale(1.5) rotate(-20deg);
+  }
+
+  100% {
+    transform: scale(1.1) rotate(0deg);
+    color: #b4042a;
+  }
+}
+
+.post-comment {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-bottom: 1px solid #d2d0d0;
+  padding: 10px;
+}
+
+.commenter-image {
+  min-width: 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.commenter-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-comment-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.post-comment-box .user-image {
+  min-width: 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-image: url("../../images/noAvatar.jpeg");
+  background-position: center;
+  background-size: cover;
+}
+
+.post-comment-box .user-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.comment-box {
+  width: 100%;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--inputField-radius);
+  padding: 10px;
+}
+
+.comment-box form {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.comment-box form input {
+  border: none;
+  outline: none;
+  background: none;
+  width: 100%;
+}
+
+.post-comment-send-btn {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* swiper */
+.swiper-button-prev,
+.swiper-button-next {
+  color: #b4042a !important;
+}
+
+.swiper-pagination-bullet {
+  background-color: #b4042a !important;
+}
+
+.swiper-pagination-bullet-active {
+  transform: scale(1.4);
+}
+
+@media screen and (max-width: 920px) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none !important;
+  }
+
+  /* image popup modal */
+  .image-popup {
+    height: calc(100vh - 115px) !important;
+    left: 0 !important;
+  }
+}
+
+/* image popup modal */
+.image-popup {
+  position: fixed;
+  width: min(700px, 100vw);
+  height: calc(100vh - 72px);
+  bottom: 0;
+  z-index: 10;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-inline: auto;
+}
+
+.image-popup-backdrop {
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  backdrop-filter: blur(5px);
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+}
+
+.image-popup-container {
+  width: min(700px, 100vw);
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-popup-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.close-btn {
+  width: 95%;
+  position: absolute;
+  height: 30px;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.close-btn .icon {
+  border-radius: 50%;
+  font-size: 30px;
+  padding: 5px;
+  background: red;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-btn .icon:hover {
+  font-size: 35px;
+  background: #b60000;
+}

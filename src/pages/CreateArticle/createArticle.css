@@ -1,0 +1,156 @@
+.create-article {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 100vh;
+  width: 100%;
+  padding: 20px 2vw;
+  position: relative;
+}
+
+.create-article-left {
+  flex-basis: 70%;
+}
+
+.create-article-right {
+  flex-basis: 30%;
+  padding-inline: 10px;
+}
+
+.create-article-left input {
+  font-size: 30px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+  padding-inline: 10px;
+}
+
+.publish-options {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #eee;
+}
+
+.publish-options a {
+  color: #b4042a;
+}
+
+.create-article-options {
+  padding: 10px;
+}
+
+.article-categories {
+  margin-bottom: 20px;
+}
+
+.article-categories h3,
+.featured-image h3 {
+  margin-bottom: 10px;
+}
+
+.article-categories .category {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.article-categories .category label {
+  cursor: pointer;
+}
+
+.featured-image {
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+}
+
+.featured-image-img-container {
+  min-width: 80%;
+  aspect-ratio: 2/1.3;
+  overflow: hidden;
+  border-radius: var(--inputField-radius);
+  margin-bottom: 10px;
+  background: white;
+}
+
+.featured-image-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.featured-image-input label {
+  display: block;
+  max-width: max-content;
+  font-size: 12px;
+}
+
+.create-article-options .gallery {
+  padding: 10px;
+}
+
+.burger {
+  display: none;
+}
+
+/* Text editor  */
+.ql-editor {
+  min-height: 400px;
+}
+
+/* Mobile media query */
+@media screen and (max-width: 920px) {
+  .create-article {
+    display: block;
+  }
+
+  .publish-options {
+    border-bottom: none;
+  }
+
+  .create-article-options {
+    display: none;
+    padding-block: 50px;
+    position: absolute;
+    width: 100%;
+    height: max-content;
+    background: #d9d9d9;
+    top: 0;
+    left: 0;
+  }
+
+  .create-article-options.active {
+    display: block;
+  }
+
+  .burger {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 10;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  .burger:hover {
+    background: #cecece;
+  }
+
+  .ql-editor {
+    min-height: calc(100vh - 300px);
+  }
+}

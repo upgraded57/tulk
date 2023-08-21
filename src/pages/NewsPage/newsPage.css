@@ -1,0 +1,60 @@
+.newspage {
+  margin-top: 0;
+}
+
+.newspage-navbar {
+  width: 100%;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.news-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.news-filter select {
+  border: none;
+  background: transparent;
+  font-size: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+}
+
+.news-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.news-search-icon {
+  cursor: pointer;
+}
+
+.news-search input {
+  padding: 4px 10px;
+  border-radius: var(--inputField-radius);
+  border: none;
+  outline: none;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: 0.4s;
+}
+
+.news-search input.active {
+  transform: scaleX(1);
+}
+
+.newspage-body {
+  padding: 20px 2vw;
+}

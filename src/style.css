@@ -1,0 +1,118 @@
+*,
+ul {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* google font */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500;700&display=swap");
+
+:root {
+  --gradient-clr: linear-gradient(to left, #4c0c54, #640c62, #a4043c, #b4042a);
+
+  --font-clr: rgba(0, 0, 0, 0.8);
+  --grey-bg-clr: rgba(0, 0, 0, 0.1);
+  --inputField-radius: 10px;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  background: #f8f8f8;
+  min-height: 100%;
+}
+
+body::-webkit-scrollbar {
+  width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #00000030;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* ------ Utility classes ------ */
+.btn-solid {
+  background-image: var(--gradient-clr);
+  color: white;
+  border-radius: 10px;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: #d2cfcf;
+  color: var(--font-clr);
+  border-radius: 10px;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  min-width: max-content;
+}
+
+.btn-secondary:hover {
+  background: #a8a8a8;
+}
+
+.h-100 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--font-clr);
+}
+
+.h-300 {
+  font-size: 30px;
+}
+
+.text-body {
+  font-size: 15px;
+}
+
+.small-text {
+  font-size: 11px;
+}
+
+.rounded-border {
+  border-radius: 10px;
+}
+
+.mt-xsm {
+  margin-top: 8px;
+}
+
+.mt-sm {
+  margin-top: 10px;
+}
+
+.mt-md {
+  margin-top: 18px;
+}
+
+.mt-lg {
+  margin-top: 45px;
+}
+
+.margin-top-container {
+  margin-top: 75px;
+}
+
+@media screen and (max-width: 920px) {
+  .margin-top-container {
+    margin-top: 120px;
+  }
+}

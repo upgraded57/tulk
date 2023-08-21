@@ -1,0 +1,214 @@
+.search-result,
+.group-listing {
+  padding-inline: 20px;
+  display: grid;
+  grid-template-columns: 20% 50% 30%;
+  align-items: flex-start;
+  gap: 20px;
+  padding-top: 10px;
+}
+
+.search-result-filter,
+.group-listing-filter {
+  background: white;
+  border-radius: var(--inputField-radius);
+  overflow: hidden;
+}
+
+.search-result-filter-header,
+.group-listing-filter-header {
+  padding: 20px;
+}
+
+.search-result-filter-list ul li,
+.group-listing-filter-list ul li {
+  list-style: none;
+  padding: 10px 20px;
+  background: #d2cfcf;
+  cursor: pointer;
+  border-bottom: 1px solid #a8a8a8;
+}
+
+.search-result-filter-list ul li:last-child,
+.group-listing-filter-list ul li:last-child {
+  border: none;
+}
+
+.search-result-filter-list ul li:hover,
+.group-listing-filter-list ul li:hover {
+  background: #a8a8a8;
+}
+
+.search-result-main-container {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+
+.search-result-main-container-header {
+  margin-bottom: 20px;
+}
+
+.search-result-main-container-body {
+  padding: 10px;
+  background: white;
+  border-radius: var(--inputField-radius);
+}
+
+.search-result-main-container-body .load-more-link {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.search-result-main-container-body .load-more-link a {
+  text-decoration: underline;
+}
+
+.search-result-main-container-body-list {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d2cfcf;
+  margin-bottom: 10px;
+}
+
+.search-result-main-container-body-list a {
+  text-decoration: none;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.search-result-main-container-body-list a:hover {
+  text-decoration: underline;
+}
+
+.search-result-main-container-body-list:last-child {
+  border: none;
+}
+
+.search-result-main-container-body-list-image {
+  min-width: 50px;
+  width: 50px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  overflow: hidden;
+  background-image: url("../../images/noGroupAvatar.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.search-result-main-container-body-list-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.search-result-main-container-body-list-content {
+  font-weight: 500 !important;
+  max-width: 60%;
+}
+.search-result-main-container-body-list-cta {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Tablet Media query */
+@media screen and (max-width: 1300px) {
+  .search-result,
+  .group-listing {
+    grid-template-columns: 30% 70%;
+  }
+}
+
+/* mobile */
+@media screen and (max-width: 920px) {
+  .search-result {
+    padding-inline: 2vw;
+    display: block;
+  }
+
+  .search-result-filter {
+    margin-bottom: 20px;
+  }
+
+  .group-listing-filter {
+    margin-bottom: 20px;
+  }
+
+  .group-listing-filter-header {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 0;
+  }
+
+  .create-group-btn-desktop {
+    display: none !important;
+  }
+
+  .create-group-btn-mobile {
+    display: flex !important;
+  }
+
+  .search-result-main-container {
+    padding-inline: 2vw;
+  }
+
+  .search-result-filter-header {
+    padding-inline: 2vw;
+  }
+
+  .search-result-filter-list ul {
+    display: flex;
+    gap: 5px;
+    padding-left: 2vw;
+  }
+
+  .search-result-filter-list ul li {
+    border-bottom: none;
+    border-radius: var(--inputField-radius);
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+
+  .group-listing-filter-list {
+    padding: 10px;
+    max-width: 100%;
+    overflow-x: scroll;
+  }
+
+  .group-listing-filter-list ul {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+    min-width: max-content;
+  }
+
+  .group-listing-filter-list ul li {
+    border: none;
+    border-radius: var(--inputField-radius);
+  }
+}
+
+.create-group-btn-desktop,
+.create-group-btn-mobile {
+  justify-content: center;
+  padding-block: 10px;
+}
+
+.create-group-btn-desktop {
+  display: flex;
+}
+
+.create-group-btn-mobile {
+  display: none;
+}

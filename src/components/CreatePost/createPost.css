@@ -1,0 +1,69 @@
+.createPostDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border-radius: var(--inputField-radius);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.createPost {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.create-post-user-img {
+  flex: 15%;
+  min-width: 60px;
+  max-width: 60px;
+  min-height: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+  background-image: url("../../images/noAvatar.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+
+.create-post-user-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.create-post-textarea {
+  flex: 85%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--inputField-radius);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.create-post-textarea textarea {
+  font-size: 15px;
+  resize: none;
+  width: 95%;
+  background: transparent;
+  outline: none;
+  border: none;
+  cursor: text;
+}
+
+.createPostIcon {
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.create-post-insert-media {
+  display: flex;
+  margin-top: 10px;
+  cursor: pointer;
+  gap: 10px;
+}

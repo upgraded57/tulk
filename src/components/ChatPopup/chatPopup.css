@@ -1,0 +1,85 @@
+.chat-popup {
+  margin-top: 20px;
+  border: 1px solid #d2cfcf;
+  background: white;
+  position: relative;
+  bottom: 0;
+  z-index: 900;
+  width: 100%;
+}
+
+.chat-popup::-webkit-scrollbar {
+  width: 5px;
+}
+
+.chat-popup::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #00000030;
+}
+
+.chat-popup-header {
+  padding: 5px 10px;
+  background: #d2cfcf;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  position: sticky;
+  top: 0;
+}
+
+.chat-popup-body {
+  max-height: 0;
+  transform-origin: bottom;
+  transition: 0.5s;
+  overflow-y: scroll;
+}
+
+.chat-popup-body.active {
+  max-height: 300px;
+}
+
+.chat-popup-body-search {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  border: 1px solid #d2cfcf;
+  margin-inline: 10px;
+  border-radius: var(--inputField-radius);
+  padding: 6px 10px;
+}
+
+.chat-popup-body-search input {
+  width: 100%;
+  font-style: 15px;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+.chat-popup-body-friends-list {
+  margin-inline: 5px;
+}
+
+.chat-popup-body-friends-list li {
+  display: flex;
+  align-items: center;
+  margin-block: 10px;
+  cursor: pointer;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d2cfcf;
+}
+
+.chat-popup-body-friends-list li:last-child {
+  border: none;
+  padding-bottom: none;
+}
+
+.chat-popup-body-friends-list li img {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  object-fit: cover;
+  margin-right: 10px;
+}

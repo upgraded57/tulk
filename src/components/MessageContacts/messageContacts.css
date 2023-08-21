@@ -1,0 +1,48 @@
+.message-contacts {
+  text-align: center;
+}
+
+.message-contacts-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.message-contact-online-friends-list {
+  list-style: none;
+}
+
+.message-contact-online-friends-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  position: relative;
+  cursor: pointer;
+}
+
+.online-friend-profile-img {
+  width: 30px;
+  height: 30px;
+  position: relative;
+}
+
+.online-friend-profile-img::before {
+  content: "";
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background: #59e827;
+  border-radius: 50%;
+}
+
+.online-friend-profile-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}

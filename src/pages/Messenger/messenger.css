@@ -1,0 +1,29 @@
+.messenger {
+  display: flex;
+  gap: 10px;
+  max-width: 1200px;
+  min-height: calc(100vh - 100px);
+  margin-inline: auto;
+}
+
+.messenger-titles {
+  flex-basis: 40%;
+}
+
+.messages {
+  flex-basis: 60%;
+  min-height: 100%;
+  border-left: 1px solid #d9d9d9;
+  padding: 10px;
+  position: relative;
+}
+
+@media screen and (max-width: 920px) {
+  .messenger {
+    display: block;
+  }
+
+  .messages {
+    display: none;
+  }
+}

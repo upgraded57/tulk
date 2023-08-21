@@ -1,0 +1,31 @@
+.newPeopleDiv {
+  text-align: center;
+}
+
+.newPeople {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.newPeopleHeader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.newPerson {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--inputField-radius);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.newPerson img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

@@ -1,0 +1,131 @@
+.create-group {
+  max-width: max(60vw, 800px);
+  margin-inline: auto;
+  margin-bottom: 20px;
+  margin-top: -20px;
+}
+
+.create-group-bg-image {
+  width: 100%;
+  height: 250px;
+  border-radius: 0 0 var(--inputField-radius) var(--inputField-radius);
+  overflow: hidden;
+  position: relative;
+}
+
+.create-group-bg-image-input {
+  display: none;
+}
+
+.create-group-bg-image-label {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  height: 250px;
+  max-height: 250px;
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  cursor: pointer;
+  position: absolute;
+  inset: 0;
+  padding: 10px;
+}
+
+.create-group-bg-image-label span {
+  padding: 10px;
+  background: #f8f8f87c;
+  border-radius: var(--inputField-radius);
+}
+
+.create-group-bg-image-label-holder,
+.create-group-avatar-label-holder {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.create-group-bg-image-label-holder img,
+.create-group-avatar-label-holder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.create-group-avatar {
+  margin-left: 40px;
+  width: 170px;
+  height: 170px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #eaeaea;
+  border: 5px solid #f8f8f8;
+  top: -40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.create-group-avatar-input {
+  display: none;
+}
+
+.create-group-avatar-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  text-align: center;
+}
+
+.create-group-input-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.create-group-input-fields-flex {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  width: 100%;
+  gap: 10px;
+}
+
+.create-group-input-fields input,
+.create-group-input-fields textarea,
+.create-group-input-fields select {
+  padding: 10px;
+  border-radius: var(--inputField-radius);
+  border: 1px solid #d0c7c7;
+  background: rgba(217, 217, 217, 0.41);
+  outline: none;
+  resize: none;
+}
+
+.create-group-input-fields button {
+  align-self: flex-end;
+}
+
+/* Mobile media query */
+@media screen and (max-width: 920px) {
+  .create-group-input-fields {
+    padding-inline: 2vw;
+  }
+
+  .create-group-bg-image {
+    height: 150px;
+  }
+
+  .create-group-bg-image-label {
+    height: 150px;
+  }
+
+  .create-group-avatar {
+    margin-left: 2vw;
+    width: 100px;
+    height: 100px;
+  }
+}
