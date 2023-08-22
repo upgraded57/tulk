@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import "./createArticle.css";
 import Navbar from "../../components/Navbar/Navbar";
-import { Link } from "react-router-dom";
-
-// images
-import tempImg from "../../images/Frame 72.png";
+import { Link, useNavigate } from "react-router-dom";
 
 // quill text editor
 import ReactQuill from "react-quill";
@@ -18,6 +15,7 @@ import { AiOutlineUnorderedList, AiOutlineClose } from "react-icons/ai";
 
 export default function CreateArticle() {
   const user = Userdata();
+  const navigate = useNavigate();
   const [optionMenuActive, setOptionMenuActive] = useState(false);
   const toggleOptionMenu = () => {
     setOptionMenuActive(!optionMenuActive);
@@ -31,7 +29,7 @@ export default function CreateArticle() {
 
   // choose featured image
   const selectFeaturedImage = (e) => {
-    const tempFeaturedImg = URL.createObjectURL(e.target?.files[0]);
+    const tempFeaturedImg = URL.createObjectURL(e?.target.files[0]);
     const featuredImgContainer = document.getElementById(
       "featuredImgContainer"
     );
@@ -54,6 +52,7 @@ export default function CreateArticle() {
     const articleFormData = new FormData();
     articleFormData.append("author", user.user_id);
     articleFormData.append("title", articleTitle);
+    articleFormData.append("category", articleCategory);
     articleFormData.append("content", articleContent);
     {
       articleFeaturedImage &&
@@ -63,18 +62,60 @@ export default function CreateArticle() {
     const toastId = toast.loading("Publishing post");
     await axiosInstance({
       method: "post",
-      url: "/editor/publish-article",
+      url: "/editor/publish-article/",
       data: articleFormData,
     })
-      .then((res) => {
-        console.log(res);
-        toast.success("Post published", {
+      .then(() => {
+        toast.success("Article published", {
           id: toastId,
         });
+        navigate("/admin");
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Unable to publish post", {
+        toast.error("Unable to publish article", {
+          id: toastId,
+        });
+      });
+  };
+
+  const saveArticleAsDraft = async () => {
+    if (
+      articleCategory.length === 0 ||
+      articleContent.length === 0 ||
+      articleTitle.length === 0
+    ) {
+      toast.error("You haven't filled the required field");
+      return;
+    }
+
+    // prepare article data
+    const articleFormData = new FormData();
+    articleFormData.append("author", user.user_id);
+    articleFormData.append("status", "draft");
+    articleFormData.append("title", articleTitle);
+    articleFormData.append("category", articleCategory);
+    articleFormData.append("content", articleContent);
+    {
+      articleFeaturedImage &&
+        articleFormData.append("featured_image", articleFeaturedImage);
+    }
+
+    const toastId = toast.loading("Saving article");
+    await axiosInstance({
+      method: "post",
+      url: "/editor/publish-article/",
+      data: articleFormData,
+    })
+      .then(() => {
+        toast.success("Article saved as draft", {
+          id: toastId,
+        });
+        navigate("/admin");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Unable to save article", {
           id: toastId,
         });
       });
@@ -100,7 +141,9 @@ export default function CreateArticle() {
         </div>
         <div className="create-article-right">
           <div className="publish-options">
-            <Link to="#">Save Draft</Link>
+            <span className="save-draft" onClick={saveArticleAsDraft}>
+              Save Draft
+            </span>
             <button className="btn-solid" onClick={publishArticle}>
               Publish
             </button>
@@ -117,10 +160,9 @@ export default function CreateArticle() {
               <div className="category">
                 <input
                   type="radio"
-                  value="politics"
                   id="politics"
                   name="articleCategory"
-                  onChange={(e) => setArticleCategory(e.target.value)}
+                  onClick={() => setArticleCategory("politics")}
                 />
                 <label htmlFor="politics">Politics</label>
               </div>
@@ -128,10 +170,9 @@ export default function CreateArticle() {
               <div className="category">
                 <input
                   type="radio"
-                  value="entertainment"
                   id="entertainment"
                   name="articleCategory"
-                  onChange={(e) => setArticleCategory(e.target.value)}
+                  onClick={() => setArticleCategory("entertainment")}
                 />
                 <label htmlFor="entertainment">Entertainment</label>
               </div>
@@ -139,10 +180,9 @@ export default function CreateArticle() {
               <div className="category">
                 <input
                   type="radio"
-                  value="sport"
                   id="sport"
                   name="articleCategory"
-                  onChange={(e) => setArticleCategory(e.target.value)}
+                  onClick={() => setArticleCategory("sport")}
                 />
                 <label htmlFor="sport">Sport</label>
               </div>
@@ -150,10 +190,9 @@ export default function CreateArticle() {
               <div className="category">
                 <input
                   type="radio"
-                  value="metro"
                   id="metro"
                   name="articleCategory"
-                  onChange={(e) => setArticleCategory(e.target.value)}
+                  onClick={() => setArticleCategory("metro")}
                 />
                 <label htmlFor="metro">Metro</label>
               </div>
@@ -161,10 +200,9 @@ export default function CreateArticle() {
               <div className="category">
                 <input
                   type="radio"
-                  value="more"
                   id="more"
                   name="articleCategory"
-                  onChange={(e) => setArticleCategory(e.target.value)}
+                  onClick={(e) => setArticleCategory("more")}
                 />
                 <label htmlFor="more">More</label>
               </div>

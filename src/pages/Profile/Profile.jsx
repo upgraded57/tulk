@@ -210,12 +210,6 @@ const Profile = () => {
     fetchUserFriends(setFriends);
   }, []);
 
-  const friendsIdArray = [];
-
-  friends.forEach((friend) => {
-    friendsIdArray.push(friend.user1_data.id);
-  });
-
   return (
     <>
       <Navbar />
@@ -269,7 +263,7 @@ const Profile = () => {
 
             <div className="profile-user-edit-button">
               {profile_id !== currentUser.user_id &&
-                !friendsIdArray.includes(profile_id) && (
+                friends.includes(profile_id) && (
                   <button
                     className="btn-solid"
                     onClick={() => sendFriendRequest(currentUser.user_id, user)}

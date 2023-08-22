@@ -6,7 +6,6 @@ import Friends from "../Friends/Friends";
 import Groups from "../groups/Groups";
 import MessageContacts from "../MessageContacts/MessageContacts";
 import ChatPopup from "../ChatPopup/ChatPopup";
-import CreatePost from "../CreatePost/CreatePost";
 import Newsreel from "../Newsreel/Newsreel";
 import { Userdata } from "../../data/Userdata";
 import Chat from "../Chat/Chat";

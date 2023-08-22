@@ -7,12 +7,14 @@ import "./friends.css";
 // api calls
 import { fetchUserFriends } from "../../Axios/ApiCalls";
 
+// images
+import noAvatar from "../../images/noAvatar.jpeg";
+
 export default function Friends() {
   // fetch friends
   const [friends, setFriends] = useState([]);
-  const [loading, setLoading] = useState([]);
   useEffect(() => {
-    fetchUserFriends(setFriends, setLoading);
+    fetchUserFriends(setFriends);
   }, []);
   return (
     <div className="friendsDiv mt-lg">
@@ -26,15 +28,38 @@ export default function Friends() {
       </div>
 
       <div className="friends">
-        {friends.map((friend) => {
-          return (
-            <div className="friend" key={friend.id}>
-              <Link to={`/profile/${friend.user1_data.id}/`}>
-                <img src={friend.user1_data.avatar} alt="" />
-              </Link>
-            </div>
-          );
-        })}
+        {friends[0] && (
+          <div className="friend" key={friends[0].id}>
+            <Link to={`/profile/${friends[0].id}/`}>
+              <img
+                src={friends[0].avatar ? friends[0].avatar : noAvatar}
+                alt=""
+              />
+            </Link>
+          </div>
+        )}
+
+        {friends[1] && (
+          <div className="friend" key={friends[1].id}>
+            <Link to={`/profile/${friends[1].id}/`}>
+              <img
+                src={friends[1].avatar ? friends[1].avatar : noAvatar}
+                alt=""
+              />
+            </Link>
+          </div>
+        )}
+
+        {friends[2] && (
+          <div className="friend" key={friends[2].id}>
+            <Link to={`/profile/${friends[2].id}/`}>
+              <img
+                src={friends[2].avatar ? friends[2].avatar : noAvatar}
+                alt=""
+              />
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

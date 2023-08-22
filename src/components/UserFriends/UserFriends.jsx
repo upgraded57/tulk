@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // styles
 import "./userFriends.css";
@@ -22,18 +23,14 @@ export default function UserFriends({ friends }) {
                 <div className="user-friend" key={friend.id}>
                   <div className="user-friend-image">
                     <img
-                      src={
-                        friend.user1_data.avatar
-                          ? friend.user1_data.avatar
-                          : noAvatar
-                      }
+                      src={friend.avatar ? friend.avatar : noAvatar}
                       alt=""
                     />
                   </div>
                   <div className="user-friend-name-location">
-                    <p className="text-body">{`${friend.user1_data.first_name} ${friend.user1_data.last_name}`}</p>
+                    <p className="text-body">{`${friend.first_name} ${friend.last_name}`}</p>
                     <small className="small-text">
-                      {friend.user1_data.locaton && friend.user1_data.locaton}
+                      {friend.locaton && friend.locaton}
                     </small>
                   </div>
                 </div>
@@ -43,7 +40,7 @@ export default function UserFriends({ friends }) {
         </>
       )}
       <div className="profile-see-all-friends-btn">
-        <a href="#">See All</a>
+        <Link to="/friends/">See All</Link>
       </div>
     </div>
   );

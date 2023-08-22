@@ -34,12 +34,14 @@ export const NavbarMiniSide = () => {
         </div>
       </Link>
 
-      <Link to={`/admin/`}>
-        <div className="admin-link">
-          <img src={adminImg} alt="" />
-          <p className="text-body">Admin</p>
-        </div>
-      </Link>
+      {user.is_staff && (
+        <Link to={`/admin/`}>
+          <div className="admin-link">
+            <img src={adminImg} alt="" />
+            <p className="text-body">Admin</p>
+          </div>
+        </Link>
+      )}
       <Link to="/login">
         <button className="btn-secondary" onClick={logout}>
           Logout

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import "./IndividualNews.css";
 
 // utils
-import { Link } from "react-router-dom";
 import moment from "moment/moment";
 
 // images
@@ -54,6 +53,7 @@ export default function IndividualNews({ loginPage, article }) {
   };
 
   const newsReelclass = newsOpen ? "newsreel active" : "newsreel";
+
   return (
     <div className={newsReelclass}>
       <div className="newsreel-content" onClick={toggleNewsOpen}>
@@ -76,9 +76,10 @@ export default function IndividualNews({ loginPage, article }) {
       </div>
       {newsOpen && (
         <>
-          <div className="newsreel-body">
-            <p className="text-body">{article.content}</p>
-          </div>
+          <div
+            className="newsreel-body"
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          ></div>
 
           <div className="newsreel-extra">
             <div className="newsreel-share">

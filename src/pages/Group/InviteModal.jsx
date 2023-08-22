@@ -8,7 +8,6 @@ import { fetchUserFriends } from "../../Axios/ApiCalls";
 import { IoIosClose } from "react-icons/io";
 
 // images
-import tempImg from "../../images/Frame 71.png";
 import noAvatar from "../../images/noAvatar.jpeg";
 
 export default function InviteModal({ setInviteModal }) {
@@ -18,12 +17,18 @@ export default function InviteModal({ setInviteModal }) {
     fetchUserFriends(setFriends);
   }, []);
 
-  const friendsArray = [];
-  friends.forEach((friend) => {
-    friendsArray.push(friend.user1_data);
+  const [inputBoxes, setInputBoxes] = useState([]);
+
+  // check selected friends
+  useEffect(() => {
+    setInputBoxes(document.querySelectorAll(".selectFriendsBox"));
+  }, [friends]);
+
+  inputBoxes.forEach((inputBox) => {
+    inputBox.addEventListener("click", () => {
+      console.log(inputBox.checked);
+    });
   });
-  const distinctFriends = [...new Set(friendsArray)];
-  console.log(distinctFriends);
 
   return (
     <div className="signupPage">
@@ -43,11 +48,11 @@ export default function InviteModal({ setInviteModal }) {
         </div>
 
         <div className="invite-lists">
-          {friendsArray.length < 1 ? (
+          {friends.length < 1 ? (
             <p>No Friends to invite. Make friends first</p>
           ) : (
             <>
-              {friendsArray.map((friend) => {
+              {friends.map((friend) => {
                 return (
                   <div className="invite-list" key={friend.id}>
                     <label htmlFor={friend.id}>
@@ -60,7 +65,11 @@ export default function InviteModal({ setInviteModal }) {
                         </div>
                         <div className="invite-list-name">{`${friend.first_name} ${friend.last_name}`}</div>
                       </div>
-                      <input type="checkbox" id={friend.id} />
+                      <input
+                        type="checkbox"
+                        className="selectFriendsBox"
+                        id={friend.id}
+                      />
                     </label>
                   </div>
                 );

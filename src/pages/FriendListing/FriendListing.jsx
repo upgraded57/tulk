@@ -24,14 +24,26 @@ import { Userdata } from "../../data/Userdata";
 
 export default function SearchResult() {
   const currentUser = Userdata();
+
   // function to filter search result (variables)
+  const [showFriends, setShowFriends] = useState(true);
   const [showPeople, setShowPeople] = useState(true);
   const [showGroups, setShowGroups] = useState(true);
 
   // function to filter search result to show all
   const showAllFilter = () => {
+    setShowFriends(true);
     setShowPeople(true);
-    setShowGroups(true);
+    setShowFriends(true);
+  };
+
+  // function to filter search result to show only user friends
+  const showFriendsFilter = () => {
+    if (!showFriends) {
+      setShowFriends(true);
+    }
+    setShowPeople(false);
+    setShowGroups(false);
   };
 
   // function to filter search result to show only people
@@ -39,6 +51,7 @@ export default function SearchResult() {
     if (!showPeople) {
       setShowPeople(true);
     }
+    setShowFriends(false);
     setShowGroups(false);
   };
 
@@ -47,6 +60,7 @@ export default function SearchResult() {
     if (!showGroups) {
       setShowGroups(true);
     }
+    setShowFriends(false);
     setShowPeople(false);
   };
 
@@ -55,7 +69,7 @@ export default function SearchResult() {
   // get all friends
   const [friends, setFriends] = useState([]);
   useEffect(() => {
-    fetchUserFriends(setFriends, setLoading);
+    fetchUserFriends(setFriends);
   }, []);
 
   // get all friends
@@ -70,12 +84,6 @@ export default function SearchResult() {
     fetchUsers(setUsers, setLoading);
   }, []);
 
-  // friends array
-  const friendsArray = [];
-  friends.forEach((friend) => {
-    friendsArray.push(friend.user1_data.id);
-  });
-
   return (
     <>
       <Navbar />
@@ -87,7 +95,8 @@ export default function SearchResult() {
 
           <div className="group-listing-filter-list">
             <ul>
-              <li onClick={showAllFilter}>All Friends</li>
+              <li onClick={showAllFilter}>All People</li>
+              <li onClick={showFriendsFilter}>Your Friends</li>
               <li onClick={showPeopleFilter}>Friend Request</li>
               <li onClick={showGroupsFilter}>Friend suggestions</li>
             </ul>
@@ -95,8 +104,8 @@ export default function SearchResult() {
         </div>
 
         <div className="search-result-main">
-          {/* People Container */}
-          {showPeople && (
+          {/* Friends Container */}
+          {showFriends && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
                 <h3 className="h-100">Your Friends </h3>
@@ -118,26 +127,23 @@ export default function SearchResult() {
                               className="search-result-main-container-body-list"
                               key={friend.id}
                             >
-                              <Link to={`/profile/${friend.user1_data.id}/`}>
+                              <Link to={`/profile/${friend.id}/`}>
                                 <div className="search-result-main-container-body-list-image">
                                   <img
                                     src={
-                                      friend.user1_data.avatar
-                                        ? friend.user1_data.avatar
-                                        : noAvatar
+                                      friend.avatar ? friend.avatar : noAvatar
                                     }
                                     alt=""
                                   />
                                 </div>
 
                                 <div className="search-result-main-container-body-list-content">
-                                  <p className="text-body">{`${friend.user1_data.first_name} ${friend.user1_data.last_name}`}</p>
+                                  <p className="text-body">{`${friend.first_name} ${friend.last_name}`}</p>
                                   <p className="small-text">
-                                    {friend.user1_data.bio
-                                      ? friend.user1_data.bio?.length < 80
-                                        ? friend.user1_data.bio
-                                        : friend.user1_data.bio?.slice(0, 80) +
-                                          "..."
+                                    {friend.bio
+                                      ? friend.bio?.length < 80
+                                        ? friend.bio
+                                        : friend.bio?.slice(0, 80) + "..."
                                       : ""}
                                   </p>
                                 </div>
@@ -157,6 +163,7 @@ export default function SearchResult() {
             </div>
           )}
 
+          {/* Friend Requests container */}
           {showPeople && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
@@ -225,7 +232,7 @@ export default function SearchResult() {
             </div>
           )}
 
-          {/* Groups Container */}
+          {/* Friends suggestion Container */}
           {showGroups && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
@@ -237,48 +244,46 @@ export default function SearchResult() {
                   <p>Loading... </p>
                 ) : (
                   <>
-                    {users
-                      .filter((user) => !friendsArray.includes(user.id))
-                      .map((user) => {
-                        return (
-                          <div
-                            className="search-result-main-container-body-list"
-                            key={user.id}
-                          >
-                            <Link to={`/profile/${user.id}/`}>
-                              <div className="search-result-main-container-body-list-image">
-                                <img
-                                  src={user.avatar ? user.avatar : noAvatar}
-                                  alt=""
-                                />
-                              </div>
-
-                              <div className="search-result-main-container-body-list-content">
-                                <p className="text-body">{`${user.first_name} ${user.last_name}`}</p>
-                                <p className="small-text">
-                                  {user.bio
-                                    ? user.bio?.length < 80
-                                      ? user.bio
-                                      : user.bio?.slice(0, 80) + "..."
-                                    : ""}
-                                </p>
-                              </div>
-                            </Link>
-                            <div className="search-result-main-container-body-list-cta">
-                              {user.id !== currentUser.user_id && (
-                                <button
-                                  className="btn-secondary"
-                                  onClick={() =>
-                                    sendFriendRequest(currentUser.user_id, user)
-                                  }
-                                >
-                                  Add Friend
-                                </button>
-                              )}
+                    {users.map((user) => {
+                      return (
+                        <div
+                          className="search-result-main-container-body-list"
+                          key={user.id}
+                        >
+                          <Link to={`/profile/${user.id}/`}>
+                            <div className="search-result-main-container-body-list-image">
+                              <img
+                                src={user.avatar ? user.avatar : noAvatar}
+                                alt=""
+                              />
                             </div>
+
+                            <div className="search-result-main-container-body-list-content">
+                              <p className="text-body">{`${user.first_name} ${user.last_name}`}</p>
+                              <p className="small-text">
+                                {user.bio
+                                  ? user.bio?.length < 80
+                                    ? user.bio
+                                    : user.bio?.slice(0, 80) + "..."
+                                  : ""}
+                              </p>
+                            </div>
+                          </Link>
+                          <div className="search-result-main-container-body-list-cta">
+                            {user.id !== currentUser.user_id && (
+                              <button
+                                className="btn-secondary"
+                                onClick={() =>
+                                  sendFriendRequest(currentUser.user_id, user)
+                                }
+                              >
+                                Add Friend
+                              </button>
+                            )}
                           </div>
-                        );
-                      })}
+                        </div>
+                      );
+                    })}
                   </>
                 )}
                 <div className="load-more-link">

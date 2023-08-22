@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Userdata = () => {
   const [user, setUser] = useState({});
@@ -25,6 +25,7 @@ export const Userdata = () => {
           DOB: currentUser.date_of_birth,
           phone: currentUser.phone_number,
           website: currentUser.website,
+          is_staff: currentUser.is_staff,
         });
       }
     };

@@ -1,4 +1,4 @@
-import axios, { Axios } from "axios";
+import axios from "axios";
 
 const tokens = JSON.parse(localStorage.getItem("tokens"));
 

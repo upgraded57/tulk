@@ -11,7 +11,6 @@ import "./group.css";
 // icons
 import { BsGear, BsCamera } from "react-icons/bs";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { BiDoorOpen } from "react-icons/bi";
 import { Userdata } from "../../data/Userdata";
 import { axiosInstance } from "../../Axios/axiosInstance";
 import InviteModal from "./InviteModal";
@@ -26,14 +25,7 @@ const Group = () => {
   const [groupData, setGroupData] = useState({});
   useEffect(() => {
     getGroupData(group_id, setGroupData);
-  }, []);
-
-  const [showGroupActionLinks, setShowGroupActionLinks] = useState(false);
-
-  // function to toggle group action links visibility
-  const toggleGroupActionLinks = () => {
-    setShowGroupActionLinks(!showGroupActionLinks);
-  };
+  }, [group_id]);
 
   const [groupPosts, setGroupPosts] = useState([]);
   const getGroupPosts = async () => {
@@ -162,7 +154,7 @@ const Group = () => {
               </div>
             </div>
 
-            {groupData.id === user.user_id && (
+            {groupData.id !== user.user_id && (
               <div className="group-edit-button">
                 <button
                   className="btn-secondary"

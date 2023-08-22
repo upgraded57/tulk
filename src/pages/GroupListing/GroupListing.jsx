@@ -5,11 +5,10 @@ import { axiosInstance } from "../../Axios/axiosInstance";
 import "../SearchResult/searchResult.css";
 
 // components
-import Post from "../../components/Post/Post";
 import Navbar from "../../components/Navbar/Navbar";
 
 // images
-import { fetchGroups } from "../../Axios/ApiCalls";
+import { fetchGroups, fetchUserGroups } from "../../Axios/ApiCalls";
 
 export default function SearchResult() {
   // function to filter search result (variables)
@@ -41,7 +40,13 @@ export default function SearchResult() {
   // get all groups
   const [groups, setGroups] = useState([]);
   useEffect(() => {
-    fetchGroups(axiosInstance, setGroups);
+    fetchGroups(setGroups);
+  }, []);
+
+  // get user groups
+  const [userGroups, setUserGroups] = useState([]);
+  useEffect(() => {
+    fetchUserGroups(setUserGroups);
   }, []);
 
   return (
@@ -73,71 +78,83 @@ export default function SearchResult() {
         </div>
 
         <div className="search-result-main">
-          {/* People Container */}
+          {/* user groups Container */}
           {showPeople && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
                 <h3 className="h-100">Groups you've joined</h3>
               </div>
 
-              <div className="search-result-main-container-body">
-                {groups.map((group) => {
-                  return (
-                    <div
-                      className="search-result-main-container-body-list"
-                      key={group.id}
-                    >
-                      <Link to={group.id}>
-                        <div className="search-result-main-container-body-list-image">
-                          <img src={group.avatar} alt="" />
-                        </div>
+              {userGroups.length < 1 ? (
+                <p>You haven't joined any group yet</p>
+              ) : (
+                <>
+                  <div className="search-result-main-container-body">
+                    {userGroups.map((userGroup) => {
+                      return (
+                        <div
+                          className="search-result-main-container-body-list"
+                          key={userGroup.id}
+                        >
+                          <Link to={userGroup.id}>
+                            <div className="search-result-main-container-body-list-image">
+                              <img src={userGroup.avatar} alt="" />
+                            </div>
 
-                        <div className="search-result-main-container-body-list-content">
-                          <p className="text-body">{group.name}</p>
-                          <p className="small-text">{group.location}</p>
+                            <div className="search-result-main-container-body-list-content">
+                              <p className="text-body">{userGroup.name}</p>
+                              <p className="small-text">{userGroup.location}</p>
+                            </div>
+                          </Link>
                         </div>
-                      </Link>
+                      );
+                    })}
+                    <div className="load-more-link">
+                      <Link to="#">Load More</Link>
                     </div>
-                  );
-                })}
-                <div className="load-more-link">
-                  <Link to="#">Load More</Link>
-                </div>
-              </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
 
-          {/* Groups Container */}
+          {/* All groups Container */}
           {showGroups && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
                 <h3 className="h-100">New Groups</h3>
               </div>
 
-              <div className="search-result-main-container-body">
-                {groups.map((group) => {
-                  return (
-                    <div
-                      className="search-result-main-container-body-list"
-                      key={group.id}
-                    >
-                      <Link to={group.id}>
-                        <div className="search-result-main-container-body-list-image">
-                          <img src={group.avatar} alt="" />
-                        </div>
+              {groups.length < 1 ? (
+                <p>No groups on TULK yet. Check back later!</p>
+              ) : (
+                <>
+                  <div className="search-result-main-container-body">
+                    {groups.map((group) => {
+                      return (
+                        <div
+                          className="search-result-main-container-body-list"
+                          key={group.id}
+                        >
+                          <Link to={group.id}>
+                            <div className="search-result-main-container-body-list-image">
+                              <img src={group.avatar} alt="" />
+                            </div>
 
-                        <div className="search-result-main-container-body-list-content">
-                          <p className="text-body">{group.name}</p>
-                          <p className="small-text">{group.location}</p>
+                            <div className="search-result-main-container-body-list-content">
+                              <p className="text-body">{group.name}</p>
+                              <p className="small-text">{group.location}</p>
+                            </div>
+                          </Link>
                         </div>
-                      </Link>
+                      );
+                    })}
+                    <div className="load-more-link">
+                      <Link to="#">Load More</Link>
                     </div>
-                  );
-                })}
-                <div className="load-more-link">
-                  <Link to="#">Load More</Link>
-                </div>
-              </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>

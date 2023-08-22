@@ -1,11 +1,6 @@
 // Utils
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
-import React, { lazy, Suspense, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { lazy, Suspense } from "react";
 
 // Protected routes
 import ProtectedRoute from "./Store/Auth/ProtectedRoute";
@@ -15,7 +10,6 @@ import { Toaster } from "react-hot-toast";
 
 // Pages
 import Loader from "./components/Loader/Loader";
-import Navbar from "./components/Navbar/Navbar";
 import Login from "./pages/Login/Login";
 
 // Auth page

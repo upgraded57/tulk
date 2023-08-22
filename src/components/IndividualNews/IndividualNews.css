@@ -61,8 +61,13 @@
   align-items: center;
 }
 
-.newsreel-body p {
+.newsreel-body {
   padding-top: 10px;
+}
+
+.newsreel-body ul {
+  padding-left: 20px;
+  list-style-type: disc !important;
 }
 
 .newsreel-share {

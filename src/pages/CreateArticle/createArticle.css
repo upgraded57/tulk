@@ -37,8 +37,10 @@
   border-bottom: 2px solid #eee;
 }
 
-.publish-options a {
+.publish-options .save-draft {
   color: #b4042a;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .create-article-options {

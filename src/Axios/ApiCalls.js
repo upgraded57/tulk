@@ -8,6 +8,9 @@ import {
 import { getUserDataSuccess } from "../Store/Userdata/Actions/GetUserdata";
 import { axiosInstance } from "./axiosInstance";
 
+// fetch crrent user from local storage
+const currentUser = JSON.parse(localStorage.getItem("user"));
+
 // initiate login
 export const loginCall = async (loginCredentials, dispatch, navigate) => {
   const toastId = toast.loading("Loging you in");
@@ -51,11 +54,6 @@ export const fetchProfileUser = async (axiosInstance, profile_id, setUser) => {
     });
 };
 
-// Persist user login
-// export const persistLogin = async () => {
-
-// }
-
 // get user timeline posts
 export const fetchUserPosts = async (
   axiosInstance,
@@ -75,7 +73,7 @@ export const fetchUserPosts = async (
 };
 
 // get all groups
-export const fetchGroups = async (axiosInstance, setGroups) => {
+export const fetchGroups = async (setGroups) => {
   await axiosInstance({
     url: "/groups/",
     method: "get",
@@ -107,10 +105,10 @@ export const getGroupData = async (group_id, setGroupData) => {
 export const getOnlineFriends = async (setOnlineFriends) => {
   await axiosInstance({
     method: "get",
-    url: `/friendships/?page=1`,
+    url: `/friendships/${currentUser.id}/`,
   })
     .then((res) => {
-      setOnlineFriends(res.data.results);
+      setOnlineFriends(res.data);
     })
     .catch((err) => {
       console.log(err);
@@ -134,17 +132,14 @@ export const fetchArticles = async (setArticles) => {
 export const fetchUserFriends = async (setFriends) => {
   await axiosInstance({
     method: "get",
-    url: `/friendships/?page=1`,
+    url: `/friendships/${currentUser.id}`,
   })
     .then((res) => {
-      setFriends(res.data.results);
+      setFriends(res.data);
     })
     .catch((err) => {
       console.log(err);
     });
-  // .finally(() => {
-  //   setLoading(false);
-  // });
 };
 
 export const fetchFriendRequests = async (setFriendRequests, setLoading) => {
@@ -300,5 +295,20 @@ export const deleteFriendRequest = async (request) => {
     .catch((err) => {
       console.log(err);
       toast.error("An error occured");
+    });
+};
+
+// fetch user groups
+
+export const fetchUserGroups = async (setUserGroups) => {
+  await axiosInstance({
+    method: "get",
+    url: `/user-groups/`,
+  })
+    .then((res) => {
+      setUserGroups(res.data.results);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };

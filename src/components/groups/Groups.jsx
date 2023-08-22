@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // styles
 import "./groups.css";
 
 // images
-import newPerson1 from "../../images/Frame 76.png";
-import newPerson2 from "../../images/Frame 85.png";
-import newPerson3 from "../../images/Frame 86.png";
+import noGroupAvatar from "../../images/noGroupAvatar.jpg";
+import { fetchUserGroups } from "../../Axios/ApiCalls";
 
 export default function Groups() {
+  const [groups, setGroups] = useState([]);
+  useEffect(() => {
+    fetchUserGroups(setGroups);
+  }, []);
+
   return (
     <div className="groupsDiv mt-lg">
       <div className="groups-header">
@@ -21,17 +25,43 @@ export default function Groups() {
         </div>
       </div>
 
-      <div className="groups">
-        <div className="group">
-          <img src={newPerson2} alt="" />
-        </div>
-        <div className="group">
-          <img src={newPerson1} alt="" />
-        </div>
-        <div className="group">
-          <img src={newPerson3} alt="" />
-        </div>
-      </div>
+      {groups.length < 1 ? (
+        <>
+          <div className="mt-md"></div>
+          <p>You haven't joined a group yet</p>
+        </>
+      ) : (
+        <>
+          <div className="groups">
+            {groups[0] && (
+              <div className="group">
+                <img
+                  src={groups[0].avatar ? groups[0].avatar : noGroupAvatar}
+                  alt=""
+                />
+              </div>
+            )}
+
+            {groups[1] && (
+              <div className="group">
+                <img
+                  src={groups[1].avatar ? groups[1].avatar : noGroupAvatar}
+                  alt=""
+                />
+              </div>
+            )}
+
+            {groups[2] && (
+              <div className="group">
+                <img
+                  src={groups[2].avatar ? groups[2].avatar : noGroupAvatar}
+                  alt=""
+                />
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }

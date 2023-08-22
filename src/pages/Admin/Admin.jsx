@@ -11,12 +11,42 @@ import { fetchArticles } from "../../Axios/ApiCalls";
 // images
 import newsImg from "../../images/newsImg.jpg";
 import moment from "moment";
+import { toast } from "react-hot-toast";
+import { axiosInstance } from "../../Axios/axiosInstance";
 
 export default function Admin() {
   const [articles, setArticles] = useState([]);
   useEffect(() => {
     fetchArticles(setArticles);
   }, []);
+
+  const deleteArticle = async (id) => {
+    const confirmation = window.confirm(
+      "Delete article? This action cannot be undone!"
+    );
+    if (confirmation !== true) {
+      return;
+    } else {
+      const toastId = toast.loading("Deleting Article");
+      await axiosInstance({
+        method: "delete",
+        url: `/editor/articles/${id}/`,
+      })
+        .then(() => {
+          toast.success("Article deleted", {
+            id: toastId,
+            icon: "🗑️",
+          });
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Unable to delete article", {
+            id: toastId,
+          });
+        });
+    }
+  };
   return (
     <>
       <Navbar />
@@ -55,7 +85,12 @@ export default function Admin() {
                   </small>
                   <div className="admin-article-action-btns">
                     <button className="btn-secondary">Edit</button>
-                    <button className="btn-secondary">Delete</button>
+                    <button
+                      className="btn-secondary"
+                      onClick={() => deleteArticle(article.id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               </div>

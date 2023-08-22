@@ -18,9 +18,8 @@ export default function CreateGroup() {
 
   // group media upload
   const [groupBackgroundImage, setGroupBackgroundImage] = useState("");
-  const [groupBackgroundImageFile, setGroupBackgroundImageFile] = useState(
-    null
-  );
+  const [groupBackgroundImageFile, setGroupBackgroundImageFile] =
+    useState(null);
   const [groupAvatar, setGroupAvatar] = useState("");
   const [groupAvatarFile, setGroupAvatarFile] = useState(null);
 
@@ -59,6 +58,7 @@ export default function CreateGroup() {
   // create group
   const createGroup = async (e) => {
     e.preventDefault();
+    const toastId = toast.loading("Creating group ...");
     // group form data
     const groupFormData = new FormData();
     groupFormData.append("name", groupName);
@@ -80,13 +80,17 @@ export default function CreateGroup() {
       data: groupFormData,
     })
       .then((res) => {
-        toast.success("Group Created Successfully");
-        console.log(res);
+        toast.success("Group Created Successfully", {
+          id: toastId,
+        });
+        console.log(res.data);
         const newGroupId = res.data.id;
         navigate(`/groups/${newGroupId}`);
       })
       .catch((err) => {
-        toast.error("Unable to create group");
+        toast.error("Unable to create group", {
+          id: toastId,
+        });
         console.log(err);
         return;
       });
