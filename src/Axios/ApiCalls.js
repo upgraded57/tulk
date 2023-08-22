@@ -23,9 +23,9 @@ export const loginCall = async (loginCredentials, dispatch, navigate) => {
       const access = res.data.access;
       const refresh = res.data.refresh;
       const tokens = { access, refresh };
-      dispatch(loginUserSuccess(tokens));
       localStorage.setItem("tokens", JSON.stringify(tokens));
       localStorage.setItem("user", JSON.stringify(res.data.user));
+      dispatch(loginUserSuccess(tokens));
       dispatch(getUserDataSuccess(res.data.user));
       navigate("/");
       toast.success("Login successful", {

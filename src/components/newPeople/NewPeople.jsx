@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { axiosInstance } from "../../Axios/axiosInstance";
-import { Userdata } from "../../data/Userdata";
 import { Link } from "react-router-dom";
 
 import "./newPeople.css";
@@ -41,7 +40,7 @@ export default function NewPeople() {
       <div className="newPeople">
         {newPeople[0] && (
           <Link
-            to={`profile/${newPeople[0].id}`}
+            to={`profile/${newPeople[0].id}/`}
             title={`${newPeople[0].first_name} ${newPeople[0].last_name}`}
           >
             <div className="newPerson">
@@ -52,7 +51,7 @@ export default function NewPeople() {
 
         {newPeople[1] && (
           <Link
-            to={`profile/${newPeople[1].id}`}
+            to={`profile/${newPeople[1].id}/`}
             title={`${newPeople[1].first_name} ${newPeople[1].last_name}`}
           >
             <div className="newPerson">
@@ -63,7 +62,7 @@ export default function NewPeople() {
 
         {newPeople[2] && (
           <Link
-            to={`profile/${newPeople[2].id}`}
+            to={`profile/${newPeople[2].id}/`}
             title={`${newPeople[2].first_name} ${newPeople[2].last_name}`}
           >
             <div className="newPerson">

@@ -1,11 +1,12 @@
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const tokens = JSON.parse(localStorage.getItem("tokens"));
 
 export const axiosInstance = axios.create({
   baseURL: "https://tulk-social-f7f4f4c56190.herokuapp.com",
   headers: {
-    Authorization: `Bearer ${tokens?.access}`,
+    Authorization: `Bearer ${tokens.access}`,
   },
 });
 
@@ -33,16 +34,18 @@ axiosInstance.interceptors.response.use(
           const tokens = { access, refresh };
           localStorage.setItem("tokens", JSON.stringify(tokens));
           err.config.headers["Authorization"] = "Bearer " + res.data.access;
-          return axiosInstance(err.config);
+          return axiosInstance(err.config), window.location.reload();
         })
         .catch((err) => {
           console.log(err);
         });
     } else if (
-      err.response.status &&
-      err.response.statusText === "Token blacklisted"
+      err.response.status === 401 &&
+      err.response.statusText === "Unauthorized" &&
+      err.response.data.detail === "Token is blacklisted"
     ) {
-      window.location = `${window.location.origin}/login`;
+      toast.error("You need to login first!");
+      return (window.location = `${window.location.origin}/login`);
     }
   }
 );

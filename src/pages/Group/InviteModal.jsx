@@ -17,19 +17,6 @@ export default function InviteModal({ setInviteModal }) {
     fetchUserFriends(setFriends);
   }, []);
 
-  const [inputBoxes, setInputBoxes] = useState([]);
-
-  // check selected friends
-  useEffect(() => {
-    setInputBoxes(document.querySelectorAll(".selectFriendsBox"));
-  }, [friends]);
-
-  inputBoxes.forEach((inputBox) => {
-    inputBox.addEventListener("click", () => {
-      console.log(inputBox.checked);
-    });
-  });
-
   return (
     <div className="signupPage">
       <div className="signup">
