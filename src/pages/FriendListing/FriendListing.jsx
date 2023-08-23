@@ -70,19 +70,19 @@ export default function SearchResult() {
   // get all friends
   const [friends, setFriends] = useState([]);
   useEffect(() => {
-    fetchUserFriends(axiosInstance, setFriends);
-  }, []);
+    fetchUserFriends(axiosInstance, currentUser.user_id, setFriends);
+  }, [currentUser.user_id]);
 
   // get all friends
   const [friendRequests, setFriendRequests] = useState([]);
   useEffect(() => {
-    fetchFriendRequests(setFriendRequests, setLoading);
+    fetchFriendRequests(axiosInstance, setFriendRequests, setLoading);
   }, []);
 
   // get all users
   const [users, setUsers] = useState([]);
   useEffect(() => {
-    fetchUsers(setUsers, setLoading);
+    fetchUsers(axiosInstance, setUsers, setLoading);
   }, []);
 
   return (
