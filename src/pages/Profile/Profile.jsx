@@ -11,6 +11,7 @@ import {
   fetchProfileUser,
   fetchUserFriends,
   sendFriendRequest,
+  fetchUserMedia,
 } from "../../Axios/ApiCalls";
 // icons
 import { BsGear, BsCamera } from "react-icons/bs";
@@ -207,8 +208,13 @@ const Profile = () => {
   // fetch user friends
   const [friends, setFriends] = useState([]);
   useEffect(() => {
-    fetchUserFriends(setFriends);
-  }, []);
+    fetchUserFriends(axiosInstance, currentUser.user_id, setFriends);
+  }, [currentUser.user_id]);
+
+  const [userMedia, setUserMedia] = useState([]);
+  useEffect(() => {
+    fetchUserMedia(axiosInstance, currentUser.user_id, setUserMedia);
+  }, [currentUser.user_id]);
 
   return (
     <>

@@ -42,7 +42,6 @@
   font-size: 30px;
   border-radius: 50%;
   cursor: pointer;
-  z-index: 100;
 }
 
 .profile-cover-photo-update label {

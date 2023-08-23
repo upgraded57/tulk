@@ -20,10 +20,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Signup({ setSignupModalVisible }) {
-  const [verifyOTPModal, setVerifyOTPModal] = useState(false);
+  // const [verifyOTPModal, setVerifyOTPModal] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [errors, setErrors] = useState([]);
   // signup data
   const firstnameRef = useRef();
   const surnameRef = useRef();
@@ -36,6 +36,7 @@ export default function Signup({ setSignupModalVisible }) {
 
   const getSignupData = async (e) => {
     e.preventDefault();
+
     const firstname = firstnameRef.current.value;
     const surname = surnameRef.current.value;
     const phone = phoneRef.current.value;
@@ -45,17 +46,52 @@ export default function Signup({ setSignupModalVisible }) {
     const DOB = DOBRef.current.value;
     const gender = genderRef.current.value;
 
+    // Formats login phone number to 234*** format
+    const signUpData = () => {
+      let unformattedPhone = Array.from(phone);
+      if (unformattedPhone[0] === "0") {
+        unformattedPhone.shift();
+        const formattedPhone = unformattedPhone;
+        formattedPhone.unshift("234");
+        return {
+          phone_number: formattedPhone.join(""),
+          first_name: firstname,
+          last_name: surname,
+          email,
+          password,
+          confirm_password: confirmPassword,
+          date_of_birth: DOB,
+          gender,
+        };
+      } else if (unformattedPhone[0] === "+") {
+        unformattedPhone.shift();
+        const formattedPhone = unformattedPhone;
+        return {
+          phone_number: formattedPhone.join(""),
+          password,
+          first_name: firstname,
+          last_name: surname,
+          email,
+          confirm_password: confirmPassword,
+          date_of_birth: DOB,
+          gender,
+        };
+      } else {
+        return {
+          phone_number: unformattedPhone.join(""),
+          password,
+          first_name: firstname,
+          last_name: surname,
+          email,
+          confirm_password: confirmPassword,
+          date_of_birth: DOB,
+          gender,
+        };
+      }
+    };
+
     if (password === confirmPassword) {
-      const signupFormData = {
-        first_name: firstname,
-        last_name: surname,
-        phone_number: phone,
-        email,
-        password,
-        confirm_password: confirmPassword,
-        date_of_birth: DOB,
-        gender,
-      };
+      const signupFormData = signUpData();
 
       dispatch(initiateRegisterUser);
       const toastId = toast.loading("Creating your profile...");

@@ -3,9 +3,8 @@ import "./notifications.css";
 
 // images
 import noAvatar from "../../images/noAvatar.jpeg";
-import { axiosInstance } from "../../Axios/axiosInstance";
 
-export default function Notification({ notification }) {
+export default function Notification({ notification, axiosInstance }) {
   const [notificationSender, setNotificationSender] = useState({});
   const getNotificationSender = async () => {
     await axiosInstance({

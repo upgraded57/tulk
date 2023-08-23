@@ -39,16 +39,13 @@ export default function Home() {
   const [posts, setPosts] = useState([]);
   const [postPagination, setPostPagination] = useState(1);
   const [hasMorePosts, setHasMorePosts] = useState(null);
-  // const authAxios = axiosInstance();
   const fetchPosts = async () => {
     await axiosInstance({
       url: `/posts/?page=${postPagination}`,
       method: "get",
     })
       .then((res) => {
-        setPosts((prevPosts) => {
-          return [...prevPosts, ...res.data.results];
-        });
+        setPosts(res.data.results);
         setHasMorePosts(res.data.next);
       })
       .catch((err) => {
@@ -63,7 +60,7 @@ export default function Home() {
   // fetch online friends
   const [onlineFriends, setOnlineFriends] = useState([]);
   useEffect(() => {
-    getOnlineFriends(setOnlineFriends);
+    getOnlineFriends(axiosInstance, setOnlineFriends);
   }, []);
 
   return (

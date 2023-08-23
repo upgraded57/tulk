@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Userdata } from "../../data/Userdata";
+import { axiosInstance } from "../../Axios/axiosInstance";
 
 // styles
 import "./friends.css";
@@ -11,11 +13,13 @@ import { fetchUserFriends } from "../../Axios/ApiCalls";
 import noAvatar from "../../images/noAvatar.jpeg";
 
 export default function Friends() {
+  const user = Userdata();
   // fetch friends
   const [friends, setFriends] = useState([]);
   useEffect(() => {
-    fetchUserFriends(setFriends);
-  }, []);
+    fetchUserFriends(axiosInstance, user.user_id, setFriends);
+  }, [user.user_id]);
+
   return (
     <div className="friendsDiv mt-lg">
       <div className="friends-header">

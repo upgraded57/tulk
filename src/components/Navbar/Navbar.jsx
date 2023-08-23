@@ -1,5 +1,5 @@
 // utils
-import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import NotificationPopup from "../../components/Notifications/NotificationPopup";
@@ -24,6 +24,7 @@ import profileIconOutline from "../../images/icons/profile-icon-outline.png";
 
 import { BsSearch, BsBell } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
+import { axiosInstance } from "../../Axios/axiosInstance";
 
 export default function Navbar() {
   // toggle sidebar
@@ -149,7 +150,10 @@ export default function Navbar() {
       </div>
       {sidebarOpen && <Sidebar setSidebarOpen={setSidebarOpen} />}
       {notificationOpen && (
-        <NotificationPopup setNotificationOpen={setNotificationOpen} />
+        <NotificationPopup
+          setNotificationOpen={setNotificationOpen}
+          axiosInstance={axiosInstance}
+        />
       )}
     </div>
   );

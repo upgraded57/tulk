@@ -6,10 +6,6 @@ import {
   loginUserSuccess,
 } from "../Store/Auth/Action/AuthActions";
 import { getUserDataSuccess } from "../Store/Userdata/Actions/GetUserdata";
-import { axiosInstance } from "./axiosInstance";
-
-// fetch crrent user from local storage
-const currentUser = JSON.parse(localStorage.getItem("user"));
 
 // initiate login
 export const loginCall = async (loginCredentials, dispatch, navigate) => {
@@ -27,10 +23,10 @@ export const loginCall = async (loginCredentials, dispatch, navigate) => {
       localStorage.setItem("user", JSON.stringify(res.data.user));
       dispatch(loginUserSuccess(tokens));
       dispatch(getUserDataSuccess(res.data.user));
-      navigate("/");
       toast.success("Login successful", {
         id: toastId,
       });
+      navigate("/");
     })
     .catch((err) => {
       dispatch(loginUserFailure(err.message));
@@ -73,7 +69,7 @@ export const fetchUserPosts = async (
 };
 
 // get all groups
-export const fetchGroups = async (setGroups) => {
+export const fetchGroups = async (axiosInstance, setGroups) => {
   await axiosInstance({
     url: "/groups/",
     method: "get",
@@ -87,7 +83,7 @@ export const fetchGroups = async (setGroups) => {
 };
 
 // get single group data
-export const getGroupData = async (group_id, setGroupData) => {
+export const getGroupData = async (axiosInstance, group_id, setGroupData) => {
   await axiosInstance({
     url: `/groups/${group_id}/`,
     method: "get",
@@ -102,10 +98,14 @@ export const getGroupData = async (group_id, setGroupData) => {
 };
 
 // get online friends
-export const getOnlineFriends = async (setOnlineFriends) => {
+export const getOnlineFriends = async (
+  axiosInstance,
+  user_id,
+  setOnlineFriends
+) => {
   await axiosInstance({
     method: "get",
-    url: `/friendships/${currentUser.id}/`,
+    url: `/friendships/${user_id}/`,
   })
     .then((res) => {
       setOnlineFriends(res.data);
@@ -129,10 +129,10 @@ export const fetchArticles = async (setArticles) => {
     });
 };
 
-export const fetchUserFriends = async (setFriends) => {
+export const fetchUserFriends = async (axiosInstance, user_id, setFriends) => {
   await axiosInstance({
     method: "get",
-    url: `/friendships/${currentUser.id}`,
+    url: `/friendships/${user_id}`,
   })
     .then((res) => {
       setFriends(res.data);
@@ -142,7 +142,11 @@ export const fetchUserFriends = async (setFriends) => {
     });
 };
 
-export const fetchFriendRequests = async (setFriendRequests, setLoading) => {
+export const fetchFriendRequests = async (
+  axiosInstance,
+  setFriendRequests,
+  setLoading
+) => {
   await axiosInstance({
     method: "get",
     url: `/friend-requests/?page=1`,
@@ -158,7 +162,7 @@ export const fetchFriendRequests = async (setFriendRequests, setLoading) => {
     });
 };
 
-export const fetchUsers = async (setUsers, setLoading) => {
+export const fetchUsers = async (axiosInstance, setUsers, setLoading) => {
   await axiosInstance({
     method: "get",
     url: `/userprofiles/?page=1`,
@@ -191,7 +195,7 @@ export const copyPostLink = async (id, group) => {
 };
 
 // delete post
-export const deletePost = async (id) => {
+export const deletePost = async (axiosInstance, id) => {
   const requestDeleteConfirmation = window.confirm(
     "Delete Post? This action cannot be undone!"
   );
@@ -220,7 +224,7 @@ export const deletePost = async (id) => {
 };
 
 // get single post
-export const getSinglePost = async (id, setPost) => {
+export const getSinglePost = async (axiosInstance, id, setPost) => {
   await axiosInstance({
     method: "get",
     url: `/posts/${id}/`,
@@ -234,7 +238,7 @@ export const getSinglePost = async (id, setPost) => {
 };
 
 // send friend request
-export const sendFriendRequest = async (user_id, friend) => {
+export const sendFriendRequest = async (axiosInstance, user_id, friend) => {
   const toastId = toast.loading("Sending friend request ...");
   await axiosInstance({
     method: "post",
@@ -259,7 +263,7 @@ export const sendFriendRequest = async (user_id, friend) => {
 };
 
 // send friend request
-export const acceptFriendRequest = async (request) => {
+export const acceptFriendRequest = async (axiosInstance, request) => {
   console.log(request);
   await axiosInstance({
     method: "put",
@@ -283,7 +287,7 @@ export const acceptFriendRequest = async (request) => {
     });
 };
 
-export const deleteFriendRequest = async (request) => {
+export const deleteFriendRequest = async (axiosInstance, request) => {
   await axiosInstance({
     method: "delete",
     url: `/friend-requests/${request.id}`,
@@ -299,14 +303,27 @@ export const deleteFriendRequest = async (request) => {
 };
 
 // fetch user groups
-
-export const fetchUserGroups = async (setUserGroups) => {
+export const fetchUserGroups = async (axiosInstance, setUserGroups) => {
   await axiosInstance({
     method: "get",
     url: `/user-groups/`,
   })
     .then((res) => {
       setUserGroups(res.data.results);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// fetch user media
+export const fetchUserMedia = async (axiosInstance, user_id, setUserMedia) => {
+  await axiosInstance({
+    method: "get",
+    url: `/user-media/${user_id}/?page=1`,
+  })
+    .then((res) => {
+      setUserMedia(res.data.results);
     })
     .catch((err) => {
       console.log(err);

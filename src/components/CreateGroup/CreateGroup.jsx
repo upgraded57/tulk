@@ -68,10 +68,12 @@ export default function CreateGroup() {
     groupFormData.append("about", groupDesc);
     groupFormData.append("admin_phone", groupPhone);
     groupFormData.append("admin_email", groupEmail);
-    groupFormData.append("admin_website", groupWebsite);
+    groupWebsite.length > 0
+      ? groupFormData.append("admin_website", groupWebsite)
+      : groupFormData.append("admin_website", "");
     groupFormData.append("avatar", groupAvatarFile);
     groupFormData.append("background_image", groupBackgroundImageFile);
-    groupFormData.append("creator", user.user_id);
+    groupFormData.append("admin", user.user_id);
     groupFormData.append("members", user.user_id);
 
     await axiosInstance({
@@ -83,7 +85,6 @@ export default function CreateGroup() {
         toast.success("Group Created Successfully", {
           id: toastId,
         });
-        console.log(res.data);
         const newGroupId = res.data.id;
         navigate(`/groups/${newGroupId}`);
       })

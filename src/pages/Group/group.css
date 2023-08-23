@@ -14,12 +14,20 @@
 .group-cover-photo {
   min-height: 250px;
   background-image: url("../../images/noBG.jpg");
-  background-position: bottom;
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   max-height: 250px;
   overflow: hidden;
   position: relative;
+}
+
+.group-cover-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
 }
 
 .group-image-name {
@@ -129,6 +137,7 @@
   align-items: flex-start;
   gap: 10px;
   padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
 }
 
 .group-info h3 {
@@ -197,7 +206,7 @@
     margin-top: -20px;
     padding-inline: 2vw;
     gap: 2px;
-    padding-bottom: 0;
+    padding-bottom: 10px;
   }
 
   .group-info h3 {
@@ -209,6 +218,6 @@
     max-width: 100%;
     margin-inline: auto;
     padding-inline: 2vw;
-    margin-top: 50px;
+    margin-top: 30px;
   }
 }

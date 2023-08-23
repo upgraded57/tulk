@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { axiosInstance } from "../../Axios/axiosInstance";
 
 // styles
 import "./messageContacts.css";
@@ -7,12 +8,14 @@ import "./messageContacts.css";
 // images
 import noAvatar from "../../images/noAvatar.jpeg";
 import { getOnlineFriends } from "../../Axios/ApiCalls";
+import { Userdata } from "../../data/Userdata";
 
 export default function MessageContacts() {
+  const user = Userdata();
   const [onlineFriends, setOnlineFriends] = useState([]);
   useEffect(() => {
-    getOnlineFriends(setOnlineFriends);
-  }, []);
+    getOnlineFriends(axiosInstance, user.user_id, setOnlineFriends);
+  }, [user.user_id]);
 
   return (
     <div className="message-contacts mt-lg">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../Login/login.css";
 
 // icons
@@ -34,14 +34,15 @@ export default function SettingseModal({ setSettingsModal, groupData }) {
     };
     await axiosInstance({
       method: "put",
-      url: `/groups/${groupData.id}`,
+      url: `/groups/${groupData.id}/`,
       data: newGroupData,
     })
-      .then(() => {
+      .then((res) => {
         toast.success("Group data updated successfully", {
           id: toastId,
         });
-        window.location.reload();
+        console.log(res.data);
+        // window.location.reload();
       })
       .catch((err) => {
         console.log(err);

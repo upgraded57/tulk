@@ -38,7 +38,6 @@ export default function Post({ post, group }) {
   // current user
   const user = Userdata();
   // axios instance
-  // const authAxios = axiosInstance();
 
   // check whether post is liked
   const [postIsLiked, setPostIsLiked] = useState(false);

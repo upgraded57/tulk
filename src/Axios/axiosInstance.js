@@ -6,7 +6,7 @@ const tokens = JSON.parse(localStorage.getItem("tokens"));
 export const axiosInstance = axios.create({
   baseURL: "https://tulk-social-f7f4f4c56190.herokuapp.com",
   headers: {
-    Authorization: `Bearer ${tokens.access}`,
+    Authorization: `Bearer ${tokens?.access}`,
   },
 });
 

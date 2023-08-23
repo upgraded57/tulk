@@ -47,6 +47,12 @@ export default function Admin() {
         });
     }
   };
+
+  const editArticle = async () => {
+    toast("Feature coming soon!", {
+      icon: "🖐🏼",
+    });
+  };
   return (
     <>
       <Navbar />
@@ -83,7 +89,10 @@ export default function Admin() {
                     {article.category.toUpperCase()} |{" "}
                     {moment(article.published_date).format("MMM Do YYYY")}
                   </small>
-                  <div className="admin-article-action-btns">
+                  <div
+                    className="admin-article-action-btns"
+                    onClick={editArticle}
+                  >
                     <button className="btn-secondary">Edit</button>
                     <button
                       className="btn-secondary"

@@ -15,9 +15,9 @@ export const NavbarMiniSide = () => {
   const navigate = useNavigate();
   const logout = () => {
     // dispatch(logoutUser());
+    navigate("/login");
     localStorage.removeItem("tokens");
     localStorage.removeItem("user");
-    navigate("/login");
   };
   return (
     <div className="navbar-mini-sidebar">

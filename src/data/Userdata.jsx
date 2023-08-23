@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 export const Userdata = () => {
   const [user, setUser] = useState({});
 
+  // get current user from store
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
   // current user
   useEffect(() => {
-    // get current user from store
-    const currentUser = JSON.parse(localStorage.getItem("user"));
-
     const fetchUser = () => {
       if (!currentUser) {
         return;

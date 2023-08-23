@@ -21,6 +21,7 @@ import {
   sendFriendRequest,
 } from "../../Axios/ApiCalls";
 import { Userdata } from "../../data/Userdata";
+import { axiosInstance } from "../../Axios/axiosInstance";
 
 export default function SearchResult() {
   const currentUser = Userdata();
@@ -69,7 +70,7 @@ export default function SearchResult() {
   // get all friends
   const [friends, setFriends] = useState([]);
   useEffect(() => {
-    fetchUserFriends(setFriends);
+    fetchUserFriends(axiosInstance, setFriends);
   }, []);
 
   // get all friends

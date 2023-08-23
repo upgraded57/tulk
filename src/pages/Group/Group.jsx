@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Post from "../../components/Post/Post";
 import CreatePost from "../../components/CreatePost/CreatePost";
 import Navbar from "../../components/Navbar/Navbar";
-import { getGroupData } from "../../Axios/ApiCalls";
+import { fetchUserGroups, getGroupData } from "../../Axios/ApiCalls";
 
 // styles
 import "./group.css";
@@ -31,7 +31,7 @@ const Group = () => {
   const getGroupPosts = async () => {
     await axiosInstance({
       method: "get",
-      url: "/group-posts/",
+      url: `/group/${groupData.id}/posts/`,
     })
       .then((res) => {
         setGroupPosts(res.data);
@@ -43,7 +43,7 @@ const Group = () => {
 
   useEffect(() => {
     getGroupPosts();
-  }, []);
+  }, [groupData]);
 
   const [inviteModal, setInviteModal] = useState(false);
   const [settingseModal, setSettingsModal] = useState(false);
@@ -101,6 +101,17 @@ const Group = () => {
         });
       });
   };
+
+  // fetch user groups
+  const [userGroups, setUserGroups] = useState([]);
+  useEffect(() => {
+    fetchUserGroups(setUserGroups);
+  }, []);
+
+  let userGroupIds = [];
+  userGroups.forEach((userGroup) => {
+    userGroupIds.push(userGroup.id);
+  });
 
   return (
     <>
@@ -186,7 +197,7 @@ const Group = () => {
         </div>
 
         <div className="group-posts">
-          <CreatePost group />
+          {userGroupIds.includes(group_id) && <CreatePost group={groupData} />}
           {groupPosts.map((groupPost) => {
             return <Post post={groupPost} key={groupPost.id} group />;
           })}

@@ -9,13 +9,15 @@ import { IoIosClose } from "react-icons/io";
 
 // images
 import noAvatar from "../../images/noAvatar.jpeg";
+import { Userdata } from "../../data/Userdata";
 
 export default function InviteModal({ setInviteModal }) {
+  const user = Userdata();
   const [friends, setFriends] = useState([]);
 
   useEffect(() => {
-    fetchUserFriends(setFriends);
-  }, []);
+    fetchUserFriends(user.user_id, setFriends);
+  }, [user.user_id]);
 
   return (
     <div className="signupPage">

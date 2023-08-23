@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { axiosInstance } from "../../Axios/axiosInstance";
 
 // styles
 import "./groups.css";
@@ -11,7 +12,7 @@ import { fetchUserGroups } from "../../Axios/ApiCalls";
 export default function Groups() {
   const [groups, setGroups] = useState([]);
   useEffect(() => {
-    fetchUserGroups(setGroups);
+    fetchUserGroups(axiosInstance, setGroups);
   }, []);
 
   return (

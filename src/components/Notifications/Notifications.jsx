@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { axiosInstance } from "../../Axios/axiosInstance";
 
 // styles
 import "./notifications.css";
@@ -11,11 +10,14 @@ import notifBell from "../../images/icons/notif-bell.png";
 import Navbar from "../Navbar/Navbar";
 import Notification from "./Notification";
 
-export default function Notifications({ desktop, setNotificationOpen }) {
+export default function Notifications({
+  desktop,
+  setNotificationOpen,
+  axiosInstance,
+}) {
   const [loadingFetchNotification, setLoadingFetchNotification] =
     useState(false);
   const [notifications, setNotifications] = useState([]);
-  // const authAxios = axiosInstance();
   const notificationPageCount = 1;
   const getNotifications = async () => {
     setLoadingFetchNotification(true);
@@ -71,6 +73,7 @@ export default function Notifications({ desktop, setNotificationOpen }) {
               return (
                 <Notification
                   notification={notification}
+                  axiosInstance={axiosInstance}
                   key={notification.id}
                 />
               );

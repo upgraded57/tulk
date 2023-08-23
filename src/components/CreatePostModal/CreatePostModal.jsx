@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { axiosInstance } from "../../Axios/axiosInstance";
 import toast from "react-hot-toast";
 
@@ -58,11 +58,12 @@ export default function CreatePostModal({ setCreatePostModal, group }) {
     const postFormData = new FormData();
     postFormData.append("author", user.user_id);
     postFormData.append("content", postBody);
+    group && postFormData.append("group", group.id);
     Array.from(uploadFileInput.files).forEach((file) => {
       return postFormData.append("files", file);
     });
 
-    if (postBody.trim() == "") {
+    if (postBody.trim() === "") {
       toast.error("cannot create empty post!", {
         id: toastId,
       });
@@ -70,14 +71,12 @@ export default function CreatePostModal({ setCreatePostModal, group }) {
     } else {
       await axiosInstance({
         method: "post",
-        url:
-          group === "undefined"
-            ? "https://tulk-social-f7f4f4c56190.herokuapp.com/posts/"
-            : "https://tulk-social-f7f4f4c56190.herokuapp.com/group-posts/",
+        url: group
+          ? `https://tulk-social-f7f4f4c56190.herokuapp.com/group/${group.id}/posts/`
+          : "https://tulk-social-f7f4f4c56190.herokuapp.com/posts/",
         data: postFormData,
       })
         .then((res) => {
-          console.log(res.data);
           toast.success("Post created successfully!", {
             id: toastId,
           });
