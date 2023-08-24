@@ -46,7 +46,7 @@ export default function SearchResult() {
   // get user groups
   const [userGroups, setUserGroups] = useState([]);
   useEffect(() => {
-    fetchUserGroups(setUserGroups);
+    fetchUserGroups(axiosInstance, setUserGroups);
   }, []);
 
   return (

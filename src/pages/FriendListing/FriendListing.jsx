@@ -85,6 +85,11 @@ export default function SearchResult() {
     fetchUsers(axiosInstance, setUsers, setLoading);
   }, []);
 
+  const friendsId = [];
+  friends.forEach((friend) => {
+    friendsId.push(friend.id);
+  });
+
   return (
     <>
       <Navbar />
@@ -271,16 +276,17 @@ export default function SearchResult() {
                             </div>
                           </Link>
                           <div className="search-result-main-container-body-list-cta">
-                            {user.id !== currentUser.user_id && (
-                              <button
-                                className="btn-secondary"
-                                onClick={() =>
-                                  sendFriendRequest(currentUser.user_id, user)
-                                }
-                              >
-                                Add Friend
-                              </button>
-                            )}
+                            {user.id !== currentUser.user_id &&
+                              !friendsId.includes(user.id) && (
+                                <button
+                                  className="btn-secondary"
+                                  onClick={() =>
+                                    sendFriendRequest(currentUser.user_id, user)
+                                  }
+                                >
+                                  Add Friend
+                                </button>
+                              )}
                           </div>
                         </div>
                       );

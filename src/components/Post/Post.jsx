@@ -37,17 +37,16 @@ export default function Post({ post, group }) {
   const [postAuthorData, setPostAuthorData] = useState({});
   // current user
   const user = Userdata();
-  // axios instance
 
   // check whether post is liked
   const [postIsLiked, setPostIsLiked] = useState(false);
 
   // times post is liked
   const [postLikeCount, setPostLikeCount] = useState(0);
+  const [postLikers, setPostLikers] = useState([]);
 
   // like post
   const likePost = async () => {
-    setPostIsLiked((prev) => !prev);
     if (!postIsLiked) {
       setPostLikeCount((prev) => prev + 1);
       setPostIsLiked(true);
@@ -83,12 +82,7 @@ export default function Post({ post, group }) {
     })
       .then((res) => {
         setPostLikeCount(res.data.results.length);
-        const userHasLikedPost = res.data.results.filter(
-          (result) => result.user === user.user_id
-        );
-        if (userHasLikedPost.length > 0) {
-          setPostIsLiked(true);
-        }
+        setPostLikers(res.data.results);
       })
       .catch((err) => {
         console.log(err);
@@ -97,6 +91,19 @@ export default function Post({ post, group }) {
 
   useEffect(() => {
     fetchPostLikes();
+  }, [postLikeCount]);
+
+  // get id of post likers to persist post like state
+  const postLikersId = [];
+  postLikers.forEach((postLiker) => {
+    postLikersId.push(postLiker.user);
+  });
+
+  useEffect(() => {
+    console.log(postLikersId);
+    postLikersId.includes(user.user_id)
+      ? setPostIsLiked(true)
+      : setPostIsLiked(false);
   }, []);
 
   // fetch post
@@ -115,7 +122,7 @@ export default function Post({ post, group }) {
 
   useEffect(() => {
     fetchPostAuthor();
-  }, [post.author]);
+  }, []);
 
   // make comment box active when comment button is selected
   const commentBoxRef = useRef();
@@ -190,7 +197,7 @@ export default function Post({ post, group }) {
 
   useEffect(() => {
     fetchPostComments();
-  }, [post]);
+  }, [postComments]);
 
   // post actions toggle
   const [postActions, setPostActions] = useState(false);

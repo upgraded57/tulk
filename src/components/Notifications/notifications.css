@@ -23,12 +23,13 @@
   padding: 10px;
 }
 
-.notification {
+.notification a {
   display: flex;
   gap: 10px;
   align-items: center;
   padding-block: 10px;
   border-bottom: 1px solid #00000030;
+  text-decoration: none;
 }
 
 .notification-user-image {

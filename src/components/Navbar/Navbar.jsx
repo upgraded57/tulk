@@ -24,7 +24,6 @@ import profileIconOutline from "../../images/icons/profile-icon-outline.png";
 
 import { BsSearch, BsBell } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
-import { axiosInstance } from "../../Axios/axiosInstance";
 
 export default function Navbar() {
   // toggle sidebar
@@ -44,7 +43,7 @@ export default function Navbar() {
 
     // navigate user to search result page if search entry is not blank
     if (searchInput.trim() !== "") {
-      navigate("/search");
+      navigate(`/search/${searchInput}`);
     }
   };
 
@@ -150,10 +149,7 @@ export default function Navbar() {
       </div>
       {sidebarOpen && <Sidebar setSidebarOpen={setSidebarOpen} />}
       {notificationOpen && (
-        <NotificationPopup
-          setNotificationOpen={setNotificationOpen}
-          axiosInstance={axiosInstance}
-        />
+        <NotificationPopup setNotificationOpen={setNotificationOpen} />
       )}
     </div>
   );

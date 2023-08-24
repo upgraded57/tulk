@@ -86,7 +86,7 @@
 
   .admin-left {
     min-height: max-content;
-    padding-inline: 10px;
+    padding: 10px;
     border-bottom: 1px solid #eee;
     overflow-x: scroll;
     margin-bottom: 10px;

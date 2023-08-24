@@ -58,7 +58,7 @@ function App() {
                 }
               />
               <Route
-                path="/search"
+                path="/search/:search_query"
                 element={
                   <Suspense fallback={<Loader />}>
                     <SearchResult />

@@ -89,6 +89,8 @@
 
 .search-result-main-container-body-list:last-child {
   border: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .search-result-main-container-body-list-image {

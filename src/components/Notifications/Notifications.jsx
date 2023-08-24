@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { axiosInstance } from "../../Axios/axiosInstance";
 
 // styles
 import "./notifications.css";
@@ -10,11 +11,7 @@ import notifBell from "../../images/icons/notif-bell.png";
 import Navbar from "../Navbar/Navbar";
 import Notification from "./Notification";
 
-export default function Notifications({
-  desktop,
-  setNotificationOpen,
-  axiosInstance,
-}) {
+export default function Notifications({ desktop, setNotificationOpen }) {
   const [loadingFetchNotification, setLoadingFetchNotification] =
     useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -40,7 +37,6 @@ export default function Notifications({
     getNotifications();
   }, []);
 
-  console.log(notifications);
   return (
     <>
       {!desktop && <Navbar />}
@@ -65,7 +61,7 @@ export default function Notifications({
         {/* Show loader while notifications are being fetched */}
         {loadingFetchNotification ? (
           <div className="notif-loader"> Fetching notifications...</div>
-        ) : notifications.length == 0 ? (
+        ) : notifications.length === 0 ? (
           <div className="notif-loader">There's nothing to see here yet</div>
         ) : (
           <>

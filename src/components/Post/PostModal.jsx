@@ -14,6 +14,7 @@ import { Userdata } from "../../data/Userdata";
 import Chat from "../Chat/Chat";
 import CreatePost from "../CreatePost/CreatePost";
 import Newsreel from "../Newsreel/Newsreel";
+import { axiosInstance } from "../../Axios/axiosInstance";
 
 export default function PostModal() {
   const { post_id } = useParams();
@@ -21,8 +22,8 @@ export default function PostModal() {
 
   //fetch post
   useEffect(() => {
-    getSinglePost(post_id, setPost);
-  }, []);
+    getSinglePost(axiosInstance, post_id, setPost);
+  }, [post_id]);
 
   // current user
   const user = Userdata();
@@ -41,7 +42,7 @@ export default function PostModal() {
   const [pagenum, setPagenum] = useState(1);
   const [onlineFriends, setOnlineFriends] = useState([]);
   useEffect(() => {
-    getOnlineFriends(pagenum, setOnlineFriends);
+    getOnlineFriends(axiosInstance, pagenum, setOnlineFriends);
   }, []);
 
   return (

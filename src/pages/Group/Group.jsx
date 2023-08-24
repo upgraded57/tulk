@@ -24,7 +24,7 @@ const Group = () => {
   // get group data
   const [groupData, setGroupData] = useState({});
   useEffect(() => {
-    getGroupData(group_id, setGroupData);
+    getGroupData(axiosInstance, group_id, setGroupData);
   }, [group_id]);
 
   const [groupPosts, setGroupPosts] = useState([]);
@@ -105,7 +105,7 @@ const Group = () => {
   // fetch user groups
   const [userGroups, setUserGroups] = useState([]);
   useEffect(() => {
-    fetchUserGroups(setUserGroups);
+    fetchUserGroups(axiosInstance, setUserGroups);
   }, []);
 
   let userGroupIds = [];
