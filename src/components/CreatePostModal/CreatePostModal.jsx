@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { axiosInstance } from "../../Axios/axiosInstance";
 import toast from "react-hot-toast";
 
@@ -16,6 +16,12 @@ export default function CreatePostModal({ setCreatePostModal, group }) {
   const hideCreatePostModal = () => {
     setCreatePostModal(false);
   };
+
+  // auto-focus text area
+  useEffect(() => {
+    const createPostInputText = document.getElementById("createPostInputText");
+    createPostInputText.focus();
+  }, []);
 
   // current user
   const user = Userdata();
@@ -122,6 +128,7 @@ export default function CreatePostModal({ setCreatePostModal, group }) {
 
         <div className="create-post-modal-container-textarea mt-xsm">
           <textarea
+            autofocus="true"
             id="createPostInputText"
             placeholder="Create Post..."
             onChange={(e) => setPostBody(e.target.value)}

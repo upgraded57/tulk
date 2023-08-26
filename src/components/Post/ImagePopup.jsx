@@ -5,7 +5,10 @@ import { AiOutlineClose } from "react-icons/ai";
 export default function ImagePopup({ image, setShowImagePopup }) {
   return (
     <>
-      <div className="image-popup-backdrop"></div>
+      <div
+        className="image-popup-backdrop"
+        onClick={() => setShowImagePopup(false)}
+      ></div>
       <div className="image-popup">
         <div className="image-popup-container">
           <img src={image} alt="" />

@@ -25,6 +25,10 @@
   width: 30px;
   height: 30px;
   position: relative;
+  background: url("../../images/noAvatar.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .online-friend-profile-img::before {

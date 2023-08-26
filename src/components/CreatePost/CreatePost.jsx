@@ -44,7 +44,7 @@ export default function CreatePost({ group }) {
         </div>
       </div>
 
-      <div className="create-post-insert-media">
+      <div className="create-post-insert-media" onClick={showCreatePostModal}>
         <MdPermMedia className="create-post-insert-media-icon" />
         <p className="text-body">Upload Photo / Video</p>
       </div>

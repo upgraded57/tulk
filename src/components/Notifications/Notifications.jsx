@@ -70,6 +70,7 @@ export default function Notifications({ desktop, setNotificationOpen }) {
                 <Notification
                   notification={notification}
                   axiosInstance={axiosInstance}
+                  setNotificationOpen={setNotificationOpen}
                   key={notification.id}
                 />
               );

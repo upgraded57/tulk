@@ -45,7 +45,9 @@ export default function Home() {
       method: "get",
     })
       .then((res) => {
-        setPosts(res.data.results);
+        setPosts((prev) => {
+          return [...prev, ...res.data.results];
+        });
         setHasMorePosts(res.data.next);
       })
       .catch((err) => {

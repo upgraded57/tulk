@@ -31,6 +31,7 @@ import toast from "react-hot-toast";
 import Comment from "./Comment";
 import { copyPostLink, deletePost } from "../../Axios/ApiCalls";
 import ImagePopup from "./ImagePopup";
+import EngagementModal from "./EngagementModal";
 
 export default function Post({ post, group }) {
   // get post author data
@@ -100,7 +101,6 @@ export default function Post({ post, group }) {
   });
 
   useEffect(() => {
-    console.log(postLikersId);
     postLikersId.includes(user.user_id)
       ? setPostIsLiked(true)
       : setPostIsLiked(false);
@@ -192,12 +192,9 @@ export default function Post({ post, group }) {
       });
   };
 
-  // visible comments
-  const [visibleCommentsCount, setVisibleCommentsCount] = useState(1);
-
   useEffect(() => {
     fetchPostComments();
-  }, [postComments]);
+  }, [postCommentCount]);
 
   // post actions toggle
   const [postActions, setPostActions] = useState(false);
@@ -205,6 +202,9 @@ export default function Post({ post, group }) {
   // image popup
   const [showImagePopup, setShowImagePopup] = useState(false);
   const [imgFile, setImgFile] = useState("");
+
+  // engagement modal
+  const [engagementModal, setEngagementModal] = useState(false);
 
   return (
     <>
@@ -271,7 +271,7 @@ export default function Post({ post, group }) {
                     setShowImagePopup(true);
                   }}
                 >
-                  <img src={imgFile.file} alt="" />
+                  <img src={imgFile.file} alt="" loading="lazy" />
                 </SwiperSlide>
               );
             })}
@@ -279,7 +279,12 @@ export default function Post({ post, group }) {
           <div className="post-desc">
             <p className="text-body">{post.content}</p>
           </div>
-          <div className="post-action">
+          <div
+            className="post-action"
+            onClick={() => {
+              setEngagementModal(true);
+            }}
+          >
             <div className="post-like-comment">
               <div className="post-like-comment-btn">
                 <AiFillHeart
@@ -332,7 +337,7 @@ export default function Post({ post, group }) {
           <div className="post-comments">
             <ul className="post-comments-list">
               {postComments
-                .slice(0, visibleCommentsCount)
+                .slice(0, 1)
                 .reverse()
                 .map((comment) => {
                   return <Comment key={comment.id} comment={comment} />;
@@ -343,7 +348,7 @@ export default function Post({ post, group }) {
               <div
                 className="load-more-comments"
                 onClick={() => {
-                  setVisibleCommentsCount((prev) => prev + 2);
+                  setEngagementModal(true);
                 }}
               >
                 Load More Comments
@@ -372,6 +377,15 @@ export default function Post({ post, group }) {
       </div>
       {showImagePopup && (
         <ImagePopup image={imgFile} setShowImagePopup={setShowImagePopup} />
+      )}
+
+      {engagementModal && (
+        <EngagementModal
+          post={post}
+          setEngagementModal={setEngagementModal}
+          group={group}
+          postAuthorData={postAuthorData}
+        />
       )}
     </>
   );

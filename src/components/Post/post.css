@@ -306,6 +306,10 @@
     height: calc(100vh - 115px) !important;
     left: 0 !important;
   }
+
+  .engagement-modal {
+    bottom: 2% !important;
+  }
 }
 
 /* image popup modal */
@@ -326,7 +330,7 @@
 .image-popup-backdrop {
   width: 100vw;
   height: 100vh;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(5px);
   position: fixed;
   inset: 0;
@@ -373,4 +377,126 @@
 .close-btn .icon:hover {
   font-size: 35px;
   background: #b60000;
+}
+
+/* engagement modal */
+.engagement-modal {
+  position: fixed;
+  width: min(600px, 94vw);
+  height: min(900px, 80vh);
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: var(--inputField-radius);
+  z-index: 10;
+  background: #fff;
+  overflow: hidden;
+}
+
+.engagement-modal-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+}
+
+.engagement-modal-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  width: 30px;
+  aspect-ratio: 1/1;
+  background: #d2cfcf;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.engagement-modal-close-btn:hover {
+  background: #a8a8a8;
+}
+
+.engagement-modal-btns {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+}
+
+.engagement-modal-btns span {
+  padding: 10px;
+  border-radius: var(--inputField-radius);
+}
+
+.engagement-modal-btns span.active {
+  border-bottom: 2px solid #a4043c;
+  color: #a4043c;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.engagement-modal-btns span:hover {
+  background: #eee;
+}
+
+.engagement-modal-like-toggle,
+.engagement-modal-comment-toggle,
+.engagement-modal-share-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.engagement-modal-body {
+  position: relative;
+  left: 0;
+  width: 300%;
+  height: 100%;
+  transition: 0.3s;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding-inline: 10px;
+}
+
+.engament-likes,
+.engament-comments,
+.engament-shares {
+  flex-basis: 50%;
+  width: 100%;
+  height: 80%;
+  overflow-y: scroll;
+}
+
+.engagement-like {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: var(--inputField-radius);
+}
+
+.engagement-like:hover {
+  background: #eee;
+}
+
+.engagement-like .liker-img,
+.engagement-like .liker-img a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.engagement-like .liker-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
