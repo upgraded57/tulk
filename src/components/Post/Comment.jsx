@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { axiosInstance } from "../../Axios/axiosInstance";
 import noAvatar from "../../images/noAvatar.jpeg";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 export default function Comment({ comment, engagementModal }) {
   const [postCommenter, setPostCommenter] = useState({});
@@ -36,9 +37,16 @@ export default function Comment({ comment, engagementModal }) {
             />
           </Link>
         </div>
-        <div className="liker-name">
-          {`${postCommenter.first_name} ${postCommenter.last_name}`} <br />
-          <small className="small-font">{comment.content}</small>
+        <div className="comment-content-block">
+          <div className="liker-name">
+            {`${postCommenter.first_name} ${postCommenter.last_name}`} <br />
+          </div>
+          <div className="comment-content">{comment.content}</div>
+          <div className="comment-timestamp">
+            <small className="small-font">
+              {moment(comment.commented_at).fromNow()}
+            </small>
+          </div>
         </div>
       </div>
     );

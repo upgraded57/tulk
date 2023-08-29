@@ -478,10 +478,11 @@
 .engagement-like {
   display: flex;
   gap: 10px;
-  align-items: center;
+  align-items: flex-start;
   padding: 10px;
   cursor: pointer;
   border-radius: var(--inputField-radius);
+  width: 100%;
 }
 
 .engagement-like:hover {
@@ -503,4 +504,20 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.engagement-like .comment-content-block {
+  width: 100%;
+}
+
+.engagement-like .comment-content-block .comment-content {
+  margin-top: 5px;
+  padding: 5px 10px;
+  background-color: #eee;
+  max-width: max-content;
+  border-radius: var(--inputField-radius);
+}
+
+.engagement-like .comment-content-block .comment-timestamp {
+  margin-left: 10px;
 }
