@@ -4,6 +4,11 @@ import Post from "../../components/Post/Post";
 import CreatePost from "../../components/CreatePost/CreatePost";
 import Navbar from "../../components/Navbar/Navbar";
 import { fetchUserGroups, getGroupData } from "../../Axios/ApiCalls";
+import { Userdata } from "../../data/Userdata";
+import { axiosInstance } from "../../Axios/axiosInstance";
+import InviteModal from "./InviteModal";
+import SettingseModal from "./SettingsModal";
+import { toast } from "react-hot-toast";
 
 // styles
 import "./group.css";
@@ -11,11 +16,6 @@ import "./group.css";
 // icons
 import { BsGear, BsCamera } from "react-icons/bs";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { Userdata } from "../../data/Userdata";
-import { axiosInstance } from "../../Axios/axiosInstance";
-import InviteModal from "./InviteModal";
-import SettingseModal from "./SettingsModal";
-import { toast } from "react-hot-toast";
 
 const Group = () => {
   const user = Userdata();
@@ -158,7 +158,7 @@ const Group = () => {
             <div className="group-name-slogan">
               <h2 className="h-200">{groupData.name}</h2>
               <div className="group-slogan mt-xsm">
-                <p>{groupData.category}</p>
+                <p>{groupData.category?.toUpperCase()}</p>
                 <div className="group-members-count">
                   <p>{groupData.members?.length} Members</p>
                 </div>

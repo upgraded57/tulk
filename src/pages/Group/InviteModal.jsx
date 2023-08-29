@@ -4,6 +4,8 @@ import "../Login/login.css";
 // api calls
 import { fetchUserFriends } from "../../Axios/ApiCalls";
 
+import { axiosInstance } from "../../Axios/axiosInstance";
+
 // icons
 import { IoIosClose } from "react-icons/io";
 
@@ -16,8 +18,21 @@ export default function InviteModal({ setInviteModal }) {
   const [friends, setFriends] = useState([]);
 
   useEffect(() => {
-    fetchUserFriends(user.user_id, setFriends);
+    fetchUserFriends(axiosInstance, user.user_id, setFriends);
   }, [user.user_id]);
+
+  const inviteesArray = [];
+  const addInvitee = (e) => {
+    if (inviteesArray.includes(e.target.id)) {
+      inviteesArray.pop(e.target.id);
+    } else {
+      inviteesArray.push(e.target.id);
+    }
+  };
+
+  const inviteFriends = () => {
+    console.log(inviteesArray);
+  };
 
   return (
     <div className="signupPage">
@@ -44,7 +59,7 @@ export default function InviteModal({ setInviteModal }) {
               {friends.map((friend) => {
                 return (
                   <div className="invite-list" key={friend.id}>
-                    <label htmlFor={friend.id}>
+                    <label htmlFor={friend.id} onChange={addInvitee}>
                       <div className="invite-list-left">
                         <div className="invite-list-img">
                           <img
@@ -69,17 +84,19 @@ export default function InviteModal({ setInviteModal }) {
 
         <div className="invitees">
           <span>Invitee</span>
-          <span>Invitee</span>
-          <span>Invitee</span>
-          <span>Invitee</span>
-          <span>Invitee</span>
-          <span>Invitee</span>
-          <span>Invitee</span>
-          <span>Invitee</span>
         </div>
         <div className="invite-btn">
-          <button className="btn-secondary">Cancel</button>
-          <button className="btn-solid">Invite Friends</button>
+          <button
+            className="btn-secondary"
+            onClick={() => {
+              setInviteModal(false);
+            }}
+          >
+            Cancel
+          </button>
+          <button className="btn-solid" onClick={inviteFriends}>
+            Invite Friends
+          </button>
         </div>
       </div>
     </div>

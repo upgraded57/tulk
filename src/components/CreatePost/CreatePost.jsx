@@ -1,6 +1,9 @@
 // utils
 import React, { useState } from "react";
 
+// images
+import noAvatar from "../../images/noAvatar.jpeg";
+
 // styles
 import "./createPost.css";
 
@@ -12,7 +15,7 @@ import { Userdata } from "../../data/Userdata";
 
 // components
 import CreatePostModal from "../CreatePostModal/CreatePostModal";
-import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function CreatePost({ group }) {
   // variable to toggle create post modal on and off
@@ -29,11 +32,11 @@ export default function CreatePost({ group }) {
   return (
     <div className="createPostDiv">
       <div className="createPost">
-        {user.avatar && (
-          <div className="create-post-user-img">
-            <img src={user.avatar} alt="" />
-          </div>
-        )}
+        <div className="create-post-user-img">
+          <Link to={`/profile/${user.user_id}/`}>
+            <img src={user.avatar ? user.avatar : noAvatar} alt="" />
+          </Link>
+        </div>
         <div className="create-post-textarea" onClick={showCreatePostModal}>
           <textarea
             rows="2"

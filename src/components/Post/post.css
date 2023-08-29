@@ -95,6 +95,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url("../../images/noFile.jpg");
+  background-size: cover;
+  background-position: center;
+  background-color: black;
 }
 
 .post-img img {

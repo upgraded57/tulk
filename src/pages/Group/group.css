@@ -12,7 +12,7 @@
 }
 
 .group-cover-photo {
-  min-height: 250px;
+  height: 250px;
   background-image: url("../../images/noBG.jpg");
   background-position: center;
   background-size: cover;
@@ -158,8 +158,8 @@
 /* Mobile media query */
 @media screen and (max-width: 920px) {
   .group-cover-photo {
-    min-height: 100px;
-    max-height: 100px;
+    min-height: 150px;
+    max-height: 150px;
   }
 
   .group-image-name {

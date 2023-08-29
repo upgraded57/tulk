@@ -165,11 +165,13 @@ export default function EngagementModal({
 
         <div className="engagement-modal-body">
           <div className="engament-likes">
+            {postLikers.length < 1 && <p>No likes for this post yet</p>}
             {postLikers.map((liker) => {
               return <Like key={liker.id} liker={liker} />;
             })}
           </div>
           <div className="engament-comments">
+            {postComments.length < 1 && <p>No comments on this post yet</p>}
             {postComments.map((comment) => {
               return (
                 <Comment comment={comment} engagementModal key={comment.id} />

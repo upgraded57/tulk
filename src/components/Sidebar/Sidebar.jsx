@@ -34,6 +34,10 @@ const Sidebar = ({ setSidebarOpen }) => {
 
   return (
     <div className="sidebar-bg">
+      <div
+        className="sidebar-overlay"
+        onClick={() => setSidebarOpen((prev) => !prev)}
+      ></div>
       <div className="sidebar">
         <Link
           to={`/profile/${user.user_id}`}

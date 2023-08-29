@@ -59,6 +59,7 @@
 .createPostIcon {
   font-size: 25px;
   cursor: pointer;
+  color: #b4042a;
 }
 
 .create-post-insert-media {
