@@ -1,24 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// styles
 import "./admin.css";
 
-// utils
+// components
 import Navbar from "../../components/Navbar/Navbar";
+import Loader from "./../../components/Loader/Loader";
 
-// api calls
-import { fetchArticles } from "../../Axios/ApiCalls";
+// hooks
+import UseFetchArticles from "./../../Hooks/Articles/UseFetchArticles";
+import { axiosInstance } from "../../Axios/axiosInstance";
+
+// utils
+import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import moment from "moment";
 
 // images
 import newsImg from "../../images/newsImg.jpg";
-import moment from "moment";
-import { toast } from "react-hot-toast";
-import { axiosInstance } from "../../Axios/axiosInstance";
 
 export default function Admin() {
-  const [articles, setArticles] = useState([]);
-  useEffect(() => {
-    fetchArticles(setArticles);
-  }, []);
+  const {
+    isLoading: articlesLoading,
+    data: articles,
+    isError,
+    error,
+  } = UseFetchArticles();
+
+  if (isError) {
+    console.log(isError);
+  }
+
+  if (error) {
+    console.log(error);
+  }
 
   const deleteArticle = async (id) => {
     const confirmation = window.confirm(
@@ -71,41 +84,47 @@ export default function Admin() {
           </ul>
         </div>
 
-        <div className="admin-right">
-          {articles.map((article) => {
-            return (
-              <div className="admin-article" key={article.id}>
-                <div className="admin-article-img">
-                  <img
-                    src={
-                      article.featured_image ? article.featured_image : newsImg
-                    }
-                    alt=""
-                  />
-                </div>
-                <div className="admin-article-content">
-                  <p className="text-body">{article.title}</p>
-                  <small>
-                    {article.category.toUpperCase()} |{" "}
-                    {moment(article.published_date).format("MMM Do YYYY")}
-                  </small>
-                  <div
-                    className="admin-article-action-btns"
-                    onClick={editArticle}
-                  >
-                    <button className="btn-secondary">Edit</button>
-                    <button
-                      className="btn-secondary"
-                      onClick={() => deleteArticle(article.id)}
+        {articlesLoading ? (
+          <Loader type="list" />
+        ) : (
+          <div className="admin-right">
+            {articles.map((article) => {
+              return (
+                <div className="admin-article" key={article.id}>
+                  <div className="admin-article-img">
+                    <img
+                      src={
+                        article.featured_image
+                          ? article.featured_image
+                          : newsImg
+                      }
+                      alt=""
+                    />
+                  </div>
+                  <div className="admin-article-content">
+                    <p className="text-body">{article.title}</p>
+                    <small>
+                      {article.category.toUpperCase()} |{" "}
+                      {moment(article.published_date).format("MMM Do YYYY")}
+                    </small>
+                    <div
+                      className="admin-article-action-btns"
+                      onClick={editArticle}
                     >
-                      Delete
-                    </button>
+                      <button className="btn-secondary">Edit</button>
+                      <button
+                        className="btn-secondary"
+                        onClick={() => deleteArticle(article.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </>
   );

@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { axiosInstance } from "../../Axios/axiosInstance";
 // styles
 import "../SearchResult/searchResult.css";
 
 // components
 import Navbar from "../../components/Navbar/Navbar";
 
-// images
-import { fetchGroups, fetchUserGroups } from "../../Axios/ApiCalls";
+// hooks
+import UseFetchUserGroups from "./../../Hooks/User/UseFetchUserGroups";
+import UseFetchGroups from "./../../Hooks/Group/UseFetchGroups";
 
 export default function SearchResult() {
   // function to filter search result (variables)
@@ -37,17 +37,10 @@ export default function SearchResult() {
     setShowPeople(false);
   };
 
-  // get all groups
-  const [groups, setGroups] = useState([]);
-  useEffect(() => {
-    fetchGroups(axiosInstance, setGroups);
-  }, []);
+  const { isLoading: groupsLoading, data: groups } = UseFetchGroups();
 
-  // get user groups
-  const [userGroups, setUserGroups] = useState([]);
-  useEffect(() => {
-    fetchUserGroups(axiosInstance, setUserGroups);
-  }, []);
+  const { isLoading: userGroupsLoading, data: userGroups } =
+    UseFetchUserGroups();
 
   return (
     <>

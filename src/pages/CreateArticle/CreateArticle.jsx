@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./createArticle.css";
 import Navbar from "../../components/Navbar/Navbar";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // quill text editor
 import ReactQuill from "react-quill";

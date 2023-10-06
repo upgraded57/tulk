@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 // styles
@@ -9,19 +9,22 @@ import noAvatar from "../../images/noAvatar.jpeg";
 
 // components
 import Navbar from "../../components/Navbar/Navbar";
-import FetchLoading from "../../components/FetchLoading/FetchLoading";
+import Loader from "./../../components/Loader/Loader";
+
+// hooks
+import useFetchUsers from "./../../Hooks/Users/useFetchUsers";
+import UseFetchFriendRequests from "./../../Hooks/User/UseFetchFriendRequests";
+import UseFetchUserFriends from "../../Hooks/User/UseFetchUserFriends";
 
 // api calls
 import {
   acceptFriendRequest,
   deleteFriendRequest,
-  fetchFriendRequests,
-  fetchUserFriends,
-  fetchUsers,
   sendFriendRequest,
 } from "../../Axios/ApiCalls";
+
+// data
 import { Userdata } from "../../data/Userdata";
-import { axiosInstance } from "../../Axios/axiosInstance";
 
 export default function SearchResult() {
   const currentUser = Userdata();
@@ -65,25 +68,14 @@ export default function SearchResult() {
     setShowPeople(false);
   };
 
-  // loading status
-  const [loading, setLoading] = useState(true);
-  // get all friends
-  const [friends, setFriends] = useState([]);
-  useEffect(() => {
-    fetchUserFriends(axiosInstance, currentUser.user_id, setFriends);
-  }, [currentUser.user_id]);
+  const { isLoading: friendsLoading, data: friends } = UseFetchUserFriends(
+    currentUser.user_id
+  );
 
-  // get all friends
-  const [friendRequests, setFriendRequests] = useState([]);
-  useEffect(() => {
-    fetchFriendRequests(axiosInstance, setFriendRequests, setLoading);
-  }, []);
+  const { isLoading: usersLoading, data: users } = useFetchUsers("1");
 
-  // get all users
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    fetchUsers(axiosInstance, setUsers, setLoading);
-  }, []);
+  const { isLoading: friendRequestsLoading, data: friendRequests } =
+    UseFetchFriendRequests("1");
 
   const friendsId = [];
   friends.forEach((friend) => {
@@ -122,9 +114,8 @@ export default function SearchResult() {
               ) : (
                 <>
                   <div className="search-result-main-container-body">
-                    {loading ? (
-                      // <FetchLoading />
-                      <p>Loading...</p>
+                    {friendsLoading ? (
+                      <Loader type="list" />
                     ) : (
                       <>
                         {friends.map((friend) => {
@@ -180,8 +171,8 @@ export default function SearchResult() {
               ) : (
                 <>
                   <div className="search-result-main-container-body">
-                    {loading ? (
-                      <p>Loading...</p>
+                    {friendRequestsLoading ? (
+                      <Loader type="list" />
                     ) : (
                       <>
                         {friendRequests.map((request) => {
@@ -246,8 +237,8 @@ export default function SearchResult() {
               </div>
 
               <div className="search-result-main-container-body">
-                {loading ? (
-                  <p>Loading... </p>
+                {usersLoading ? (
+                  <Loader type="list" />
                 ) : (
                   <>
                     {users.map((user) => {

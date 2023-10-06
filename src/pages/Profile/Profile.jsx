@@ -5,14 +5,12 @@ import { Userdata } from "../../data/Userdata";
 // styles
 import "./profile.css";
 
+// utils
 import { axiosInstance } from "../../Axios/axiosInstance";
-import {
-  fetchUserPosts,
-  fetchProfileUser,
-  fetchUserFriends,
-  sendFriendRequest,
-  fetchUserMedia,
-} from "../../Axios/ApiCalls";
+
+// API calls
+import { sendFriendRequest } from "../../Axios/ApiCalls";
+
 // icons
 import { BsGear, BsCamera } from "react-icons/bs";
 import { AiOutlineMessage, AiOutlineUserAdd } from "react-icons/ai";
@@ -25,21 +23,40 @@ import UserPhotos from "../../components/UserPhotos/UserPhotos";
 import UserFriends from "../../components/UserFriends/UserFriends";
 import UserGroups from "../../components/UserGroups/UserGroups";
 import CreatePost from "../../components/CreatePost/CreatePost";
-
-// modals
 import EditProfile from "../../components/EditProfile/EditProfile";
-import { toast } from "react-hot-toast";
 import Post from "../../components/Post/Post";
 import Navbar from "../../components/Navbar/Navbar";
+
+// modals
+import { toast } from "react-hot-toast";
+
+// hooks
+import useFetchProfile from "../../Hooks/User/useFetchProfile";
+import UseFetchUserPosts from "./../../Hooks/User/UseFetchUserPosts";
+import UseFetchUserFriends from "./../../Hooks/User/UseFetchUserFriends";
+import UseFetchUserMedia from "./../../Hooks/User/UseFetchUserMedia";
 
 const Profile = () => {
   const currentUser = Userdata();
   // fetch user profile
   const { profile_id } = useParams();
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    fetchProfileUser(axiosInstance, profile_id, setUser);
-  }, [profile_id]);
+  const { isLoading: userProfileLoading, data: user } =
+    useFetchProfile(profile_id);
+
+  // fetch user posts
+  const { isLoading: userPostsLoading, data: userPosts } =
+    UseFetchUserPosts(profile_id);
+
+  // fetch user friends
+  const { isLoading: userFriendsLoading, data: friends } = UseFetchUserFriends(
+    currentUser.user_id
+  );
+
+  // fetch user media
+  const { isLoading: userMediaLoading, data: userMedia } = UseFetchUserMedia(
+    currentUser.user_id,
+    "1"
+  );
 
   // functions
   const [showPhotos, setShowPhotos] = useState(true);
@@ -197,24 +214,6 @@ const Profile = () => {
         });
       });
   };
-
-  // fetch user posts
-  const [userPosts, setUserPosts] = useState([]);
-
-  useEffect(() => {
-    fetchUserPosts(axiosInstance, profile_id, setUserPosts);
-  }, [profile_id]);
-
-  // fetch user friends
-  const [friends, setFriends] = useState([]);
-  useEffect(() => {
-    fetchUserFriends(axiosInstance, currentUser.user_id, setFriends);
-  }, [currentUser.user_id]);
-
-  const [userMedia, setUserMedia] = useState([]);
-  useEffect(() => {
-    fetchUserMedia(axiosInstance, currentUser.user_id, setUserMedia);
-  }, [currentUser.user_id]);
 
   return (
     <>

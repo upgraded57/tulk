@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 
 // styles
@@ -15,8 +15,17 @@ import noGroupAvatar from "../../images/noGroupAvatar.jpg";
 
 // utils
 import { axiosInstance } from "../../Axios/axiosInstance";
-import { fetchUserFriends, sendFriendRequest } from "../../Axios/ApiCalls";
 import { Userdata } from "../../data/Userdata";
+
+// API calls
+import { sendFriendRequest } from "../../Axios/ApiCalls";
+
+// hooks
+import UseFetchUserFriends from "./../../Hooks/User/UseFetchUserFriends";
+import useSearchGroups from "../../Hooks/Search/useSearchGroups";
+import UseSearchPosts from "../../Hooks/Search/UseSearchPosts";
+import UseSearchArticles from "../../Hooks/Search/UseSearchArticles";
+import useFetchUsers from "./../../Hooks/Users/useFetchUsers";
 
 export default function SearchResult() {
   // get search query
@@ -24,6 +33,33 @@ export default function SearchResult() {
 
   // get current user
   const user = Userdata();
+
+  // search for people
+  const { isLoading: searchUsersLoading, data: searchedPeople } =
+    useFetchUsers("1");
+
+  // search for groups
+  const { isLoading: searchGroupLoading, data: searchedGroups } =
+    useSearchGroups(search_query);
+
+  // search for posts
+  const { isLoading: searchPostsLoading, data: searchedPosts } =
+    UseSearchPosts(search_query);
+
+  // search for articles
+  const { isLoading: searchArticlesLoading, data: searchedArticles } =
+    UseSearchArticles(search_query);
+
+  // fetch user friends to determine when to show Add Friend button in people result
+  const { isLoading: userFriendsLoading, data: friends } = UseFetchUserFriends(
+    user.user_id
+  );
+
+  const friendsId = [];
+  friends.forEach((friend) => {
+    friendsId.push(friend.id);
+  });
+
   // function to filter search result (variables)
   const [showPeople, setShowPeople] = useState(true);
   const [showGroups, setShowGroups] = useState(true);
@@ -77,100 +113,6 @@ export default function SearchResult() {
     setShowPosts(false);
     setShowPeople(false);
   };
-
-  // search for people
-  const [searchedPeople, setSearchedPeople] = useState([]);
-  const searchPeople = async () => {
-    await axiosInstance({
-      method: "get",
-      url: "/search/",
-      params: {
-        search: search_query,
-        model: "users",
-      },
-    })
-      .then((res) => {
-        setSearchedPeople(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // search for groups
-  const [searchedGroups, setSearchedGroups] = useState([]);
-  const searchGroups = async () => {
-    await axiosInstance({
-      method: "get",
-      url: "/search/",
-      params: {
-        search: search_query,
-        model: "groups",
-      },
-    })
-      .then((res) => {
-        setSearchedGroups(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // search for posts
-  const [searchedPosts, setSearchedPosts] = useState([]);
-  const searchPosts = async () => {
-    await axiosInstance({
-      method: "get",
-      url: "/search/",
-      params: {
-        search: search_query,
-        model: "posts",
-      },
-    })
-      .then((res) => {
-        setSearchedPosts(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // search for posts
-  const [searchedArticles, setSearchedArticles] = useState([]);
-  const searchArticles = async () => {
-    await axiosInstance({
-      method: "get",
-      url: "/search/",
-      params: {
-        search: search_query,
-        model: "articles",
-      },
-    })
-      .then((res) => {
-        setSearchedArticles(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    searchPeople();
-    searchGroups();
-    searchPosts();
-    searchArticles();
-  }, [search_query]);
-
-  // fetch user friends to determine when to show Add Friend button in people result
-  const [friends, setFriends] = useState([]);
-  useEffect(() => {
-    fetchUserFriends(axiosInstance, user.user_id, setFriends);
-  }, [user.user_id, search_query]);
-
-  const friendsId = [];
-  friends.forEach((friend) => {
-    friendsId.push(friend.id);
-  });
 
   return (
     <>

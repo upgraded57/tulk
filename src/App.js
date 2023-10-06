@@ -52,7 +52,7 @@ function App() {
               <Route
                 index
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <Home />
                   </Suspense>
                 }
@@ -60,7 +60,7 @@ function App() {
               <Route
                 path="/search/:search_query"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <SearchResult />
                   </Suspense>
                 }
@@ -68,7 +68,7 @@ function App() {
               <Route
                 path="/profile/:profile_id"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <Profile />
                   </Suspense>
                 }
@@ -76,7 +76,7 @@ function App() {
               <Route
                 path="/groups"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <GroupListing />
                   </Suspense>
                 }
@@ -84,7 +84,7 @@ function App() {
               <Route
                 path="/groups/:group_id"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <Group />
                   </Suspense>
                 }
@@ -92,7 +92,7 @@ function App() {
               <Route
                 path="/groups/create"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <CreateGroup />
                   </Suspense>
                 }
@@ -100,7 +100,7 @@ function App() {
               <Route
                 path="/newsPage"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <NewsPage />
                   </Suspense>
                 }
@@ -108,7 +108,7 @@ function App() {
               <Route
                 path="/messenger"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <Messenger />
                   </Suspense>
                 }
@@ -116,7 +116,7 @@ function App() {
               <Route
                 path="/notifications"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <Notifications />
                   </Suspense>
                 }
@@ -124,7 +124,7 @@ function App() {
               <Route
                 path="/friends"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <FriendListing />
                   </Suspense>
                 }
@@ -132,7 +132,7 @@ function App() {
               <Route
                 path="/admin"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <Admin />
                   </Suspense>
                 }
@@ -140,7 +140,7 @@ function App() {
               <Route
                 path="/article/create/"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <CreateArticle />
                   </Suspense>
                 }
@@ -148,7 +148,7 @@ function App() {
               <Route
                 path="/posts/:post_id"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <PostModal />
                   </Suspense>
                 }
@@ -156,7 +156,7 @@ function App() {
               <Route
                 path="/articles/:article_id"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <ArticleModal />
                   </Suspense>
                 }
@@ -164,7 +164,7 @@ function App() {
               <Route
                 path="*"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<Loader type="spinner" />}>
                     <NotFound />
                   </Suspense>
                 }

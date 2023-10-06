@@ -1,10 +1,4 @@
-import React, { useEffect, useState } from "react";
 import "../Login/login.css";
-
-// api calls
-import { fetchUserFriends } from "../../Axios/ApiCalls";
-
-import { axiosInstance } from "../../Axios/axiosInstance";
 
 // icons
 import { IoIosClose } from "react-icons/io";
@@ -12,14 +6,14 @@ import { IoIosClose } from "react-icons/io";
 // images
 import noAvatar from "../../images/noAvatar.jpeg";
 import { Userdata } from "../../data/Userdata";
+import UseFetchUserFriends from "./../../Hooks/User/UseFetchUserFriends";
 
 export default function InviteModal({ setInviteModal }) {
   const user = Userdata();
-  const [friends, setFriends] = useState([]);
 
-  useEffect(() => {
-    fetchUserFriends(axiosInstance, user.user_id, setFriends);
-  }, [user.user_id]);
+  const { isLoading: userFriendsLoading, data: friends } = UseFetchUserFriends(
+    user.user_id
+  );
 
   const inviteesArray = [];
   const addInvitee = (e) => {

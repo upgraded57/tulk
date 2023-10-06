@@ -20,6 +20,7 @@ import Chat from "../../components/Chat/Chat";
 
 import Navbar from "../../components/Navbar/Navbar";
 import { getOnlineFriends } from "../../Axios/ApiCalls";
+import UseFetchUserFriends from "../../Hooks/User/UseFetchUserFriends";
 
 export default function Home() {
   // current user
@@ -64,6 +65,8 @@ export default function Home() {
   useEffect(() => {
     getOnlineFriends(axiosInstance, setOnlineFriends);
   }, []);
+
+  // const {data: onlineFriends} = UseFetchUserFriends(user.user_id)
 
   return (
     <>

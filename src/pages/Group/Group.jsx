@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import Post from "../../components/Post/Post";
 import CreatePost from "../../components/CreatePost/CreatePost";
 import Navbar from "../../components/Navbar/Navbar";
-import { fetchUserGroups, getGroupData } from "../../Axios/ApiCalls";
 import { Userdata } from "../../data/Userdata";
 import { axiosInstance } from "../../Axios/axiosInstance";
 import InviteModal from "./InviteModal";
@@ -16,34 +15,22 @@ import "./group.css";
 // icons
 import { BsGear, BsCamera } from "react-icons/bs";
 import { AiOutlineUserAdd } from "react-icons/ai";
+import UseFetchGroupData from "../../Hooks/Group/UseFetchGroupData";
+import UseFetchGroupPosts from "../../Hooks/Group/UseFetchGroupPosts";
+import UseFetchUserGroups from "./../../Hooks/User/UseFetchUserGroups";
 
 const Group = () => {
   const user = Userdata();
   const { group_id } = useParams();
 
-  // get group data
-  const [groupData, setGroupData] = useState({});
-  useEffect(() => {
-    getGroupData(axiosInstance, group_id, setGroupData);
-  }, [group_id]);
+  const { isLoading: groupDataLoading, data: groupData } =
+    UseFetchGroupData(group_id);
 
-  const [groupPosts, setGroupPosts] = useState([]);
-  const getGroupPosts = async () => {
-    await axiosInstance({
-      method: "get",
-      url: `/group/${groupData.id}/posts/`,
-    })
-      .then((res) => {
-        setGroupPosts(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const { isLoading: groupPostsLoading, data: groupPosts } =
+    UseFetchGroupPosts(group_id);
 
-  useEffect(() => {
-    getGroupPosts();
-  }, [groupData]);
+  const { isLoading: userGroupsLoading, data: userGroups } =
+    UseFetchUserGroups();
 
   const [inviteModal, setInviteModal] = useState(false);
   const [settingseModal, setSettingsModal] = useState(false);
@@ -101,12 +88,6 @@ const Group = () => {
         });
       });
   };
-
-  // fetch user groups
-  const [userGroups, setUserGroups] = useState([]);
-  useEffect(() => {
-    fetchUserGroups(axiosInstance, setUserGroups);
-  }, []);
 
   let userGroupIds = [];
   userGroups.forEach((userGroup) => {
