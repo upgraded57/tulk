@@ -1,12 +1,14 @@
-import axios from "axios";
 import { useQuery } from "react-query";
+import { axiosInstance } from "./../../Axios/axiosInstance";
 
 export default function UseFetchArticles() {
   const fetchArticles = () => {
-    return axios({
+    return axiosInstance({
       method: "get",
-      url: "https://tulk-social-f7f4f4c56190.herokuapp.com/articles/",
+      url: "https://tulk-social.azurewebsites.net/editor/articles/",
     });
   };
-  return useQuery("articles", fetchArticles);
+  return useQuery("articles", fetchArticles, {
+    select: (data) => data.data,
+  });
 }

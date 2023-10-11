@@ -172,20 +172,17 @@ export default function CreateGroup() {
               onChange={(e) => setGroupSlogan(e.target.value)}
             />
             <textarea
-              required
               rows="5"
               placeholder="About"
               onChange={(e) => setGroupDesc(e.target.value)}
             ></textarea>
             <div className="create-group-input-fields-flex">
               <input
-                required
                 type="text"
                 placeholder="Phone Contact"
                 onChange={(e) => setGroupPhone(e.target.value)}
               />
               <input
-                required
                 type="email"
                 placeholder="Email Address"
                 onChange={(e) => setGroupEmail(e.target.value)}

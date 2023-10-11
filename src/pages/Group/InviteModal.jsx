@@ -11,9 +11,7 @@ import UseFetchUserFriends from "./../../Hooks/User/UseFetchUserFriends";
 export default function InviteModal({ setInviteModal }) {
   const user = Userdata();
 
-  const { isLoading: userFriendsLoading, data: friends } = UseFetchUserFriends(
-    user.user_id
-  );
+  const { data: friends } = UseFetchUserFriends(user.user_id);
 
   const inviteesArray = [];
   const addInvitee = (e) => {
@@ -46,11 +44,11 @@ export default function InviteModal({ setInviteModal }) {
         </div>
 
         <div className="invite-lists">
-          {friends.length < 1 ? (
+          {friends?.length < 1 ? (
             <p>No Friends to invite. Make friends first</p>
           ) : (
             <>
-              {friends.map((friend) => {
+              {friends?.map((friend) => {
                 return (
                   <div className="invite-list" key={friend.id}>
                     <label htmlFor={friend.id} onChange={addInvitee}>

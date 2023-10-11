@@ -24,6 +24,7 @@ import profileIconOutline from "../../images/icons/profile-icon-outline.png";
 
 import { BsSearch, BsBell } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
+import useFetchProfile from "./../../Hooks/User/useFetchProfile";
 
 export default function Navbar() {
   // toggle sidebar
@@ -52,7 +53,9 @@ export default function Navbar() {
   const currentLocation = location.pathname;
 
   // user data
-  const user = Userdata();
+  const currentUser = Userdata();
+
+  const { data: user } = useFetchProfile(currentUser?.user_id);
 
   return (
     <div className="navbar">
@@ -74,7 +77,7 @@ export default function Navbar() {
             )}
           </NavLink>
 
-          <NavLink to={`/profile/${user.user_id}/`}>
+          <NavLink to={`/profile/${user?.id}/`}>
             {currentLocation.includes("profile") ? (
               <img src={profileIconSolid} alt="" />
             ) : (
@@ -117,7 +120,7 @@ export default function Navbar() {
             className="navbar-profile-link"
             onClick={() => setMiniSidebarOpen((prev) => !prev)}
           >
-            <img src={user.avatar} alt="profile link" />
+            <img src={user?.avatar} alt="profile link" />
           </div>
         </div>
         <div className="navbar-mobile-links">

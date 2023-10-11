@@ -13,8 +13,8 @@ export default function VerifyOTP() {
   const navigate = useNavigate();
 
   // selects detail of registering user
-  const newUser = useSelector((state) => state.register.newUser);
-
+  // const newUser = useSelector((state) => state.register.newUser);
+  const newUser = JSON.parse(localStorage.getItem("newUserData"));
   const newUID = newUser.user_id;
 
   const OTPRef = useRef();
@@ -26,12 +26,13 @@ export default function VerifyOTP() {
     if (otp.trim().length !== 0) {
       await axios({
         method: "post",
-        url: `https://tulk-social-f7f4f4c56190.herokuapp.com/verify-otp/${newUID}/`,
+        url: `https://tulk-social.azurewebsites.net/verify-otp/${newUID}/`,
         data: { otp },
       })
         .then((res) => {
           toast.success("Verification successful. Please login");
           navigate("/login");
+          localStorage.removeItem("newUserData");
         })
         .catch((err) => {
           console.log(err);

@@ -30,43 +30,7 @@ export default function SearchResult() {
   const currentUser = Userdata();
 
   // function to filter search result (variables)
-  const [showFriends, setShowFriends] = useState(true);
-  const [showPeople, setShowPeople] = useState(true);
-  const [showGroups, setShowGroups] = useState(true);
-
-  // function to filter search result to show all
-  const showAllFilter = () => {
-    setShowFriends(true);
-    setShowPeople(true);
-    setShowFriends(true);
-  };
-
-  // function to filter search result to show only user friends
-  const showFriendsFilter = () => {
-    if (!showFriends) {
-      setShowFriends(true);
-    }
-    setShowPeople(false);
-    setShowGroups(false);
-  };
-
-  // function to filter search result to show only people
-  const showPeopleFilter = () => {
-    if (!showPeople) {
-      setShowPeople(true);
-    }
-    setShowFriends(false);
-    setShowGroups(false);
-  };
-
-  // function to filter search result to show only groups
-  const showGroupsFilter = () => {
-    if (!showGroups) {
-      setShowGroups(true);
-    }
-    setShowFriends(false);
-    setShowPeople(false);
-  };
+  const [filter, setFilter] = useState("all");
 
   const { isLoading: friendsLoading, data: friends } = UseFetchUserFriends(
     currentUser.user_id
@@ -78,7 +42,7 @@ export default function SearchResult() {
     UseFetchFriendRequests("1");
 
   const friendsId = [];
-  friends.forEach((friend) => {
+  friends?.forEach((friend) => {
     friendsId.push(friend.id);
   });
 
@@ -93,23 +57,25 @@ export default function SearchResult() {
 
           <div className="group-listing-filter-list">
             <ul>
-              <li onClick={showAllFilter}>All People</li>
-              <li onClick={showFriendsFilter}>Your Friends</li>
-              <li onClick={showPeopleFilter}>Friend Request</li>
-              <li onClick={showGroupsFilter}>Friend suggestions</li>
+              <li onClick={() => setFilter("all")}>All People</li>
+              <li onClick={() => setFilter("friends")}>Your Friends</li>
+              <li onClick={() => setFilter("requests")}>Friend Request</li>
+              <li onClick={() => setFilter("suggestions")}>
+                Friend suggestions
+              </li>
             </ul>
           </div>
         </div>
 
         <div className="search-result-main">
           {/* Friends Container */}
-          {showFriends && (
+          {(filter === "all" || filter === "friends") && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
                 <h3 className="h-100">Your Friends </h3>
               </div>
 
-              {friends.length < 1 ? (
+              {friends?.length < 1 ? (
                 <p>You have no friends yet!</p>
               ) : (
                 <>
@@ -118,7 +84,7 @@ export default function SearchResult() {
                       <Loader type="list" />
                     ) : (
                       <>
-                        {friends.map((friend) => {
+                        {friends?.map((friend) => {
                           return (
                             <div
                               className="search-result-main-container-body-list"
@@ -161,12 +127,12 @@ export default function SearchResult() {
           )}
 
           {/* Friend Requests container */}
-          {showPeople && (
+          {(filter === "all" || filter === "requests") && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
                 <h3 className="h-100">Friend Requests </h3>
               </div>
-              {friendRequests.length < 1 ? (
+              {friendRequests?.length < 1 ? (
                 <p>You have no pending friend requests!</p>
               ) : (
                 <>
@@ -175,7 +141,7 @@ export default function SearchResult() {
                       <Loader type="list" />
                     ) : (
                       <>
-                        {friendRequests.map((request) => {
+                        {friendRequests?.map((request) => {
                           return (
                             <div
                               className="search-result-main-container-body-list"
@@ -230,7 +196,7 @@ export default function SearchResult() {
           )}
 
           {/* Friends suggestion Container */}
-          {showGroups && (
+          {(filter === "all" || filter === "suggestions") && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
                 <h3 className="h-100">Friend Suggestions </h3>
@@ -241,7 +207,7 @@ export default function SearchResult() {
                   <Loader type="list" />
                 ) : (
                   <>
-                    {users.map((user) => {
+                    {users?.map((user) => {
                       return (
                         <div
                           className="search-result-main-container-body-list"

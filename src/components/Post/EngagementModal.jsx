@@ -12,6 +12,7 @@ import tempImg from "../../images/Frame 73.png";
 import { axiosInstance } from "../../Axios/axiosInstance";
 import Comment from "./Comment";
 import Like from "./Like";
+import Share from "./Share";
 
 export default function EngagementModal({
   post,
@@ -120,6 +121,30 @@ export default function EngagementModal({
     fetchPostLikes();
   }, [postLikeCount]);
 
+  //fetch post likes
+  const [postSharers, setPostSharers] = useState([]);
+  const [postShareCount, setPostShareCount] = useState(0);
+  const fetchPostShares = async () => {
+    await axiosInstance({
+      method: "get",
+      url:
+        group === true
+          ? `/group-posts/${post.id}/share/?page=1`
+          : `/posts/${post.id}/share/?page=1`,
+    })
+      .then((res) => {
+        setPostShareCount(res.data.results.length);
+        setPostSharers(res.data.results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchPostShares();
+  }, [postShareCount]);
+
   return (
     <>
       <div
@@ -159,7 +184,7 @@ export default function EngagementModal({
             onClick={() => (engagementToggle.style.left = "-200%")}
           >
             <RiShareBoxFill />
-            <p>(4)</p>
+            <p>({postShareCount})</p>
           </span>
         </div>
 
@@ -179,96 +204,13 @@ export default function EngagementModal({
             })}
           </div>
           <div className="engament-shares">
-            <div className="engagement-like">
-              <div className="liker-img">
-                <img src={tempImg} alt="" />
-              </div>
-              <div className="liker-name">John Doe</div>
-            </div>
-
-            <div className="engagement-like">
-              <div className="liker-img">
-                <img src={tempImg} alt="" />
-              </div>
-              <div className="liker-name">John Doe</div>
-            </div>
-
-            <div className="engagement-like">
-              <div className="liker-img">
-                <img src={tempImg} alt="" />
-              </div>
-              <div className="liker-name">John Doe</div>
-            </div>
-
-            <div className="engagement-like">
-              <div className="liker-img">
-                <img src={tempImg} alt="" />
-              </div>
-              <div className="liker-name">John Doe</div>
-            </div>
-
-            <div className="engagement-like">
-              <div className="liker-img">
-                <img src={tempImg} alt="" />
-              </div>
-              <div className="liker-name">John Doe</div>
-            </div>
-
-            <div className="engagement-like">
-              <div className="liker-img">
-                <img src={tempImg} alt="" />
-              </div>
-              <div className="liker-name">John Doe</div>
-            </div>
-
-            <div className="engagement-like">
-              <div className="liker-img">
-                <img src={tempImg} alt="" />
-              </div>
-              <div className="liker-name">John Doe</div>
-            </div>
-
-            <div className="engagement-like">
-              <div className="liker-img">
-                <img src={tempImg} alt="" />
-              </div>
-              <div className="liker-name">John Doe</div>
-            </div>
-
-            <div className="engagement-like">
-              <div className="liker-img">
-                <img src={tempImg} alt="" />
-              </div>
-              <div className="liker-name">John Doe</div>
-            </div>
-
-            <div className="engagement-like">
-              <div className="liker-img">
-                <img src={tempImg} alt="" />
-              </div>
-              <div className="liker-name">John Doe</div>
-            </div>
-
-            <div className="engagement-like">
-              <div className="liker-img">
-                <img src={tempImg} alt="" />
-              </div>
-              <div className="liker-name">John Doe</div>
-            </div>
-
-            <div className="engagement-like">
-              <div className="liker-img">
-                <img src={tempImg} alt="" />
-              </div>
-              <div className="liker-name">John Doe</div>
-            </div>
-
-            <div className="engagement-like">
-              <div className="liker-img">
-                <img src={tempImg} alt="" />
-              </div>
-              <div className="liker-name">John Doe</div>
-            </div>
+            {postSharers.length < 1 ? (
+              <p>This post hasn't been shared yet</p>
+            ) : (
+              postSharers.map((sharer) => (
+                <Share sharer={sharer} key={sharer.id} />
+              ))
+            )}
           </div>
         </div>
       </div>

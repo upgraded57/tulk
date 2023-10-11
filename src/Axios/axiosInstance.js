@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 const tokens = JSON.parse(localStorage.getItem("tokens"));
 
 export const axiosInstance = axios.create({
-  baseURL: "https://tulk-social-f7f4f4c56190.herokuapp.com",
+  baseURL: "https://tulk-social.azurewebsites.net",
   headers: {
     Authorization: `Bearer ${tokens?.access}`,
   },
@@ -22,7 +22,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       await axios({
         method: "post",
-        url: "https://tulk-social-f7f4f4c56190.herokuapp.com/api/token/refresh/",
+        url: "https://tulk-social.azurewebsites.net/api/token/refresh/",
         data: { refresh: tokens.refresh },
       })
         .then((res) => {

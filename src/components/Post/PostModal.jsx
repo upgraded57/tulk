@@ -15,6 +15,7 @@ import Chat from "../Chat/Chat";
 import CreatePost from "../CreatePost/CreatePost";
 import Newsreel from "../Newsreel/Newsreel";
 import { axiosInstance } from "../../Axios/axiosInstance";
+import UseFetchUserFriends from "../../Hooks/User/UseFetchUserFriends";
 
 export default function PostModal() {
   const { post_id } = useParams();
@@ -40,10 +41,8 @@ export default function PostModal() {
 
   // fetch online friends
   const [pagenum, setPagenum] = useState(1);
-  const [onlineFriends, setOnlineFriends] = useState([]);
-  useEffect(() => {
-    getOnlineFriends(axiosInstance, pagenum, setOnlineFriends);
-  }, []);
+
+  const { data: onlineFriends } = UseFetchUserFriends(user.user_id);
 
   return (
     <>

@@ -97,11 +97,12 @@ export default function Signup({ setSignupModalVisible }) {
       const toastId = toast.loading("Creating your profile...");
       await axios({
         method: "post",
-        url: "https://tulk-social-f7f4f4c56190.herokuapp.com/register/",
+        url: "https://tulk-social.azurewebsites.net/register/",
         data: signupFormData,
       })
         .then((res) => {
           dispatch(registerUserSuccess(res.data));
+          localStorage.setItem("newUserData", JSON.stringify(res.data));
           toast.success("Registration Successful!", {
             id: toastId,
           });
@@ -125,7 +126,6 @@ export default function Signup({ setSignupModalVisible }) {
           }
         });
     } else {
-      console.log("Passwords do not match");
       alert("Passwords do not match");
       return;
     }

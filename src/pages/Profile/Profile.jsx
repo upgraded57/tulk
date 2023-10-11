@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Userdata } from "../../data/Userdata";
 
@@ -17,6 +17,7 @@ import { AiOutlineMessage, AiOutlineUserAdd } from "react-icons/ai";
 
 // images
 import noAvatar from "../../images/noAvatar.jpeg";
+import noBG from "../../images/noBG.jpg";
 
 // components
 import UserPhotos from "../../components/UserPhotos/UserPhotos";
@@ -35,6 +36,8 @@ import useFetchProfile from "../../Hooks/User/useFetchProfile";
 import UseFetchUserPosts from "./../../Hooks/User/UseFetchUserPosts";
 import UseFetchUserFriends from "./../../Hooks/User/UseFetchUserFriends";
 import UseFetchUserMedia from "./../../Hooks/User/UseFetchUserMedia";
+import UseFetchUserGroups from "./../../Hooks/User/UseFetchUserGroups";
+import Loader from "./../../components/Loader/Loader";
 
 const Profile = () => {
   const currentUser = Userdata();
@@ -48,100 +51,17 @@ const Profile = () => {
     UseFetchUserPosts(profile_id);
 
   // fetch user friends
-  const { isLoading: userFriendsLoading, data: friends } = UseFetchUserFriends(
-    currentUser.user_id
-  );
+  const { isLoading: userFriendsLoading, data: friends } =
+    UseFetchUserFriends(profile_id);
 
   // fetch user media
   const { isLoading: userMediaLoading, data: userMedia } = UseFetchUserMedia(
-    currentUser.user_id,
+    profile_id,
     "1"
   );
 
-  // functions
-  const [showPhotos, setShowPhotos] = useState(true);
-  const [showFriends, setShowFriends] = useState(false);
-  const [showGroups, setShowGroups] = useState(false);
-
-  // buttons from DOM
-  const [showPhotosBtn, setShowPhotosBtn] = useState(null);
-  const [showFriendsBtn, setShowFriendsBtn] = useState(null);
-  const [showGroupsBtn, setShowGroupsBtn] = useState(null);
-
-  useEffect(() => {
-    setShowPhotosBtn(document.getElementById("showPhotosBtn"));
-    setShowFriendsBtn(document.getElementById("showFriendsBtn"));
-    setShowGroupsBtn(document.getElementById("showGroupsBtn"));
-  }, []);
-  // function to display user photos and media
-  const showPhotosFunction = () => {
-    // display only necessary component
-    if (!showPhotos) {
-      setShowPhotos(true);
-    }
-    setShowFriends(false);
-    setShowGroups(false);
-
-    // adds style to button
-    if (!showPhotosBtn.classList.contains("active")) {
-      showPhotosBtn.classList.add("active");
-    }
-
-    if (showFriendsBtn.classList.contains("active")) {
-      showFriendsBtn.classList.remove("active");
-    }
-
-    if (showGroupsBtn.classList.contains("active")) {
-      showGroupsBtn.classList.remove("active");
-    }
-  };
-
-  // function to display user friends
-  const showFriendsFunction = () => {
-    // display only necessary component
-    if (!showFriends) {
-      setShowFriends(true);
-    }
-
-    setShowPhotos(false);
-    setShowGroups(false);
-
-    // adds style to button
-    if (!showFriendsBtn.classList.contains("active")) {
-      showFriendsBtn.classList.add("active");
-    }
-
-    if (showPhotosBtn.classList.contains("active")) {
-      showPhotosBtn.classList.remove("active");
-    }
-
-    if (showGroupsBtn.classList.contains("active")) {
-      showGroupsBtn.classList.remove("active");
-    }
-  };
-
-  // function to display user groups
-  const showGroupsFunction = () => {
-    // display only necessary component
-    if (!showGroups) {
-      setShowGroups(true);
-    }
-    setShowPhotos(false);
-    setShowFriends(false);
-
-    // adds style to button
-    if (!showGroupsBtn.classList.contains("active")) {
-      showGroupsBtn.classList.add("active");
-    }
-
-    if (showFriendsBtn.classList.contains("active")) {
-      showFriendsBtn.classList.remove("active");
-    }
-
-    if (showPhotosBtn.classList.contains("active")) {
-      showPhotosBtn.classList.remove("active");
-    }
-  };
+  const { isLoading: userGroupsLoading, data: userGroups } =
+    UseFetchUserGroups();
 
   // show edit profile modal
   const [editProfileModalIsVisible, setEditProfileModalIsVisible] =
@@ -215,13 +135,18 @@ const Profile = () => {
       });
   };
 
+  const [showModal, setShowModal] = useState("photos");
+
   return (
     <>
       <Navbar />
       <div className="profile">
         <div className="profile-user-data">
           <div className="profile-cover-photo">
-            <img src={user.background_image} alt="" />
+            <img
+              src={user?.background_image ? user?.background_image : noBG}
+              alt=""
+            />
             {profile_id === currentUser.user_id && (
               <div className="profile-cover-photo-update">
                 <input
@@ -240,7 +165,7 @@ const Profile = () => {
           </div>
           <div className="profile-user-image-name">
             <div className="profile-user-avatar" id="profile-user-avatar">
-              <img src={user.avatar ? user.avatar : noAvatar} alt="" />
+              <img src={user?.avatar ? user?.avatar : noAvatar} alt="" />
               {profile_id === currentUser.user_id && (
                 <div className="profile-user-avatar-update">
                   <input
@@ -258,17 +183,17 @@ const Profile = () => {
               )}
             </div>
             <div className="profile-user-name-slogan">
-              {user.first_name && (
-                <h2 className="h-200">{`${user.first_name} ${user.last_name}`}</h2>
+              {user?.first_name && (
+                <h2 className="h-200">{`${user?.first_name} ${user?.last_name}`}</h2>
               )}
               <div className="profile-user-slogan mt-xsm">
-                {user.bio && <p>{user.bio}</p>}
+                {user?.bio && <p>{user?.bio}</p>}
               </div>
             </div>
 
             <div className="profile-user-edit-button">
-              {profile_id !== currentUser.user_id &&
-                friends.includes(profile_id) && (
+              {profile_id !== currentUser?.user_id &&
+                friends?.includes(profile_id) && (
                   <button
                     className="btn-solid"
                     onClick={() => sendFriendRequest(currentUser.user_id, user)}
@@ -303,70 +228,106 @@ const Profile = () => {
         )}
 
         <div className="profile-user-info">
-          {user.work && (
-            <h3 className="h-100">
-              Works at: <b>{user.work} </b>
-            </h3>
-          )}
-          {user.school && (
-            <h3 className="h-100">
-              Studied at: <b>{user.school}</b>
-            </h3>
-          )}
-          {user.marital_status && (
-            <h3 className="h-100">
-              Marital Status: <b>Single</b>
-            </h3>
-          )}
-          {user.date_of_birth && (
-            <h3 className="h-100">
-              Birthday: <b> {user.date_of_birth} </b>
-            </h3>
-          )}
-          {user.phone_number && (
-            <h3 className="h-100">
-              Contact: <b>{user.phone_number} </b>
-            </h3>
-          )}
-          {user.email && (
-            <h3 className="h-100">
-              Email: <b>{user.email}</b>
-            </h3>
-          )}
-          {user.website && (
-            <h3 className="h-100">
-              Web: <b>{user.website}</b>
-            </h3>
-          )}
+          <table>
+            <tbody>
+              {user?.work && (
+                <tr>
+                  <td>
+                    <b> Works at</b>
+                  </td>
+                  <td>{user?.work}</td>
+                </tr>
+              )}
+              {user?.school && (
+                <tr>
+                  <td>
+                    <b>Studies at</b>
+                  </td>
+                  <td>{user?.school}</td>
+                </tr>
+              )}
+              {user?.marital_status && (
+                <tr>
+                  <td>
+                    <b>Marital Status</b>
+                  </td>
+                  <td>{user?.marital_status}</td>
+                </tr>
+              )}
+              {user?.date_of_birth && (
+                <tr>
+                  <td>
+                    <b>DOB</b>
+                  </td>
+                  <td>{user?.date_of_birth}</td>
+                </tr>
+              )}
+              {user?.phone_number && (
+                <tr>
+                  <td>
+                    <b>Phone</b>
+                  </td>
+                  <td>{user?.phone_number}</td>
+                </tr>
+              )}
+              {user?.email && (
+                <tr>
+                  <td>
+                    <b>Email</b>
+                  </td>
+                  <td>{user?.email}</td>
+                </tr>
+              )}
+              {user?.website && (
+                <tr>
+                  <td>
+                    <b>Website</b>
+                  </td>
+                  <td>{user?.website}</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
 
         <div className="profile-bottom-page">
           <div className="profile-bottom-page-left">
             <div className="profile-action-buttons">
               <p
-                className="active"
-                id="showPhotosBtn"
-                onClick={showPhotosFunction}
+                className={showModal === "photos" ? "active" : ""}
+                onClick={() => setShowModal("photos")}
               >
                 Photos & Media
               </p>
-              <p className="" id="showFriendsBtn" onClick={showFriendsFunction}>
+              <p
+                className={showModal === "friends" ? "active" : ""}
+                onClick={() => setShowModal("friends")}
+              >
                 Friends
               </p>
-              <p className="" id="showGroupsBtn" onClick={showGroupsFunction}>
+              <p
+                className={showModal === "groups" ? "active" : ""}
+                onClick={() => setShowModal("groups")}
+              >
                 My Groups
               </p>
             </div>
-            {showPhotos && <UserPhotos />}
-            {showFriends && <UserFriends friends={friends} />}
-            {showGroups && <UserGroups />}
-            {/* {showFriends && <UserGroups />} */}
+            {showModal === "photos" && <UserPhotos />}
+            {showModal === "friends" && <UserFriends friends={friends} />}
+            {showModal === "groups" && <UserGroups />}
           </div>
           <div className="profile-bottom-page-right">
-            <CreatePost />
-            {userPosts.map((post) => {
-              return <Post post={post} key={post.id} />;
-            })}
+            {user?.id === currentUser?.user_id && <CreatePost />}
+
+            {userPosts?.length === 0 ? (
+              <p style={{ textAlign: "center", marginBlock: "30px" }}>
+                No posts yet!
+              </p>
+            ) : (
+              userPosts?.map((post) => {
+                return <Post post={post} key={post.id} />;
+              })
+            )}
           </div>
         </div>
       </div>

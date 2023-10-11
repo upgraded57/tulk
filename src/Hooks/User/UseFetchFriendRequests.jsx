@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { axiosInstance } from "../../Axios/axiosInstance";
 
-export default function UseFetchFriendRequests({ pageNum }) {
+export default function UseFetchFriendRequests(pageNum) {
   const fetchUserFriendRequests = (pageNum) => {
     return axiosInstance({
       method: "get",

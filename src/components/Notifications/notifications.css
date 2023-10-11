@@ -33,12 +33,8 @@
 }
 
 .notification-user-image {
-  min-width: 80px;
-  min-height: 80px;
-  width: 80px;
-  height: 80px;
-  max-width: 80px;
-  max-height: 80px;
+  width: 50px;
+  aspect-ratio: 1/1;
   border-radius: var(--inputField-radius);
   overflow: hidden;
 }

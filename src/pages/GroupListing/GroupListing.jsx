@@ -12,35 +12,11 @@ import UseFetchGroups from "./../../Hooks/Group/UseFetchGroups";
 
 export default function SearchResult() {
   // function to filter search result (variables)
-  const [showPeople, setShowPeople] = useState(true);
-  const [showGroups, setShowGroups] = useState(true);
+  const [filter, setFilter] = useState("all");
 
-  // function to filter search result to show all
-  const showAllFilter = () => {
-    setShowPeople(true);
-    setShowGroups(true);
-  };
+  const { data: groups } = UseFetchGroups();
 
-  // function to filter search result to show only people
-  const showPeopleFilter = () => {
-    if (!showPeople) {
-      setShowPeople(true);
-    }
-    setShowGroups(false);
-  };
-
-  // function to filter search result to show only groups
-  const showGroupsFilter = () => {
-    if (!showGroups) {
-      setShowGroups(true);
-    }
-    setShowPeople(false);
-  };
-
-  const { isLoading: groupsLoading, data: groups } = UseFetchGroups();
-
-  const { isLoading: userGroupsLoading, data: userGroups } =
-    UseFetchUserGroups();
+  const { data: userGroups } = UseFetchUserGroups();
 
   return (
     <>
@@ -58,9 +34,9 @@ export default function SearchResult() {
 
           <div className="group-listing-filter-list">
             <ul>
-              <li onClick={showAllFilter}>All Groups</li>
-              <li onClick={showPeopleFilter}>Joined Groups</li>
-              <li onClick={showGroupsFilter}>Unjoined Groups</li>
+              <li onClick={() => setFilter("all")}>All Groups</li>
+              <li onClick={() => setFilter("joined")}>Joined Groups</li>
+              <li onClick={() => setFilter("unjoined")}>Unjoined Groups</li>
             </ul>
           </div>
           <div className="create-group-btn-desktop">
@@ -72,18 +48,18 @@ export default function SearchResult() {
 
         <div className="search-result-main">
           {/* user groups Container */}
-          {showPeople && (
+          {(filter === "all" || filter === "joined") && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
                 <h3 className="h-100">Groups you've joined</h3>
               </div>
 
-              {userGroups.length < 1 ? (
+              {userGroups?.length < 1 ? (
                 <p>You haven't joined any group yet</p>
               ) : (
                 <>
                   <div className="search-result-main-container-body">
-                    {userGroups.map((userGroup) => {
+                    {userGroups?.map((userGroup) => {
                       return (
                         <div
                           className="search-result-main-container-body-list"
@@ -112,18 +88,18 @@ export default function SearchResult() {
           )}
 
           {/* All groups Container */}
-          {showGroups && (
+          {(filter === "all" || filter === "unjoined") && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
                 <h3 className="h-100">New Groups</h3>
               </div>
 
-              {groups.length < 1 ? (
-                <p>No groups on TULK yet. Check back later!</p>
+              {groups?.length < 1 ? (
+                <p>No groups on TULK yet. Check back later or create one!</p>
               ) : (
                 <>
                   <div className="search-result-main-container-body">
-                    {groups.map((group) => {
+                    {groups?.map((group) => {
                       return (
                         <div
                           className="search-result-main-container-body-list"

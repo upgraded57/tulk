@@ -78,8 +78,8 @@ export default function CreatePostModal({ setCreatePostModal, group }) {
       await axiosInstance({
         method: "post",
         url: group
-          ? `https://tulk-social-f7f4f4c56190.herokuapp.com/group/${group.id}/posts/`
-          : "https://tulk-social-f7f4f4c56190.herokuapp.com/posts/",
+          ? `https://tulk-social.azurewebsites.net/group/${group.id}/posts/`
+          : "https://tulk-social.azurewebsites.net/posts/",
         data: postFormData,
       })
         .then((res) => {

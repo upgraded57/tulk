@@ -20,6 +20,10 @@
   padding: 20px;
 }
 
+.search-result-filter-list {
+  overflow-x: scroll;
+}
+
 .search-result-filter-list ul li,
 .group-listing-filter-list ul li {
   list-style: none;

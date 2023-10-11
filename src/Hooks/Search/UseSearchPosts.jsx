@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { axiosInstance } from "../../Axios/axiosInstance";
 
-export default function UseSearchPosts({ search_query }) {
+export default function UseSearchPosts(search_query) {
   const searchPosts = (search_query) => {
     return axiosInstance({
       method: "get",

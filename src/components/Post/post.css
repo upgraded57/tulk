@@ -307,7 +307,7 @@
 
   /* image popup modal */
   .image-popup {
-    height: calc(100vh - 115px) !important;
+    height: calc(100dvh - 115px) !important;
     left: 0 !important;
   }
 
@@ -320,7 +320,7 @@
 .image-popup {
   position: fixed;
   width: min(700px, 100vw);
-  height: calc(100vh - 72px);
+  height: calc(100dvh - 72px);
   bottom: 0;
   z-index: 10;
   background: #000;

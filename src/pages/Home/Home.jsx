@@ -61,12 +61,12 @@ export default function Home() {
   }, [postPagination]);
 
   // fetch online friends
-  const [onlineFriends, setOnlineFriends] = useState([]);
-  useEffect(() => {
-    getOnlineFriends(axiosInstance, setOnlineFriends);
-  }, []);
+  // const [onlineFriends, setOnlineFriends] = useState([]);
+  // useEffect(() => {
+  //   getOnlineFriends(axiosInstance, user.user_id, setOnlineFriends);
+  // }, [user.user_id]);
 
-  // const {data: onlineFriends} = UseFetchUserFriends(user.user_id)
+  const { data: onlineFriends } = UseFetchUserFriends(user.user_id);
 
   return (
     <>

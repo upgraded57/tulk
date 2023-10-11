@@ -38,11 +38,7 @@ export default function CreatePost({ group }) {
           </Link>
         </div>
         <div className="create-post-textarea" onClick={showCreatePostModal}>
-          <textarea
-            rows="2"
-            placeholder="Create Post..."
-            disabled={true}
-          ></textarea>
+          <textarea rows="2" placeholder="Create Post..."></textarea>
           <VscSmiley className="createPostIcon" />
         </div>
       </div>

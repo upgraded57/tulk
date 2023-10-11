@@ -59,7 +59,7 @@ export default function Post({ post, group }) {
             : `/posts/${post.id}/like/`,
       })
         .then(() => {
-          toast.success(`You liked ${postAuthorData.first_name}'s post`);
+          toast.success(`You liked ${postAuthorData?.first_name}'s post`);
         })
         .catch((err) => {
           console.log(err);
@@ -67,7 +67,7 @@ export default function Post({ post, group }) {
         });
     } else {
       setPostLikeCount((prev) => prev - 1);
-      toast.error(`You disliked ${postAuthorData.first_name}'s post`);
+      toast.error(`You disliked ${postAuthorData?.first_name}'s post`);
       setPostIsLiked(false);
     }
   };
@@ -153,7 +153,7 @@ export default function Post({ post, group }) {
       })
         .then(() => {
           toast.success(
-            `You commented on ${postAuthorData.first_name}'s post`,
+            `You commented on ${postAuthorData?.first_name}'s post`,
             {
               id: toastId,
             }
@@ -196,6 +196,30 @@ export default function Post({ post, group }) {
     fetchPostComments();
   }, [postCommentCount]);
 
+  // fetch post shares
+  const [postShares, setPostShares] = useState([]);
+  const [postShareCount, setPostShareCount] = useState(0);
+  const fetchPostShares = async () => {
+    await axiosInstance({
+      method: "get",
+      url:
+        group === true
+          ? `/group-posts/${post.id}/share/`
+          : `/posts/${post.id}/share/`,
+    })
+      .then((res) => {
+        setPostShares(res.data.results);
+        setPostShareCount(res.data.results.length);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchPostShares();
+  }, [postShareCount]);
+
   // post actions toggle
   const [postActions, setPostActions] = useState(false);
 
@@ -206,6 +230,32 @@ export default function Post({ post, group }) {
   // engagement modal
   const [engagementModal, setEngagementModal] = useState(false);
 
+  const sharePost = async () => {
+    const toastId = toast.loading(
+      `Sharing ${postAuthorData?.first_name}'s post`
+    );
+    await axiosInstance({
+      method: "Post",
+      url:
+        group === true
+          ? `/group-posts/${post.id}/share/`
+          : `/posts/${post.id}/share/`,
+      data: {
+        user: user.user_id,
+        post: post.id,
+      },
+    })
+      .then((res) => {
+        setPostShareCount((prev) => prev + 1);
+        toast.success("Post Shared!", {
+          id: toastId,
+        });
+      })
+      .catch((err) => {
+        toast.error("Unable to share post");
+      });
+  };
+
   return (
     <>
       <div className="postDiv">
@@ -213,13 +263,13 @@ export default function Post({ post, group }) {
           <div className="post-head">
             <Link to={`/profile/${post.author}/`}>
               <div className="poster-image">
-                <img src={postAuthorData.avatar} alt="" />
+                <img src={postAuthorData?.avatar} alt="" />
               </div>
             </Link>
-            {postAuthorData.first_name && (
+            {postAuthorData?.first_name && (
               <div className="poster-name">
                 <Link to={`/profile/${post.author}/`}>
-                  <h3 className="h-100">{`${postAuthorData.first_name} ${postAuthorData.last_name}`}</h3>
+                  <h3 className="h-100">{`${postAuthorData?.first_name} ${postAuthorData?.last_name}`}</h3>
                 </Link>
                 <small>{moment(post.created_at).fromNow()}</small>
               </div>
@@ -301,7 +351,7 @@ export default function Post({ post, group }) {
             </div>
 
             <div className="post-repost">
-              <p className="text-body">3</p>
+              <p className="text-body">{postShareCount}</p>
               <RiShareBoxFill className="post-like-icon" />
             </div>
           </div>
@@ -329,7 +379,10 @@ export default function Post({ post, group }) {
             >
               <FaRegComment className="post-interaction-icon" /> Comment
             </button>
-            <button className="post-interaction-btn">
+            <button
+              className="post-interaction-btn"
+              onClick={() => sharePost()}
+            >
               <RiShareBoxFill className="post-interaction-icon" /> Share
             </button>
           </div>

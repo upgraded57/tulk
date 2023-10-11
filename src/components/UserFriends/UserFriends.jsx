@@ -10,15 +10,15 @@ import noAvatar from "../../images/noAvatar.jpeg";
 export default function UserFriends({ friends }) {
   return (
     <div className="user-friends-div">
-      {friends.length < 1 ? (
+      {friends?.length === 0 ? (
         <>
-          <p>You have no friends yet. Go make some friends</p>
+          <p>No friends yet. Go make some friends</p>
           <div className="mt-md"></div>
         </>
       ) : (
         <>
           <div className="user-friends">
-            {friends.map((friend) => {
+            {friends?.map((friend) => {
               return (
                 <div className="user-friend" key={friend.id}>
                   <div className="user-friend-image">

@@ -52,7 +52,7 @@ export default function Signup({ setEditProfileModalIsVisible }) {
       // post data to server
       await axiosInstance({
         method: "put",
-        url: `https://tulk-social-f7f4f4c56190.herokuapp.com/userprofiles/${user.user_id}/`,
+        url: `https://tulk-social.azurewebsites.net/userprofiles/${user.user_id}/`,
         data: updateData,
       })
         .then((res) => {
@@ -61,7 +61,7 @@ export default function Signup({ setEditProfileModalIsVisible }) {
             id: toastId,
           });
           setEditProfileModalIsVisible(false);
-          localStorage.removeItem("user");
+          // localStorage.removeItem("user");
           localStorage.setItem("user", JSON.stringify(res.data));
           window.location.reload();
         })
@@ -75,10 +75,6 @@ export default function Signup({ setEditProfileModalIsVisible }) {
 
     postData();
   };
-
-  // const profileUpdateData = {
-  //   first_name: first_nameRef.current.value,
-  // };
 
   return (
     <div className="signupPage">

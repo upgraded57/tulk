@@ -49,7 +49,7 @@
 }
 
 .navbar-center img {
-  height: 28px;
+  height: 24px;
 }
 .navbar-center a {
   padding: 0 20px;
@@ -67,7 +67,7 @@
 .navbar-sm-screen a.active::before {
   content: "";
   position: absolute;
-  height: 10px;
+  height: 7px;
   width: 100px;
   background-image: var(--gradient-clr);
   bottom: -18px;

@@ -16,16 +16,19 @@ import { BsSearch } from "react-icons/bs";
 
 // data
 import { fetchArticles } from "../../Axios/ApiCalls";
+import UseFetchArticles from "./../../Hooks/Articles/UseFetchArticles";
 
 export default function Newsreel({ loginPage, feedsSwitched }) {
   const [newsCount, setNewsCount] = useState(10);
 
   // set variable to hold news articles
-  const [Articles, setArticles] = useState([]);
+  // const [Articles, setArticles] = useState([]);
 
-  useEffect(() => {
-    fetchArticles(setArticles);
-  }, []);
+  // useEffect(() => {
+  //   fetchArticles(setArticles);
+  // }, []);
+
+  const { data: Articles } = UseFetchArticles();
 
   // function to show search news input field when search icon is clicked
   const showSearchInput = () => {
@@ -79,16 +82,18 @@ export default function Newsreel({ loginPage, feedsSwitched }) {
           </div>
         </div>
       )}
-      {Articles.map((article) => {
+      {Articles?.map((article) => {
         return <IndividualNews key={article.id} article={article} />;
       })}
 
-      <button
-        className="btn-solid"
-        onClick={() => setNewsCount((prev) => prev + 10)}
-      >
-        View More
-      </button>
+      {Articles?.length > 10 && (
+        <button
+          className="btn-solid"
+          onClick={() => setNewsCount((prev) => prev + 10)}
+        >
+          View More
+        </button>
+      )}
     </div>
   );
 }

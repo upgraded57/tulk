@@ -40,7 +40,6 @@
 }
 
 .group-avatar {
-  min-width: 170px;
   width: 170px;
   aspect-ratio: 1/1;
   background-image: url("../../images/noGroupAvatar.jpg");
@@ -50,11 +49,13 @@
   border-radius: 50%;
   border: 5px solid #f8f8f8;
   position: relative;
+  overflow: hidden;
 }
 
 .group-avatar img {
   border-radius: 50%;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -169,10 +170,7 @@
   }
 
   .group-avatar {
-    min-width: 100px;
     width: 100px;
-    min-height: 100px;
-    height: 100px;
   }
 
   .group-image-name {

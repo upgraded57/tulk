@@ -32,10 +32,7 @@ export default function Notification({
     case "friend_request":
       return (
         <div className="notification">
-          <Link
-            to={`/profile/${notification.sender}/`}
-            onClick={() => setNotificationOpen(false)}
-          >
+          <Link to={`/profile/${notification.sender}/`}>
             <div className="notification-user-image">
               <img
                 src={
@@ -60,10 +57,7 @@ export default function Notification({
     case "accept_friend_request":
       return (
         <div className="notification">
-          <Link
-            to={`/profile/${notification.sender}/`}
-            onClick={() => setNotificationOpen(false)}
-          >
+          <Link to={`/profile/${notification.sender}/`}>
             <div className="notification-user-image">
               <img
                 src={
@@ -84,10 +78,7 @@ export default function Notification({
     case "group_request":
       return (
         <div className="notification">
-          <Link
-            to={`/profile/${notification.sender}/`}
-            onClick={() => setNotificationOpen(false)}
-          >
+          <Link to={`/profile/${notification.sender}/`}>
             <div className="notification-user-image">
               <img
                 src={
@@ -108,10 +99,7 @@ export default function Notification({
     case "group_request_accept":
       return (
         <div className="notification">
-          <Link
-            to={`/profile/${notification.sender}/`}
-            onClick={() => setNotificationOpen(false)}
-          >
+          <Link to={`/profile/${notification.sender}/`}>
             <div className="notification-user-image">
               <img
                 src={
@@ -132,10 +120,7 @@ export default function Notification({
     case "post_comment":
       return (
         <div className="notification">
-          <Link
-            to={`/posts/${notification.object_id}/`}
-            onClick={() => setNotificationOpen(false)}
-          >
+          <Link to={`/posts/${notification.object_id}/`}>
             <div className="notification-user-image">
               <img
                 src={
@@ -156,10 +141,7 @@ export default function Notification({
     case "post_like":
       return (
         <div className="notification">
-          <Link
-            to={`/posts/${notification.object_id}/`}
-            onClick={() => setNotificationOpen(false)}
-          >
+          <Link to={`/posts/${notification.object_id}/`}>
             <div className="notification-user-image">
               <img
                 src={
@@ -180,10 +162,7 @@ export default function Notification({
     case "post_share":
       return (
         <div className="notification">
-          <Link
-            to={`/posts/${notification.object_id}/`}
-            onClick={() => setNotificationOpen(false)}
-          >
+          <Link to={`/posts/${notification.object_id}/`}>
             <div className="notification-user-image">
               <img
                 src={

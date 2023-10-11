@@ -20,6 +20,15 @@
 .messenger-img {
   width: 50px;
   height: 50px;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.messenger-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .messenger-item-right {

@@ -88,41 +88,45 @@ export default function Admin() {
           <Loader type="list" />
         ) : (
           <div className="admin-right">
-            {articles.map((article) => {
-              return (
-                <div className="admin-article" key={article.id}>
-                  <div className="admin-article-img">
-                    <img
-                      src={
-                        article.featured_image
-                          ? article.featured_image
-                          : newsImg
-                      }
-                      alt=""
-                    />
-                  </div>
-                  <div className="admin-article-content">
-                    <p className="text-body">{article.title}</p>
-                    <small>
-                      {article.category.toUpperCase()} |{" "}
-                      {moment(article.published_date).format("MMM Do YYYY")}
-                    </small>
-                    <div
-                      className="admin-article-action-btns"
-                      onClick={editArticle}
-                    >
-                      <button className="btn-secondary">Edit</button>
-                      <button
-                        className="btn-secondary"
-                        onClick={() => deleteArticle(article.id)}
+            {articles?.length === 0 ? (
+              <p style={{ padding: "20px" }}>Nothing to show here yet!</p>
+            ) : (
+              articles?.map((article) => {
+                return (
+                  <div className="admin-article" key={article.id}>
+                    <div className="admin-article-img">
+                      <img
+                        src={
+                          article.featured_image
+                            ? article.featured_image
+                            : newsImg
+                        }
+                        alt=""
+                      />
+                    </div>
+                    <div className="admin-article-content">
+                      <p className="text-body">{article.title}</p>
+                      <small>
+                        {article.category.toUpperCase()} |{" "}
+                        {moment(article.published_date).format("MMM Do YYYY")}
+                      </small>
+                      <div
+                        className="admin-article-action-btns"
+                        onClick={editArticle}
                       >
-                        Delete
-                      </button>
+                        <button className="btn-secondary">Edit</button>
+                        <button
+                          className="btn-secondary"
+                          onClick={() => deleteArticle(article.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
         )}
       </div>

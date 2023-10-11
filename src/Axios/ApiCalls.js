@@ -1,6 +1,9 @@
 import axios from "axios";
 // react hot toast
 import toast from "react-hot-toast";
+
+import { useQuery } from "react-query";
+
 import {
   loginUserFailure,
   loginUserSuccess,
@@ -12,7 +15,7 @@ export const loginCall = async (loginCredentials, dispatch, navigate) => {
   const toastId = toast.loading("Loging you in");
   await axios({
     method: "post",
-    url: `https://tulk-social-f7f4f4c56190.herokuapp.com/api/token/`,
+    url: `https://tulk-social.azurewebsites.net/api/token/`,
     data: loginCredentials,
   })
     .then((res) => {
@@ -36,106 +39,14 @@ export const loginCall = async (loginCredentials, dispatch, navigate) => {
     });
 };
 
-// get a user
-export const fetchProfileUser = async (axiosInstance, profile_id, setUser) => {
-  await axiosInstance({
-    method: "get",
-    url: `/userprofiles/${profile_id}/`,
-  })
-    .then((res) => {
-      setUser(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-// get user timeline posts
-export const fetchUserPosts = async (
-  axiosInstance,
-  profile_id,
-  setUserPosts
-) => {
-  await axiosInstance({
-    url: `/users/${profile_id}/posts/`,
-    method: "get",
-  })
-    .then((res) => {
-      setUserPosts(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-// get all groups
-export const fetchGroups = async (axiosInstance, setGroups) => {
-  await axiosInstance({
-    url: "/groups/",
-    method: "get",
-  })
-    .then((res) => {
-      setGroups(res.data.results);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-// get single group data
-export const getGroupData = async (axiosInstance, group_id, setGroupData) => {
-  await axiosInstance({
-    url: `/groups/${group_id}/`,
-    method: "get",
-  })
-    .then((res) => {
-      setGroupData(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-      toast.error("Unable to fetch group data now");
-    });
-};
-
-// get online friends
-export const getOnlineFriends = async (
-  axiosInstance,
-  user_id,
-  setOnlineFriends
-) => {
-  await axiosInstance({
-    method: "get",
-    url: `/friendships/${user_id}/`,
-  })
-    .then((res) => {
-      setOnlineFriends(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
 // fetch news
 export const fetchArticles = async (setArticles) => {
   await axios({
     method: "get",
-    url: "https://tulk-social-f7f4f4c56190.herokuapp.com/articles/",
+    url: "https://tulk-social.azurewebsites.net/articles/",
   })
     .then((res) => {
       setArticles(res.data.results);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-export const fetchUserFriends = async (axiosInstance, user_id, setFriends) => {
-  await axiosInstance({
-    method: "get",
-    url: `/friendships/${user_id}`,
-  })
-    .then((res) => {
-      setFriends(res.data);
     })
     .catch((err) => {
       console.log(err);

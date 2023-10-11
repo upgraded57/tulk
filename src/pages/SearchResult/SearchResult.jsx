@@ -25,7 +25,7 @@ import UseFetchUserFriends from "./../../Hooks/User/UseFetchUserFriends";
 import useSearchGroups from "../../Hooks/Search/useSearchGroups";
 import UseSearchPosts from "../../Hooks/Search/UseSearchPosts";
 import UseSearchArticles from "../../Hooks/Search/UseSearchArticles";
-import useFetchUsers from "./../../Hooks/Users/useFetchUsers";
+import UseSearchPeople from "./../../Hooks/Search/UseSearchPeople";
 
 export default function SearchResult() {
   // get search query
@@ -35,84 +35,30 @@ export default function SearchResult() {
   const user = Userdata();
 
   // search for people
-  const { isLoading: searchUsersLoading, data: searchedPeople } =
-    useFetchUsers("1");
+  // const { data: searchedPeople } = useFetchUsers("1");
+  const { data: searchedPeople } = UseSearchPeople(search_query);
 
   // search for groups
-  const { isLoading: searchGroupLoading, data: searchedGroups } =
-    useSearchGroups(search_query);
+  const { data: searchedGroups } = useSearchGroups(search_query);
 
   // search for posts
-  const { isLoading: searchPostsLoading, data: searchedPosts } =
-    UseSearchPosts(search_query);
+  const { data: searchedPosts } = UseSearchPosts(search_query);
 
   // search for articles
-  const { isLoading: searchArticlesLoading, data: searchedArticles } =
-    UseSearchArticles(search_query);
+  const { data: searchedArticles } = UseSearchArticles(search_query);
 
   // fetch user friends to determine when to show Add Friend button in people result
-  const { isLoading: userFriendsLoading, data: friends } = UseFetchUserFriends(
-    user.user_id
-  );
+  const { data: friends } = UseFetchUserFriends(user.user_id);
 
   const friendsId = [];
-  friends.forEach((friend) => {
+  friends?.forEach((friend) => {
     friendsId.push(friend.id);
   });
 
   // function to filter search result (variables)
-  const [showPeople, setShowPeople] = useState(true);
-  const [showGroups, setShowGroups] = useState(true);
-  const [showPosts, setShowPosts] = useState(true);
-  const [showArticles, setShowArticles] = useState(true);
+  const [filter, setFilter] = useState("all");
 
-  // function to filter search result to show all
-  const showAllFilter = () => {
-    setShowPeople(true);
-    setShowGroups(true);
-    setShowPosts(true);
-    setShowArticles(true);
-  };
-
-  // function to filter search result to show only people
-  const showPeopleFilter = () => {
-    if (!showPeople) {
-      setShowPeople(true);
-    }
-    setShowGroups(false);
-    setShowPosts(false);
-    setShowArticles(false);
-  };
-
-  // function to filter search result to show only groups
-  const showGroupsFilter = () => {
-    if (!showGroups) {
-      setShowGroups(true);
-    }
-    setShowPeople(false);
-    setShowPosts(false);
-    setShowArticles(false);
-  };
-
-  // function to filter search result to show only posts
-  const showPostsFilter = () => {
-    if (!showPosts) {
-      setShowPosts(true);
-    }
-    setShowGroups(false);
-    setShowPeople(false);
-    setShowArticles(false);
-  };
-
-  // function to filter search result to show only articles
-  const showArticlesFilter = () => {
-    if (!showArticles) {
-      setShowArticles(true);
-    }
-    setShowGroups(false);
-    setShowPosts(false);
-    setShowPeople(false);
-  };
+  console.log(searchedArticles);
 
   return (
     <>
@@ -124,29 +70,29 @@ export default function SearchResult() {
           </div>
           <div className="search-result-filter-list">
             <ul>
-              <li onClick={showAllFilter}>All</li>
-              <li onClick={showPeopleFilter}>People</li>
-              <li onClick={showGroupsFilter}>Groups</li>
-              <li onClick={showPostsFilter}>Posts</li>
-              <li onClick={showArticlesFilter}>Articles</li>
+              <li onClick={() => setFilter("all")}>All</li>
+              <li onClick={() => setFilter("people")}>People</li>
+              <li onClick={() => setFilter("groups")}>Groups</li>
+              <li onClick={() => setFilter("posts")}>Posts</li>
+              <li onClick={() => setFilter("articles")}>Articles</li>
             </ul>
           </div>
         </div>
 
         <div className="search-result-main">
           {/* People Container */}
-          {showPeople && (
+          {(filter === "all" || filter === "people") && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
                 <h3 className="h-100">People</h3>
               </div>
 
-              {searchedPeople.length === 0 ? (
+              {searchedPeople?.length === 0 ? (
                 <p>Your search didn't return any person</p>
               ) : (
                 <>
                   <div className="search-result-main-container-body">
-                    {searchedPeople.map((person) => {
+                    {searchedPeople?.map((person) => {
                       return (
                         <div
                           className="search-result-main-container-body-list"
@@ -197,18 +143,18 @@ export default function SearchResult() {
           )}
 
           {/* Groups Container */}
-          {showGroups && (
+          {(filter === "all" || filter === "groups") && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
                 <h3 className="h-100">Groups</h3>
               </div>
 
-              {searchedGroups.length === 0 ? (
+              {searchedGroups?.length === 0 ? (
                 <p>Your search didn't return any group</p>
               ) : (
                 <>
                   <div className="search-result-main-container-body">
-                    {searchedGroups.map((group) => {
+                    {searchedGroups?.map((group) => {
                       return (
                         <div
                           className="search-result-main-container-body-list"
@@ -241,16 +187,16 @@ export default function SearchResult() {
           )}
 
           {/* Posts Container */}
-          {showPosts && (
+          {(filter === "all" || filter === "posts") && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
                 <h3 className="h-100">Posts</h3>
               </div>
 
-              {searchedPosts.length === 0 ? (
+              {searchedPosts?.length === 0 ? (
                 <p>Your search didn't return any post</p>
               ) : (
-                searchedPosts.map((post) => {
+                searchedPosts?.map((post) => {
                   return <Post post={post} key={post.id} />;
                 })
               )}
@@ -258,16 +204,16 @@ export default function SearchResult() {
           )}
 
           {/* Posts Container */}
-          {showArticles && (
+          {(filter === "all" || filter === "articles") && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
                 <h3 className="h-100">Articles</h3>
               </div>
 
-              {searchedArticles.length === 0 ? (
+              {searchedArticles?.length === 0 ? (
                 <p>Your search didn't return any article</p>
               ) : (
-                searchedArticles.map((article) => {
+                searchedArticles?.map((article) => {
                   return <IndividualNews article={article} key={article.id} />;
                 })
               )}

@@ -13,21 +13,24 @@ import { IoIosClose } from "react-icons/io";
 import chatHeadImg from "../../images/Frame 40.png";
 import { useSelector } from "react-redux";
 
-export default function Chat({ setShowChatModal, chatModal }) {
+export default function Chat({ setShowChatModal, chatModal, conversation }) {
   // Function to close chat
   const closeChat = () => {
     setShowChatModal(false);
   };
 
+  console.log(conversation);
+
   // select current user
-  const currentUser = useSelector((state) => state.currentUser);
+  // const currentUser = useSelector((state) => state.currentUser);
+
   return (
     <div className={chatModal ? "chatModal-chat-box" : "fullscreen-chat-box"}>
       <div className="chat-head">
         <div className="chat-head-img">
           <img src={chatHeadImg} alt="" />
         </div>
-        <h3 className="h-100">Precious Lazarus</h3>
+        <h3 className="h-100">{conversation.name}</h3>
         {chatModal && (
           <div className="chat-close-btn" onClick={closeChat}>
             <IoIosClose />

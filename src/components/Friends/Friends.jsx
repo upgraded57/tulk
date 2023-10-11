@@ -11,14 +11,12 @@ import { fetchUserFriends } from "../../Axios/ApiCalls";
 
 // images
 import noAvatar from "../../images/noAvatar.jpeg";
+import UseFetchUserFriends from "../../Hooks/User/UseFetchUserFriends";
 
 export default function Friends() {
   const user = Userdata();
   // fetch friends
-  const [friends, setFriends] = useState([]);
-  useEffect(() => {
-    fetchUserFriends(axiosInstance, user.user_id, setFriends);
-  }, [user.user_id]);
+  const { data: friends } = UseFetchUserFriends(user.user_id);
 
   return (
     <div className="friendsDiv mt-lg">
@@ -32,7 +30,7 @@ export default function Friends() {
       </div>
 
       <div className="friends">
-        {friends[0] && (
+        {friends && friends[0] && (
           <div className="friend" key={friends[0].id}>
             <Link to={`/profile/${friends[0].id}/`}>
               <img
@@ -43,7 +41,7 @@ export default function Friends() {
           </div>
         )}
 
-        {friends[1] && (
+        {friends && friends[1] && (
           <div className="friend" key={friends[1].id}>
             <Link to={`/profile/${friends[1].id}/`}>
               <img
@@ -54,7 +52,7 @@ export default function Friends() {
           </div>
         )}
 
-        {friends[2] && (
+        {friends && friends[2] && (
           <div className="friend" key={friends[2].id}>
             <Link to={`/profile/${friends[2].id}/`}>
               <img

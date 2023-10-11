@@ -45,7 +45,7 @@ const Group = () => {
 
     await axiosInstance({
       method: "patch",
-      url: `/groups/${groupData.id}`,
+      url: `/groups/${groupData?.id}`,
       data: formData,
     })
       .then(() => {
@@ -72,7 +72,7 @@ const Group = () => {
 
     await axiosInstance({
       method: "patch",
-      url: `/groups/${groupData.id}`,
+      url: `/groups/${groupData?.id}`,
       data: formData,
     })
       .then(() => {
@@ -90,7 +90,7 @@ const Group = () => {
   };
 
   let userGroupIds = [];
-  userGroups.forEach((userGroup) => {
+  userGroups?.forEach((userGroup) => {
     userGroupIds.push(userGroup.id);
   });
 
@@ -100,8 +100,8 @@ const Group = () => {
       <div className="group-page">
         <div className="group-data">
           <div className="group-cover-photo">
-            <img src={groupData.background_image} alt="" />
-            {groupData.id === user.user_id && (
+            <img src={groupData?.background_image} alt="" />
+            {groupData?.id === user.user_id && (
               <div className="group-cover-photo-update">
                 <input
                   type="file"
@@ -119,8 +119,8 @@ const Group = () => {
           </div>
           <div className="group-image-name">
             <div className="group-avatar">
-              <img src={groupData.avatar} alt="" />
-              {groupData.id === user.user_id && (
+              <img src={groupData?.avatar} alt="" />
+              {groupData?.id === user.user_id && (
                 <div className="group-avatar-update-icon">
                   <input
                     type="file"
@@ -137,16 +137,16 @@ const Group = () => {
               )}
             </div>
             <div className="group-name-slogan">
-              <h2 className="h-200">{groupData.name}</h2>
+              <h2 className="h-200">{groupData?.name}</h2>
               <div className="group-slogan mt-xsm">
-                <p>{groupData.category?.toUpperCase()}</p>
+                <p>{groupData?.category?.toUpperCase()}</p>
                 <div className="group-members-count">
-                  <p>{groupData.members?.length} Members</p>
+                  <p>{groupData?.members?.length} Members</p>
                 </div>
               </div>
             </div>
 
-            {groupData.id !== user.user_id && (
+            {groupData?.id !== user.user_id && (
               <div className="group-edit-button">
                 <button
                   className="btn-secondary"
@@ -169,17 +169,17 @@ const Group = () => {
         <div className="group-info">
           <h3 className="h-100">
             <b> Slogan: </b> <br />
-            {groupData.slogan}
+            {groupData?.slogan}
           </h3>
           <h3 className="h-100">
             <b>Group introduction message</b> <br />
-            {groupData.about}
+            {groupData?.about}
           </h3>
         </div>
 
         <div className="group-posts">
           {userGroupIds.includes(group_id) && <CreatePost group={groupData} />}
-          {groupPosts.map((groupPost) => {
+          {groupPosts?.map((groupPost) => {
             return <Post post={groupPost} key={groupPost.id} group />;
           })}
         </div>
