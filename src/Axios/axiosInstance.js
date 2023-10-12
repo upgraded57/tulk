@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 const tokens = JSON.parse(localStorage.getItem("tokens"));
 
 export const axiosInstance = axios.create({
-  baseURL: "https://tulk-social.azurewebsites.net",
+  baseURL: "https://tulk-socail.azurewebsites.net",
   headers: {
     Authorization: `Bearer ${tokens?.access}`,
   },
@@ -22,7 +22,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       await axios({
         method: "post",
-        url: "https://tulk-social.azurewebsites.net/api/token/refresh/",
+        url: "https://tulk-socail.azurewebsites.net/api/token/refresh/",
         data: { refresh: tokens.refresh },
       })
         .then((res) => {
@@ -38,11 +38,19 @@ axiosInstance.interceptors.response.use(
         })
         .catch((err) => {
           console.log(err);
+          if (
+            err.response.status === 401 &&
+            err.response.statusText === "Unauthorized"
+          ) {
+            toast.error("You need to login first!");
+            localStorage.removeItem("user");
+            localStorage.removeItem("tokens");
+            return (window.location = `${window.location.origin}/login`);
+          }
         });
     } else if (
       err.response.status === 401 &&
-      err.response.statusText === "Unauthorized" &&
-      err.response.data.detail === "Token is blacklisted"
+      err.response.statusText === "Unauthorized"
     ) {
       toast.error("You need to login first!");
       return (window.location = `${window.location.origin}/login`);

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Userdata = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({});
 
   // get current user from store
@@ -10,7 +12,10 @@ export const Userdata = () => {
   useEffect(() => {
     const fetchUser = () => {
       if (!currentUser) {
-        return;
+        navigate("/login");
+        if (localStorage.getItem("tokens")) {
+          localStorage.removeItem("tokens");
+        }
       } else {
         setUser({
           fullname: `${currentUser.first_name} ${currentUser.last_name}`,

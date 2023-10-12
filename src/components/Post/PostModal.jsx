@@ -16,16 +16,14 @@ import CreatePost from "../CreatePost/CreatePost";
 import Newsreel from "../Newsreel/Newsreel";
 import { axiosInstance } from "../../Axios/axiosInstance";
 import UseFetchUserFriends from "../../Hooks/User/UseFetchUserFriends";
+import UseFetchPost from "../../Hooks/Posts/UseFetchPost";
+import Loader from "./../Loader/Loader";
 
 export default function PostModal() {
   const { post_id } = useParams();
-  const [post, setPost] = useState({});
 
   //fetch post
-  useEffect(() => {
-    getSinglePost(axiosInstance, post_id, setPost);
-  }, [post_id]);
-
+  const { isLoading: postLoading, data: post } = UseFetchPost(post_id);
   // current user
   const user = Userdata();
 
@@ -68,7 +66,8 @@ export default function PostModal() {
           {/* <Stories /> */}
           <CreatePost />
 
-          <Post post={post} />
+          {/* {post && <Post post={post} />} */}
+          {postLoading ? <Loader type="post" /> : <Post post={post} />}
         </div>
         <div className="home-right-toggle-feed">
           <div className="toggle-feed" id="toggleFeed" onClick={switchFeed}>

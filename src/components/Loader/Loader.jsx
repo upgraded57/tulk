@@ -4,7 +4,7 @@ import "./loader.css";
 
 export default function Loader({ type }) {
   switch (type) {
-    case "post":
+    case "posts":
       return (
         <>
           <div className="post-loader">
@@ -37,6 +37,27 @@ export default function Loader({ type }) {
               <span></span>
             </div>
           </div>
+          <div className="post-loader">
+            <div className="post-loader__user">
+              <div className="post-loader__user-avatar"></div>
+              <div className="post-loader__user-data">
+                <div className="post-loader__user-data-name"></div>
+                <div className="post-loader__user-data-subtitle"></div>
+              </div>
+            </div>
+            <div className="post-loader__media"></div>
+            <div className="post-loader__content">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </>
+      );
+
+    case "post":
+      return (
+        <>
           <div className="post-loader">
             <div className="post-loader__user">
               <div className="post-loader__user-avatar"></div>

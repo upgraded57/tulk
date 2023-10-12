@@ -2,8 +2,6 @@ import axios from "axios";
 // react hot toast
 import toast from "react-hot-toast";
 
-import { useQuery } from "react-query";
-
 import {
   loginUserFailure,
   loginUserSuccess,
@@ -15,7 +13,7 @@ export const loginCall = async (loginCredentials, dispatch, navigate) => {
   const toastId = toast.loading("Loging you in");
   await axios({
     method: "post",
-    url: `https://tulk-social.azurewebsites.net/api/token/`,
+    url: `https://tulk-socail.azurewebsites.net/api/token/`,
     data: loginCredentials,
   })
     .then((res) => {
@@ -43,7 +41,7 @@ export const loginCall = async (loginCredentials, dispatch, navigate) => {
 export const fetchArticles = async (setArticles) => {
   await axios({
     method: "get",
-    url: "https://tulk-social.azurewebsites.net/articles/",
+    url: "https://tulk-socail.azurewebsites.net/articles/",
   })
     .then((res) => {
       setArticles(res.data.results);

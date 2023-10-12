@@ -21,6 +21,7 @@ import Chat from "../../components/Chat/Chat";
 import Navbar from "../../components/Navbar/Navbar";
 import { getOnlineFriends } from "../../Axios/ApiCalls";
 import UseFetchUserFriends from "../../Hooks/User/UseFetchUserFriends";
+import Loader from "../../components/Loader/Loader";
 
 export default function Home() {
   // current user
@@ -38,9 +39,11 @@ export default function Home() {
 
   // fetch posts
   const [posts, setPosts] = useState([]);
+  const [postsLoading, setPostsLoading] = useState(false);
   const [postPagination, setPostPagination] = useState(1);
   const [hasMorePosts, setHasMorePosts] = useState(null);
   const fetchPosts = async () => {
+    setPostsLoading(true);
     await axiosInstance({
       url: `/posts/?page=${postPagination}`,
       method: "get",
@@ -53,6 +56,9 @@ export default function Home() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setPostsLoading(false);
       });
   };
 
@@ -92,24 +98,28 @@ export default function Home() {
           {/* <Stories /> */}
           <CreatePost />
 
-          <InfiniteScroll
-            dataLength={posts.length} //This is important field to render the next data
-            next={() => setPostPagination((prev) => prev + 1)}
-            hasMore={hasMorePosts !== null ? true : false}
-            loader={<h4>Loading...</h4>}
-            endMessage={
-              <div
-                className="end-of-post-text"
-                style={{ textAlign: "center", marginBlock: "20px" }}
-              >
-                <p>Thats all for now.</p>
-              </div>
-            }
-          >
-            {posts.map((post) => {
-              return <Post post={post} key={post.id} />;
-            })}
-          </InfiniteScroll>
+          {postsLoading ? (
+            <Loader type="posts" />
+          ) : (
+            <InfiniteScroll
+              dataLength={posts.length} //This is important field to render the next data
+              next={() => setPostPagination((prev) => prev + 1)}
+              hasMore={hasMorePosts !== null ? true : false}
+              loader={<h4>Loading...</h4>}
+              endMessage={
+                <div
+                  className="end-of-post-text"
+                  style={{ textAlign: "center", marginBlock: "20px" }}
+                >
+                  <p>Thats all for now.</p>
+                </div>
+              }
+            >
+              {posts.map((post) => {
+                return <Post post={post} key={post.id} />;
+              })}
+            </InfiniteScroll>
+          )}
         </div>
         <div className="home-right-toggle-feed">
           <div className="toggle-feed" id="toggleFeed" onClick={switchFeed}>

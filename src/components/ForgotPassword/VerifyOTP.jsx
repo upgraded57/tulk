@@ -26,7 +26,7 @@ export default function VerifyOTP() {
     if (otp.trim().length !== 0) {
       await axios({
         method: "post",
-        url: `https://tulk-social.azurewebsites.net/verify-otp/${newUID}/`,
+        url: `https://tulk-socail.azurewebsites.net/verify-otp/${newUID}/`,
         data: { otp },
       })
         .then((res) => {

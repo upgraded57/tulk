@@ -309,7 +309,8 @@ const Profile = () => {
                 className={showModal === "groups" ? "active" : ""}
                 onClick={() => setShowModal("groups")}
               >
-                My Groups
+                {user && currentUser && user.id === currentUser.user_id && "My"}{" "}
+                Groups
               </p>
             </div>
             {showModal === "photos" && <UserPhotos />}

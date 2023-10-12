@@ -20,8 +20,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Signup({ setSignupModalVisible }) {
-  // const [verifyOTPModal, setVerifyOTPModal] = useState(false);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // signup data
@@ -97,7 +95,7 @@ export default function Signup({ setSignupModalVisible }) {
       const toastId = toast.loading("Creating your profile...");
       await axios({
         method: "post",
-        url: "https://tulk-social.azurewebsites.net/register/",
+        url: "https://tulk-socail.azurewebsites.net/register/",
         data: signupFormData,
       })
         .then((res) => {

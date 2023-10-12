@@ -25,6 +25,7 @@ import {
 
 // data
 import { Userdata } from "../../data/Userdata";
+import { axiosInstance } from "../../Axios/axiosInstance";
 
 export default function SearchResult() {
   const currentUser = Userdata();
@@ -238,7 +239,11 @@ export default function SearchResult() {
                                 <button
                                   className="btn-secondary"
                                   onClick={() =>
-                                    sendFriendRequest(currentUser.user_id, user)
+                                    sendFriendRequest(
+                                      axiosInstance,
+                                      currentUser.user_id,
+                                      user
+                                    )
                                   }
                                 >
                                   Add Friend
