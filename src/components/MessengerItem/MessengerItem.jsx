@@ -22,19 +22,17 @@ export default function MessengerItem({
 
   const { data: recipient } = useFetchProfile(chat.receiver);
 
-  console.log(recipient);
-
   return (
     <div className="messenger-item" onClick={openConversation}>
       <div className="messenger-item-left">
         <div className="messenger-img">
-          <img src={recipient.avatar ? recipient.avatar : noAvatar} alt="" />
+          <img src={recipient?.avatar ? recipient.avatar : noAvatar} alt="" />
         </div>
         <div className="messenger-item-left-center">
           <div className="messenger-name">
-            <h3 className="h-100">{`${recipient.first_name} ${recipient.last_name}`}</h3>
+            <h3 className="h-100">{`${recipient?.first_name} ${recipient?.last_name}`}</h3>
             <div className="messenger-last-message">
-              <p className="text-body">{chat.catchPhrase}</p>
+              <p className="text-body">{chat?.catchPhrase}</p>
             </div>
           </div>
         </div>

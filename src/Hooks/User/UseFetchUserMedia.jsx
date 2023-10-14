@@ -9,6 +9,6 @@ export default function UseFetchUserMedia(user_id) {
     });
   };
   return useQuery(["userMedia", user_id], () => fetchUserMedia(user_id), {
-    select: (data) => data.data.results,
+    select: (data) => data.data,
   });
 }

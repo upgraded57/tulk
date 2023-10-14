@@ -13,7 +13,7 @@ export const loginCall = async (loginCredentials, dispatch, navigate) => {
   const toastId = toast.loading("Loging you in");
   await axios({
     method: "post",
-    url: `https://tulk-socail.azurewebsites.net/api/token/`,
+    url: `https://tulk.azurewebsites.net/api/token/`,
     data: loginCredentials,
   })
     .then((res) => {
@@ -31,9 +31,22 @@ export const loginCall = async (loginCredentials, dispatch, navigate) => {
     })
     .catch((err) => {
       dispatch(loginUserFailure(err.message));
-      toast.error("Unable to login! Check credentials", {
-        id: toastId,
-      });
+      if (err.response.data.non_field_errors[0]) {
+        toast.error(
+          "Unable to login! " + err.response.data.non_field_errors[0],
+          {
+            id: toastId,
+          }
+        );
+      } else if (err.message === "Network Error") {
+        toast.error("Unable to login! Network Error", {
+          id: toastId,
+        });
+      } else {
+        toast.error("Unable to login! Check credentials", {
+          id: toastId,
+        });
+      }
     });
 };
 
@@ -41,7 +54,7 @@ export const loginCall = async (loginCredentials, dispatch, navigate) => {
 export const fetchArticles = async (setArticles) => {
   await axios({
     method: "get",
-    url: "https://tulk-socail.azurewebsites.net/articles/",
+    url: "https://tulk.azurewebsites.net/articles/",
   })
     .then((res) => {
       setArticles(res.data.results);

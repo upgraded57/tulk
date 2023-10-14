@@ -52,7 +52,7 @@ export default function Signup({ setEditProfileModalIsVisible }) {
       // post data to server
       await axiosInstance({
         method: "put",
-        url: `https://tulk-social.azurewebsites.net/userprofiles/${user.user_id}/`,
+        url: `https://tulk.azurewebsites.net/userprofiles/${user.user_id}/`,
         data: updateData,
       })
         .then((res) => {
@@ -61,7 +61,6 @@ export default function Signup({ setEditProfileModalIsVisible }) {
             id: toastId,
           });
           setEditProfileModalIsVisible(false);
-          // localStorage.removeItem("user");
           localStorage.setItem("user", JSON.stringify(res.data));
           window.location.reload();
         })
@@ -98,21 +97,39 @@ export default function Signup({ setEditProfileModalIsVisible }) {
             <span>
               <input
                 type="text"
-                placeholder="First Name ..."
+                placeholder={
+                  user?.first_name ? user.first_name : "First Name ..."
+                }
                 ref={first_nameRef}
               />
               <input
                 type="text"
-                placeholder="Last Name ..."
+                placeholder={user?.last_name ? user.last_name : "Last Name ..."}
                 ref={last_nameRef}
               />
             </span>
-            <input type="text" placeholder=" Address ..." ref={locationRef} />
+            <input
+              type="text"
+              placeholder={user?.location ? user.location : "Address ..."}
+              ref={locationRef}
+            />
             <span>
-              <input type="text" placeholder="School ..." ref={schoolRef} />
-              <input type="text" placeholder="Website ..." ref={websiteRef} />
+              <input
+                type="text"
+                placeholder={user?.school ? user.school : "School ..."}
+                ref={schoolRef}
+              />
+              <input
+                type="text"
+                placeholder={user?.website ? user.website : "Website ..."}
+                ref={websiteRef}
+              />
             </span>
-            <input type="text" placeholder="Bio ..." ref={bioRef} />
+            <input
+              type="text"
+              placeholder={user?.bio ? user.bio : "Bio ..."}
+              ref={bioRef}
+            />
 
             <span>
               <div className="gender-input">
@@ -140,7 +157,7 @@ export default function Signup({ setEditProfileModalIsVisible }) {
                   <option value="MARRIED">Married</option>
                   <option value="DIVORCED">Divorced</option>
                   <option value="COMPLICATED">Complicated</option>
-                  <option value="I'D RATHER NOT SAY">I'd Rather Not Say</option>
+                  <option value="I'D RATHER NOT SAY">I'd Rather Not Say</option>
                 </select>
               </div>
             </span>

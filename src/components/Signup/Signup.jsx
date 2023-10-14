@@ -95,7 +95,7 @@ export default function Signup({ setSignupModalVisible }) {
       const toastId = toast.loading("Creating your profile...");
       await axios({
         method: "post",
-        url: "https://tulk-socail.azurewebsites.net/register/",
+        url: "https://tulk.azurewebsites.net/register/",
         data: signupFormData,
       })
         .then((res) => {

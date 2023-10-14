@@ -109,3 +109,21 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
+.noArticle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.noArticle img {
+  margin-top: 5vh;
+  width: 100px;
+}
+
+.noArticle p {
+  text-align: center;
+}

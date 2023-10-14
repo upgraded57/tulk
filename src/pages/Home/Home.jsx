@@ -19,7 +19,6 @@ import ChatPopup from "../../components/ChatPopup/ChatPopup";
 import Chat from "../../components/Chat/Chat";
 
 import Navbar from "../../components/Navbar/Navbar";
-import { getOnlineFriends } from "../../Axios/ApiCalls";
 import UseFetchUserFriends from "../../Hooks/User/UseFetchUserFriends";
 import Loader from "../../components/Loader/Loader";
 

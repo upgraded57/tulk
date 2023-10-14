@@ -333,7 +333,7 @@
 
 .image-popup-backdrop {
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(5px);
   position: fixed;
@@ -387,7 +387,7 @@
 .engagement-modal {
   position: fixed;
   width: min(600px, 94vw);
-  height: min(900px, 80vh);
+  height: min(900px, 80dvh);
   bottom: 5%;
   left: 50%;
   transform: translateX(-50%);

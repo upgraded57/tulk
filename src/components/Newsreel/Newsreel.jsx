@@ -3,6 +3,9 @@ import React from "react";
 // styles
 import "./newsreel.css";
 
+// images
+import noArticle from "../../images/icons/no-article.svg";
+
 // components
 import IndividualNews from "../IndividualNews/IndividualNews";
 
@@ -16,19 +19,16 @@ import { BsSearch } from "react-icons/bs";
 
 // data
 import { fetchArticles } from "../../Axios/ApiCalls";
-import UseFetchArticles from "./../../Hooks/Articles/UseFetchArticles";
 
 export default function Newsreel({ loginPage, feedsSwitched }) {
   const [newsCount, setNewsCount] = useState(10);
 
   // set variable to hold news articles
-  // const [Articles, setArticles] = useState([]);
+  const [Articles, setArticles] = useState([]);
 
-  // useEffect(() => {
-  //   fetchArticles(setArticles);
-  // }, []);
-
-  const { data: Articles } = UseFetchArticles();
+  useEffect(() => {
+    fetchArticles(setArticles);
+  }, []);
 
   // function to show search news input field when search icon is clicked
   const showSearchInput = () => {
@@ -82,9 +82,18 @@ export default function Newsreel({ loginPage, feedsSwitched }) {
           </div>
         </div>
       )}
-      {Articles?.map((article) => {
-        return <IndividualNews key={article.id} article={article} />;
-      })}
+      {Articles?.length === 0 ? (
+        <div className="noArticle">
+          <img src={noArticle} alt="" />
+          <p className="text-body">
+            No articles found. <br /> Check back later
+          </p>
+        </div>
+      ) : (
+        Articles?.map((article) => {
+          return <IndividualNews key={article.id} article={article} />;
+        })
+      )}
 
       {Articles?.length > 10 && (
         <button

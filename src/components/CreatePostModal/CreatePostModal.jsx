@@ -128,7 +128,7 @@ export default function CreatePostModal({ setCreatePostModal, group }) {
 
         <div className="create-post-modal-container-textarea mt-xsm">
           <textarea
-            autofocus="true"
+            autoFocus={true}
             id="createPostInputText"
             placeholder="Create Post..."
             onChange={(e) => setPostBody(e.target.value)}

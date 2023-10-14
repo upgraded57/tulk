@@ -2,56 +2,101 @@ import React from "react";
 
 // styles
 import "./userPhotos.css";
+import { useNavigate } from "react-router-dom";
 
-// images
-import userPhoto1 from "../../images/Frame 71.png";
-import userPhoto2 from "../../images/Frame 72.png";
-import userPhoto3 from "../../images/Frame 73.png";
-import userPhoto4 from "../../images/Frame 74.png";
-import userPhoto5 from "../../images/Frame 75.png";
-
-export default function UserPhotos() {
+export default function UserPhotos({ photos }) {
+  const navigate = useNavigate();
   return (
     <div className="user-photos-div">
+      {(photos?.length === 0 || !photos) && <p>No media to display yet</p>}
       <div className="profile-photos-media">
-        <div className="profile-media">
-          <img src={userPhoto1} alt="" />
-        </div>
-        <div className="profile-media">
-          <img src={userPhoto1} alt="" />
-        </div>
-        <div className="profile-media">
-          <img src={userPhoto3} alt="" />
-        </div>
-        <div className="profile-media">
-          <img src={userPhoto1} alt="" />
-        </div>
-        <div className="profile-media">
-          <img src={userPhoto2} alt="" />
-        </div>
-        <div className="profile-media">
-          <img src={userPhoto1} alt="" />
-        </div>
-        <div className="profile-media">
-          <img src={userPhoto5} alt="" />
-        </div>
-        <div className="profile-media">
-          <img src={userPhoto1} alt="" />
-        </div>
-        <div className="profile-media">
-          <img src={userPhoto4} alt="" />
-        </div>
-        <div className="profile-media">
-          <img src={userPhoto1} alt="" />
-        </div>
-        <div className="profile-media">
-          <img src={userPhoto1} alt="" />
-        </div>
+        {photos && photos[0] && (
+          <div
+            className="profile-media"
+            onClick={() => navigate("/posts/" + photos[0].post)}
+          >
+            <img src={photos[0].file} alt="" />
+          </div>
+        )}
+
+        {photos && photos[1] && (
+          <div
+            className="profile-media"
+            onClick={() => navigate("/posts/" + photos[1].post)}
+          >
+            <img src={photos[1].file} alt="" />
+          </div>
+        )}
+
+        {photos && photos[2] && (
+          <div
+            className="profile-media"
+            onClick={() => navigate("/posts/" + photos[2].post)}
+          >
+            <img src={photos[2].file} alt="" />
+          </div>
+        )}
+
+        {photos && photos[3] && (
+          <div
+            className="profile-media"
+            onClick={() => navigate("/posts/" + photos[3].post)}
+          >
+            <img src={photos[3].file} alt="" />
+          </div>
+        )}
+
+        {photos && photos[4] && (
+          <div
+            className="profile-media"
+            onClick={() => navigate("/posts/" + photos[4].post)}
+          >
+            <img src={photos[4].file} alt="" />
+          </div>
+        )}
+
+        {photos && photos[5] && (
+          <div
+            className="profile-media"
+            onClick={() => navigate("/posts/" + photos[5].post)}
+          >
+            <img src={photos[5].file} alt="" />
+          </div>
+        )}
+
+        {photos && photos[6] && (
+          <div
+            className="profile-media"
+            onClick={() => navigate("/posts/" + photos[6].post)}
+          >
+            <img src={photos[6].file} alt="" />
+          </div>
+        )}
+
+        {photos && photos[7] && (
+          <div
+            className="profile-media"
+            onClick={() => navigate("/posts/" + photos[7].post)}
+          >
+            <img src={photos[7].file} alt="" />
+          </div>
+        )}
+
+        {photos && photos[8] && (
+          <div
+            className="profile-media"
+            onClick={() => navigate("/posts/" + photos[8].post)}
+          >
+            <img src={photos[8].file} alt="" />
+          </div>
+        )}
       </div>
 
-      <div className="see-all-user-photos-btn">
-        <a href="#">See All</a>
-      </div>
+      {photos && photos?.length > 9 && (
+        <div className="see-all-user-photos-btn">
+          <a href="#">See All</a>
+        </div>
+      )}
     </div>
   );
 }

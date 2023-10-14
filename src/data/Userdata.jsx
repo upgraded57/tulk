@@ -18,6 +18,8 @@ export const Userdata = () => {
         }
       } else {
         setUser({
+          first_name: currentUser.first_name,
+          last_name: currentUser.last_name,
           fullname: `${currentUser.first_name} ${currentUser.last_name}`,
           email: currentUser.email,
           user_id: currentUser.id,

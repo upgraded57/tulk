@@ -43,25 +43,18 @@ const Profile = () => {
   const currentUser = Userdata();
   // fetch user profile
   const { profile_id } = useParams();
-  const { isLoading: userProfileLoading, data: user } =
-    useFetchProfile(profile_id);
+  const { data: user } = useFetchProfile(profile_id);
 
   // fetch user posts
-  const { isLoading: userPostsLoading, data: userPosts } =
-    UseFetchUserPosts(profile_id);
+  const { data: userPosts } = UseFetchUserPosts(profile_id);
 
   // fetch user friends
-  const { isLoading: userFriendsLoading, data: friends } =
-    UseFetchUserFriends(profile_id);
+  const { data: friends } = UseFetchUserFriends(profile_id);
 
   // fetch user media
-  const { isLoading: userMediaLoading, data: userMedia } = UseFetchUserMedia(
-    profile_id,
-    "1"
-  );
+  const { data: userMedia } = UseFetchUserMedia(profile_id, "1");
 
-  const { isLoading: userGroupsLoading, data: userGroups } =
-    UseFetchUserGroups();
+  const { data: userGroups } = UseFetchUserGroups();
 
   // show edit profile modal
   const [editProfileModalIsVisible, setEditProfileModalIsVisible] =
@@ -313,9 +306,9 @@ const Profile = () => {
                 Groups
               </p>
             </div>
-            {showModal === "photos" && <UserPhotos />}
+            {showModal === "photos" && <UserPhotos photos={userMedia} />}
             {showModal === "friends" && <UserFriends friends={friends} />}
-            {showModal === "groups" && <UserGroups />}
+            {showModal === "groups" && <UserGroups groups={userGroups} />}
           </div>
           <div className="profile-bottom-page-right">
             {user?.id === currentUser?.user_id && <CreatePost />}

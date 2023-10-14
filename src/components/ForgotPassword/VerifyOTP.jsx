@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 // styles
 import "./forgotPassword.css";
@@ -26,7 +25,7 @@ export default function VerifyOTP() {
     if (otp.trim().length !== 0) {
       await axios({
         method: "post",
-        url: `https://tulk-socail.azurewebsites.net/verify-otp/${newUID}/`,
+        url: `https://tulk.azurewebsites.net/verify-otp/${newUID}/`,
         data: { otp },
       })
         .then((res) => {
