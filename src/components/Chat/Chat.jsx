@@ -1,36 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 
 // styles
 import "./chat.css";
 
 // icons
-import { VscSmiley } from "react-icons/vsc";
 import { MdPermMedia } from "react-icons/md";
 import { RiAttachment2 } from "react-icons/ri";
 import { IoIosClose } from "react-icons/io";
 
 // images
-import chatHeadImg from "../../images/Frame 40.png";
-import { useSelector } from "react-redux";
+import UseFetchMessages from "../../Hooks/Chat/UseFetchMessages";
+import useFetchProfile from "../../Hooks/User/useFetchProfile";
+import moment from "moment/moment";
+import { Userdata } from "../../data/Userdata";
+import { axiosInstance } from "../../Axios/axiosInstance";
 
-export default function Chat({ setShowChatModal, chatModal, conversation }) {
+export default function Chat({ setShowChatModal, chatModal, recipient }) {
+  const user = Userdata();
   // Function to close chat
   const closeChat = () => {
     setShowChatModal(false);
   };
 
-  console.log(conversation);
+  const { data: messages } = UseFetchMessages(recipient);
 
-  // select current user
-  // const currentUser = useSelector((state) => state.currentUser);
+  const { data: converser } = useFetchProfile(recipient);
+
+  const [newMessage, setNewMessage] = useState("");
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    const message_object = new FormData();
+    message_object.append("sender", user.user_id);
+    message_object.append("receiver", recipient);
+    message_object.append("message_content", newMessage);
+    console.log(newMessage);
+
+    // await axiosInstance({
+    //   method: "post",
+    //   url: "/send-message/",
+    //   data: message_object,
+    // })
+    //   .then((res) => {
+    //     console.log(res);
+    //     setNewMessage("");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  };
 
   return (
     <div className={chatModal ? "chatModal-chat-box" : "fullscreen-chat-box"}>
       <div className="chat-head">
         <div className="chat-head-img">
-          <img src={chatHeadImg} alt="" />
+          <img src={converser?.avatar} alt="" />
         </div>
-        <h3 className="h-100">{conversation.name}</h3>
+        <h3 className="h-100">{`${converser?.first_name} ${converser?.last_name}`}</h3>
         {chatModal && (
           <div className="chat-close-btn" onClick={closeChat}>
             <IoIosClose />
@@ -40,55 +66,58 @@ export default function Chat({ setShowChatModal, chatModal, conversation }) {
 
       <div className="chat-body">
         <div className="chat-body-messages">
-          <div className="chat-body-sent-message">
-            <p className="text-body">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-              nisi eos eveniet laborum nihil. Officia!
-            </p>
-          </div>
-          <div className="chat-body-received-message">
-            <p className="text-body">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-              nisi eos eveniet laborum nihil. Officia!
-            </p>
-          </div>
-          <div className="chat-body-sent-message">
-            <p className="text-body">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-              nisi eos eveniet laborum nihil. Officia!
-            </p>
-          </div>
-          <div className="chat-body-received-message">
-            <p className="text-body">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-              nisi eos eveniet laborum nihil. Officia!
-            </p>
-          </div>
-          <div className="chat-body-sent-message">
-            <p className="text-body">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-              nisi eos eveniet laborum nihil. Officia!
-            </p>
-          </div>
-          <div className="chat-body-received-message">
-            <p className="text-body">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-              nisi eos eveniet laborum nihil. Officia!
-            </p>
-          </div>
+          {messages?.map((message, index) =>
+            message.sender === recipient ? (
+              <div className="message received" key={index}>
+                <div className="chat-body">
+                  <p className="text-body">{message.message_content}</p>
+                  {message.files.length > 0 &&
+                    message.files.map((file) => (
+                      <div className="media" key={file.id}>
+                        <img src={file.file} alt="" />
+                      </div>
+                    ))}
+                </div>
+                <small className="message-time">
+                  {moment(message.timestamp).fromNow()}
+                </small>
+              </div>
+            ) : (
+              <div className="message sent" key={index}>
+                <div className="chat-body">
+                  <p className="text-body">{message.message_content}</p>
+                  {message.files.length > 0 &&
+                    message.files.map((file) => (
+                      <div className="media" key={file.id}>
+                        <img src={file.file} alt="" />
+                      </div>
+                    ))}
+                </div>
+                <small className="message-time">
+                  {moment(message.timestamp).fromNow()}
+                </small>
+              </div>
+            )
+          )}
         </div>
         <div className="chatbox-bottom">
-          <div className="chat-body-text-input">
-            <textarea rows="3" placeholder="Write Message..."></textarea>
-          </div>
-          <div className="chat-body-actions">
-            <div className="chat-body-media-input">
-              <VscSmiley className="chat-body-icon" />
-              <MdPermMedia className="chat-body-icon" />
-              <RiAttachment2 className="chat-body-icon" />
+          <form onSubmit={sendMessage}>
+            <div className="chat-body-text-input">
+              <textarea
+                rows="3"
+                placeholder="Write Message..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+              ></textarea>
             </div>
-            <div className="chat-body-send-btn btn-solid">Send</div>
-          </div>
+            <div className="chat-body-actions">
+              <div className="chat-body-media-input">
+                <MdPermMedia className="chat-body-icon" />
+                <RiAttachment2 className="chat-body-icon" />
+              </div>
+              <button className="chat-body-send-btn btn-solid">Send</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

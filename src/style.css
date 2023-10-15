@@ -5,9 +5,6 @@ ul {
   box-sizing: border-box;
 }
 
-/* google font */
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500;700&display=swap");
-
 :root {
   --gradient-clr: linear-gradient(to left, #4c0c54, #640c62, #a4043c, #b4042a);
 
@@ -17,7 +14,7 @@ ul {
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Inter", sans-serif;
   background: #f8f8f8;
   min-height: 100%;
 }

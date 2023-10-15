@@ -26,4 +26,31 @@
   .messages {
     display: none;
   }
+
+  .empty-conversation {
+    display: none;
+  }
+}
+
+.empty-conversation {
+  padding: 20px;
+  position: relative;
+  top: 5vh;
+  opacity: 0.5;
+}
+
+.search-conversation form {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: lightgrey;
+}
+
+.search-conversation form input {
+  width: 100%;
+  padding: 5px;
+  outline: none;
+  border: none;
+  background: transparent;
+  font-family: inherit;
 }

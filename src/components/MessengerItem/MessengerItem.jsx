@@ -13,7 +13,7 @@ export default function MessengerItem({
   setConversation,
 }) {
   // Set chat Header
-  const [chatHeader, setChatHeader] = useState("Leanne Graham");
+  const [chatHeader, setChatHeader] = useState("");
 
   const openConversation = () => {
     setConversationActive(true);
