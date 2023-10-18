@@ -12,7 +12,7 @@
 
 .messages {
   flex-basis: 60%;
-  max-height: 100dvh;
+  height: 100%;
   border-left: 1px solid #d9d9d9;
   padding: 10px;
   position: relative;
@@ -25,9 +25,9 @@
     display: block;
   }
 
-  .messages {
+  /* .messages {
     display: none;
-  }
+  } */
 
   .empty-conversation {
     display: none;

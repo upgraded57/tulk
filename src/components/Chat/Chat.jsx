@@ -15,9 +15,17 @@ import UseFetchMessages from "../../Hooks/Chat/UseFetchMessages";
 import useFetchProfile from "../../Hooks/User/useFetchProfile";
 import moment from "moment/moment";
 import { Userdata } from "../../data/Userdata";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
-export default function Chat({ setShowChatModal, chatModal, recipient }) {
+export default function Chat({
+  setShowChatModal,
+  chatModal,
+  recipient,
+  mobile,
+}) {
   const user = Userdata();
+  const navigate = useNavigate();
   // Function to close chat
   const closeChat = () => {
     setShowChatModal(false);
@@ -104,10 +112,25 @@ export default function Chat({ setShowChatModal, chatModal, recipient }) {
   return (
     <div className={chatModal ? "chatModal-chat-box" : "fullscreen-chat-box"}>
       <div className="chat-head">
-        <div className="chat-head-img">
-          <img src={converser?.avatar} alt="" />
+        {mobile && (
+          <div className="chat-head-back-icon" onClick={() => navigate(-1)}>
+            <AiOutlineArrowLeft />
+          </div>
+        )}
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            alignItems: "center",
+            cursor: "pointer",
+          }}
+          onClick={() => navigate(`/profile/${recipient}`)}
+        >
+          <div className="chat-head-img">
+            <img src={converser?.avatar} alt="" />
+          </div>
+          <h3 className="h-100">{`${converser?.first_name} ${converser?.last_name}`}</h3>
         </div>
-        <h3 className="h-100">{`${converser?.first_name} ${converser?.last_name}`}</h3>
         {chatModal && (
           <div className="chat-close-btn" onClick={closeChat}>
             <IoIosClose />

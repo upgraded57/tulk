@@ -7,12 +7,15 @@ import "./messengerItem.css";
 import noAvatar from "../../images/noAvatar.jpeg";
 import useFetchProfile from "../../Hooks/User/useFetchProfile";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 export default function MessengerItem({
   chat,
   setConversationActive,
   setConversation,
+  mobile,
 }) {
+  const navigate = useNavigate();
   // Set chat Header
   const [chatHeader, setChatHeader] = useState("");
 
@@ -24,7 +27,12 @@ export default function MessengerItem({
   const { data: recipient } = useFetchProfile(chat.participant2);
 
   return (
-    <div className="messenger-item" onClick={openConversation}>
+    <div
+      className="messenger-item"
+      onClick={
+        mobile ? () => navigate(`${chat.participant2}`) : openConversation
+      }
+    >
       <div className="messenger-item-left">
         <div className="messenger-img">
           <img src={recipient?.avatar ? recipient.avatar : noAvatar} alt="" />

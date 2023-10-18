@@ -8,12 +8,29 @@
   padding: 10px;
   border: 1px solid #d9d9d9;
 }
+
+.chat-container {
+  position: relative;
+  height: 100%;
+}
 .chat-head {
   display: flex;
   align-items: center;
   gap: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid #a8a8a8;
+}
+
+.chat-head-back-icon {
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.chat-head-back-icon:hover {
+  background: #ececec;
 }
 
 .chat-head-img {

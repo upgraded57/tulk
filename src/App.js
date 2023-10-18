@@ -23,6 +23,10 @@ const NewsPage = lazy(() => import("./pages/NewsPage/NewsPage"));
 const GroupListing = lazy(() => import("./pages/GroupListing/GroupListing"));
 const Group = lazy(() => import("./pages/Group/Group"));
 const Messenger = lazy(() => import("./pages/Messenger/Messenger"));
+const MessengerMobile = lazy(() =>
+  import("./pages/Messenger-Mobile/MessengerMobile")
+);
+const Conversation = lazy(() => import("./pages/Conversation/Conversation"));
 const SearchResult = lazy(() => import("./pages/SearchResult/SearchResult"));
 const FriendListing = lazy(() => import("./pages/FriendListing/FriendListing"));
 const Admin = lazy(() => import("./pages/Admin/Admin"));
@@ -110,6 +114,22 @@ function App() {
                 element={
                   <Suspense fallback={<Loader type="spinner" />}>
                     <Messenger />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/messenger/m"
+                element={
+                  <Suspense fallback={<Loader type="spinner" />}>
+                    <MessengerMobile />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/messenger/m/:conversationId"
+                element={
+                  <Suspense fallback={<Loader type="spinner" />}>
+                    <Conversation />
                   </Suspense>
                 }
               />

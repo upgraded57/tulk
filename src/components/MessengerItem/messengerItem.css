@@ -19,8 +19,8 @@
 }
 
 .messenger-img {
-  width: 50px;
-  height: 50px;
+  min-width: 50px;
+  max-width: 50px;
   aspect-ratio: 1/1;
   overflow: hidden;
   border-radius: 50%;

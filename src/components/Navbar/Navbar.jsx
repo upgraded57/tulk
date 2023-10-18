@@ -148,7 +148,7 @@ export default function Navbar() {
       <div className="navbar-sm-screen">
         <NavLink to="/newsPage">News</NavLink>
         <NavLink to="/">Social</NavLink>
-        <NavLink to="/messenger">Chat</NavLink>
+        <NavLink to="/messenger/m">Chat</NavLink>
       </div>
       {sidebarOpen && <Sidebar setSidebarOpen={setSidebarOpen} />}
       {notificationOpen && (
