@@ -20,7 +20,7 @@ export default function Notifications({ desktop, setNotificationOpen }) {
     setLoadingFetchNotification(true);
     await axiosInstance({
       method: "get",
-      url: `https://tulk-social.azurewebsites.net/notifications/?page=${notificationPageCount}`,
+      url: `https://tulk.azurewebsites.net/notifications/?page=${notificationPageCount}`,
     })
       .then((res) => {
         setNotifications(res.data.results);

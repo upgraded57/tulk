@@ -66,7 +66,7 @@ export default function CreatePostModal({ setCreatePostModal, group }) {
     postFormData.append("content", postBody);
     group && postFormData.append("group", group.id);
     Array.from(uploadFileInput.files).forEach((file) => {
-      return postFormData.append("files", file);
+      return postFormData.append("uploaded_files", file);
     });
 
     if (postBody.trim() === "") {
@@ -78,11 +78,11 @@ export default function CreatePostModal({ setCreatePostModal, group }) {
       await axiosInstance({
         method: "post",
         url: group
-          ? `https://tulk-social.azurewebsites.net/group/${group.id}/posts/`
-          : "https://tulk-social.azurewebsites.net/posts/",
+          ? `https://tulk.azurewebsites.net/group/${group.id}/posts/`
+          : "https://tulk.azurewebsites.net/posts/",
         data: postFormData,
       })
-        .then((res) => {
+        .then(() => {
           toast.success("Post created successfully!", {
             id: toastId,
           });

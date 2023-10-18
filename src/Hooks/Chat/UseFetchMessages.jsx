@@ -9,6 +9,6 @@ export default function UseFetchMessages(id) {
     });
   };
   return useQuery(["Messages", id], () => fetchMessages(id), {
-    select: (data) => data.data.results,
+    select: (data) => data.data,
   });
 }

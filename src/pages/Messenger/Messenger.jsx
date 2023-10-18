@@ -13,12 +13,14 @@ import MessengerItem from "../../components/MessengerItem/MessengerItem";
 import Navbar from "../../components/Navbar/Navbar";
 import UseFetchConversations from "./../../Hooks/Chat/UseFetchConversations";
 import { FiSearch } from "react-icons/fi";
+import Loader from "./../../components/Loader/Loader";
 
 export default function Messenger() {
   const [conversation, setConversation] = useState(null);
   const [conversationActive, setConversationActive] = useState(false);
 
-  const { data: chats } = UseFetchConversations();
+  const { isLoading: loading, data: chats } = UseFetchConversations();
+
   return (
     <>
       <Navbar />
@@ -30,20 +32,26 @@ export default function Messenger() {
               <input type="text" placeholder="Search a conversation..." />
             </form>
           </div>
-          {chats?.map((chat) => {
-            return (
-              <MessengerItem
-                key={chat.receiver}
-                chat={chat}
-                setConversationActive={setConversationActive}
-                setConversation={setConversation}
-              />
-            );
-          })}
+          {loading ? (
+            <Loader type="list" />
+          ) : !chats ? (
+            <p style={{ padding: "20px" }}> No recent chats to display </p>
+          ) : (
+            chats?.map((chat) => {
+              return (
+                <MessengerItem
+                  key={chat.participant2}
+                  chat={chat}
+                  setConversationActive={setConversationActive}
+                  setConversation={setConversation}
+                />
+              );
+            })
+          )}
         </div>
         {conversationActive ? (
           <div className="messages">
-            <Chat recipient={conversation.receiver} />
+            <Chat recipient={conversation.participant2} />
           </div>
         ) : (
           <div className="empty-conversation">

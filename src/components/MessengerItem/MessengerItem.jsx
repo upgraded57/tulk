@@ -6,6 +6,7 @@ import "./messengerItem.css";
 // images
 import noAvatar from "../../images/noAvatar.jpeg";
 import useFetchProfile from "../../Hooks/User/useFetchProfile";
+import moment from "moment";
 
 export default function MessengerItem({
   chat,
@@ -20,7 +21,7 @@ export default function MessengerItem({
     setConversation(chat);
   };
 
-  const { data: recipient } = useFetchProfile(chat.receiver);
+  const { data: recipient } = useFetchProfile(chat.participant2);
 
   return (
     <div className="messenger-item" onClick={openConversation}>
@@ -32,16 +33,17 @@ export default function MessengerItem({
           <div className="messenger-name">
             <h3 className="h-100">{`${recipient?.first_name} ${recipient?.last_name}`}</h3>
             <div className="messenger-last-message">
-              <p className="text-body">{chat?.catchPhrase}</p>
+              <p className="text-body">{chat?.last_message}</p>
             </div>
           </div>
         </div>
       </div>
       <div className="messenger-item-right">
         <div className="messenger-last-message-time">
-          <small className="small-text"> 11:55pm </small>
+          <small className="small-text">
+            {moment(chat?.timestamp).fromNow()}{" "}
+          </small>
         </div>
-        <div className="messenger-unread-message-count">2</div>
       </div>
     </div>
   );

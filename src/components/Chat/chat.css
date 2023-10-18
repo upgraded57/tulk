@@ -50,17 +50,52 @@
   padding-top: 10px;
 }
 
-.chatModal-chat-box .chat-body-messages {
+.chatModal-chat-box .chat-container-messages {
   max-height: 400px;
   overflow-y: scroll;
-  padding-right: 10px;
 }
 
-.chatModal-chat-box .chat-body-messages::-webkit-scrollbar {
+.sending-message-screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sending-message-screen-loader {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 32px 0 #fff, -32px 0 #fff;
+  position: relative;
+  animation: flash 0.5s ease-out infinite alternate;
+}
+
+@keyframes flash {
+  0% {
+    background-color: #c5c5c5;
+    box-shadow: 32px 0 #c5c5c5, -32px 0 #fff;
+  }
+  50% {
+    background-color: #fff;
+    box-shadow: 32px 0 #c5c5c5, -32px 0 #c5c5c5;
+  }
+  100% {
+    background-color: #c5c5c5;
+    box-shadow: 32px 0 #fff, -32px 0 #c5c5c5;
+  }
+}
+
+.chatModal-chat-box .chat-container-messages::-webkit-scrollbar {
   width: 5px;
 }
 
-.chatModal-chat-box .chat-body-messages::-webkit-scrollbar-thumb {
+.chatModal-chat-box .chat-container-messages::-webkit-scrollbar-thumb {
   background: #00000030;
   border-radius: 10px;
 }
@@ -74,8 +109,13 @@
   margin-bottom: 10px;
 }
 
+.message.fade {
+  opacity: 0.3;
+}
+
 .message.sent {
   margin-left: auto;
+  margin-right: 10px;
 }
 
 .message.sent .chat-body {
@@ -123,27 +163,27 @@
 .fullscreen-chat-box {
   position: relative;
   width: 100%;
-  height: calc(100vh - 120px);
+  height: calc(100dvh - 90px);
 }
 
-.fullscreen-chat-box .chat-body-messages {
+.fullscreen-chat-box .chat-container-messages {
   width: 100%;
   max-height: calc(100vh - 310px);
   overflow-y: scroll;
-  padding-right: 10px;
+  position: relative;
 }
 
 .fullscreen-chat-box .chatbox-bottom {
   width: 100%;
   position: absolute;
-  bottom: 10px;
+  bottom: 0;
 }
 
-.fullscreen-chat-box .chat-body-messages::-webkit-scrollbar {
+.fullscreen-chat-box .chat-container-messages::-webkit-scrollbar {
   width: 5px;
 }
 
-.fullscreen-chat-box .chat-body-messages::-webkit-scrollbar-thumb {
+.fullscreen-chat-box .chat-container-messages::-webkit-scrollbar-thumb {
   background: #00000030;
   border-radius: 10px;
 }
@@ -170,4 +210,30 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.chatbox-images {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.chatbox-image {
+  width: 60px;
+  border-radius: 5px;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  cursor: pointer;
+  background: black;
+}
+
+.chatbox-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+.chatbox-image:hover img {
+  opacity: 1;
 }

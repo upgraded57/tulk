@@ -5,10 +5,10 @@ export default function UseFetchConversations() {
   const fetchConversations = () => {
     return axiosInstance({
       method: "get",
-      url: "/user-chats/",
+      url: "/chat-list/",
     });
   };
   return useQuery("Conversations", fetchConversations, {
-    select: (data) => data.data.results,
+    select: (data) => data.data,
   });
 }
