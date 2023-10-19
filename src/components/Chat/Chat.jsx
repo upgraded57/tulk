@@ -35,7 +35,8 @@ export default function Chat({
 
   const [sendMessageLoading, setSendMessageLoading] = useState(false);
 
-  const { data: messages } = UseFetchMessages(recipient);
+  const { isLoading: messagesLoading, data: messages } =
+    UseFetchMessages(recipient);
 
   const { data: converser } = useFetchProfile(recipient);
 
@@ -145,49 +146,55 @@ export default function Chat({
               <span className="sending-message-screen-loader"></span>
             </div>
           )}
-          {messages?.map((message, index) =>
-            message.sender === recipient ? (
-              <div
-                className={
-                  sendMessageLoading
-                    ? "message received fade"
-                    : "message received"
-                }
-                key={index}
-              >
-                <div className="chat-body">
-                  <p className="text-body">{message.message_content}</p>
-                  {message.files.length > 0 &&
-                    message.files.map((file) => (
-                      <div className="media" key={file.id}>
-                        <img src={file.file} alt="" />
-                      </div>
-                    ))}
+          {messagesLoading ? (
+            <div className="sending-message-screen">
+              <span className="sending-message-screen-loader"></span>
+            </div>
+          ) : (
+            messages?.map((message, index) =>
+              message.sender === recipient ? (
+                <div
+                  className={
+                    sendMessageLoading
+                      ? "message received fade"
+                      : "message received"
+                  }
+                  key={index}
+                >
+                  <div className="chat-body">
+                    <p className="text-body">{message.message_content}</p>
+                    {message.files.length > 0 &&
+                      message.files.map((file) => (
+                        <div className="media" key={file.id}>
+                          <img src={file.file} alt="" />
+                        </div>
+                      ))}
+                  </div>
+                  <small className="message-time">
+                    {moment(message.timestamp).fromNow()}
+                  </small>
                 </div>
-                <small className="message-time">
-                  {moment(message.timestamp).fromNow()}
-                </small>
-              </div>
-            ) : (
-              <div
-                className={
-                  sendMessageLoading ? "message sent fade" : "message sent"
-                }
-                key={index}
-              >
-                <div className="chat-body">
-                  <p className="text-body">{message.message_content}</p>
-                  {message.files.length > 0 &&
-                    message.files.map((file) => (
-                      <div className="media" key={file.id}>
-                        <img src={file.file} alt="" />
-                      </div>
-                    ))}
+              ) : (
+                <div
+                  className={
+                    sendMessageLoading ? "message sent fade" : "message sent"
+                  }
+                  key={index}
+                >
+                  <div className="chat-body">
+                    <p className="text-body">{message.message_content}</p>
+                    {message.files.length > 0 &&
+                      message.files.map((file) => (
+                        <div className="media" key={file.id}>
+                          <img src={file.file} alt="" />
+                        </div>
+                      ))}
+                  </div>
+                  <small className="message-time">
+                    {moment(message.timestamp).fromNow()}
+                  </small>
                 </div>
-                <small className="message-time">
-                  {moment(message.timestamp).fromNow()}
-                </small>
-              </div>
+              )
             )
           )}
         </div>

@@ -7,7 +7,6 @@ ul {
 
 :root {
   --gradient-clr: linear-gradient(to left, #4c0c54, #640c62, #a4043c, #b4042a);
-
   --font-clr: rgb(0, 0, 0);
   --grey-bg-clr: rgba(0, 0, 0, 0.1);
   --inputField-radius: 10px;

@@ -37,7 +37,11 @@ import UseFetchUserPosts from "./../../Hooks/User/UseFetchUserPosts";
 import UseFetchUserFriends from "./../../Hooks/User/UseFetchUserFriends";
 import UseFetchUserMedia from "./../../Hooks/User/UseFetchUserMedia";
 import UseFetchUserGroups from "./../../Hooks/User/UseFetchUserGroups";
-import Loader from "./../../components/Loader/Loader";
+
+// tooltip
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import MessageTooltip from "./MessageTooltip";
 
 const Profile = () => {
   const currentUser = Userdata();
@@ -196,10 +200,27 @@ const Profile = () => {
                 )}
 
               {profile_id !== currentUser.user_id && (
-                <button className="btn-secondary">
-                  <AiOutlineMessage className="icon" />
-                  Message
-                </button>
+                <>
+                  <button className="btn-secondary" id="msg-btn">
+                    <AiOutlineMessage className="icon" />
+                    Message
+                  </button>
+                  <Tooltip
+                    anchorSelect="#msg-btn"
+                    style={{
+                      backgroundColor: "#a8a8a8",
+                      padding: "10px",
+                      borderRadius: "var(--inputField-radius)",
+                    }}
+                    place="bottom"
+                    clickable
+                  >
+                    <MessageTooltip
+                      sender={currentUser?.user_id}
+                      recipient={user?.id}
+                    />
+                  </Tooltip>
+                </>
               )}
               {profile_id === currentUser.user_id && (
                 <button
