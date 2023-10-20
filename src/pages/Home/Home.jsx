@@ -28,6 +28,7 @@ export default function Home() {
 
   // variable to store state of chat Modal whether active or not
   const [showChatModal, setShowChatModal] = useState(false);
+  const [newsFilter, setNewsFilter] = useState("all");
 
   // function to switch feed
   const [feedsSwitched, setFeedsSwitched] = useState(true);
@@ -121,7 +122,11 @@ export default function Home() {
           </div>
         </div>
         <div className={feedsSwitched ? "home-right" : "home-center"}>
-          <Newsreel feedsSwitched={feedsSwitched} />
+          <Newsreel
+            filter={newsFilter}
+            setFilter={setNewsFilter}
+            feedsSwitched={feedsSwitched}
+          />
         </div>
       </div>
     </>

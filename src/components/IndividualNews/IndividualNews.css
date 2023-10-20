@@ -44,10 +44,11 @@
   object-fit: cover;
 }
 
-/* .newsreelBody-header-text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  } */
+.newsreelHead {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 
 .newsreelHead-header-text h3 {
   font-weight: 500;
@@ -68,6 +69,14 @@
 .newsreel-body ul {
   padding-left: 20px;
   list-style-type: disc !important;
+}
+
+.newsreel-body p {
+  font-size: 15px;
+}
+
+.newsreel-body p strong {
+  font-weight: 500;
 }
 
 .newsreel-share {

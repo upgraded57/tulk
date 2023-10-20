@@ -69,7 +69,10 @@ export default function CreatePostModal({ setCreatePostModal, group }) {
       return postFormData.append("uploaded_files", file);
     });
 
-    if (postBody.trim() === "") {
+    if (
+      postBody.trim() === "" &&
+      Array.from(uploadFileInput.files).length === 0
+    ) {
       toast.error("cannot create empty post!", {
         id: toastId,
       });

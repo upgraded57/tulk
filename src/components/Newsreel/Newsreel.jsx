@@ -20,7 +20,12 @@ import { BsSearch } from "react-icons/bs";
 // data
 import { fetchArticles } from "../../Axios/ApiCalls";
 
-export default function Newsreel({ loginPage, feedsSwitched }) {
+export default function Newsreel({
+  filter,
+  setFilter,
+  loginPage,
+  feedsSwitched,
+}) {
   const [newsCount, setNewsCount] = useState(10);
 
   // set variable to hold news articles
@@ -55,11 +60,28 @@ export default function Newsreel({ loginPage, feedsSwitched }) {
       {!loginPage && !feedsSwitched && !smallScreen && (
         <div className="news-nav">
           <ul>
-            <li className="active">All News</li>
-            <li>Sport</li>
-            <li>Politics</li>
-            <li>Metro</li>
-            <li>Entertainment &amp; More</li>
+            <li
+              className="active"
+              value="all"
+              onClick={(e) => setFilter(e.target.value)}
+            >
+              All News
+            </li>
+            <li value="sport" onClick={(e) => setFilter(e.target.value)}>
+              Sport
+            </li>
+            <li value="politics" onClick={(e) => setFilter(e.target.value)}>
+              Politics
+            </li>
+            <li value="metro" onClick={(e) => setFilter(e.target.value)}>
+              Metro
+            </li>
+            <li
+              value="entertainment"
+              onClick={(e) => setFilter(e.target.value)}
+            >
+              Entertainment &amp; More
+            </li>
           </ul>
         </div>
       )}
@@ -69,11 +91,36 @@ export default function Newsreel({ loginPage, feedsSwitched }) {
           <div className="news-filter">
             <TfiLayoutGrid3Alt />
             <select name="news-filter" id="news-filter">
-              <option value="All-news">All Updates</option>
-              <option value="All-news">Sports</option>
-              <option value="All-news">Politics</option>
-              <option value="All-news">Metro</option>
-              <option value="All-news">Entertainment & More</option>
+              <option
+                value="All-news"
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                All Updates
+              </option>
+              <option
+                value="All-news"
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                Sports
+              </option>
+              <option
+                value="All-news"
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                Politics
+              </option>
+              <option
+                value="All-news"
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                Metro
+              </option>
+              <option
+                value="All-news"
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                Entertainment & More
+              </option>
             </select>
           </div>
           <div className="news-search">
@@ -91,7 +138,13 @@ export default function Newsreel({ loginPage, feedsSwitched }) {
         </div>
       ) : (
         Articles?.map((article) => {
-          return <IndividualNews key={article.id} article={article} />;
+          return (
+            <IndividualNews
+              key={article.id}
+              article={article}
+              filter={filter}
+            />
+          );
         })
       )}
 

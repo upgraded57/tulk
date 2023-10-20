@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // styles
 import "./newsPage.css";
@@ -15,6 +15,8 @@ export default function NewsPage() {
   const showSearchInput = () => {
     document.getElementById("search-input").classList.toggle("active");
   };
+
+  const [filter, setFilter] = useState("all");
   return (
     <>
       <Navbar />
@@ -23,11 +25,27 @@ export default function NewsPage() {
           <div className="news-filter">
             <TfiLayoutGrid3Alt />
             <select name="news-filter" id="news-filter">
-              <option value="All-news">All Updates</option>
-              <option value="All-news">Entertainment & More</option>
-              <option value="All-news">Metro</option>
-              <option value="All-news">Politics</option>
-              <option value="All-news">Sports</option>
+              <option value="all" onChange={(e) => setFilter(e.target.value)}>
+                All Updates
+              </option>
+              <option
+                value="entertainment"
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                Entertainment & More
+              </option>
+              <option value="metro" onChange={(e) => setFilter(e.target.value)}>
+                Metro
+              </option>
+              <option
+                value="politics"
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                Politics
+              </option>
+              <option value="sport" onChange={(e) => setFilter(e.target.value)}>
+                Sports
+              </option>
             </select>
           </div>
           <div className="news-search">
@@ -37,7 +55,7 @@ export default function NewsPage() {
         </div>
 
         <div className="newspage-body">
-          <Newsreel />
+          <Newsreel filter={filter} />
         </div>
       </div>
     </>
