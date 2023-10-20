@@ -41,10 +41,11 @@ export default function Signup({ setEditProfileModalIsVisible }) {
       last_name: last_nameRef.current.value,
       date_of_birth: DOBRef.current.value,
       gender: genderRef.current.value,
-      email: user.email,
-      phone_number: user.phone,
-      user_id: user.user_id,
+      // email: user.email,
+      // phone_number: user.phone,
     };
+
+    console.log(updateData);
 
     const postData = async () => {
       const toastId = toast.loading("Updating your profile");
@@ -53,16 +54,16 @@ export default function Signup({ setEditProfileModalIsVisible }) {
       await axiosInstance({
         method: "put",
         url: `https://tulk.azurewebsites.net/userprofiles/${user.user_id}/`,
-        data: updateData,
+        updateData,
       })
         .then((res) => {
-          console.log(res);
+          console.log(res.data);
           toast.success("Data updated successfully", {
             id: toastId,
           });
-          setEditProfileModalIsVisible(false);
+          // setEditProfileModalIsVisible(false);
           localStorage.setItem("user", JSON.stringify(res.data));
-          window.location.reload();
+          // window.location.reload();
         })
         .catch((err) => {
           console.log(err);
@@ -110,7 +111,9 @@ export default function Signup({ setEditProfileModalIsVisible }) {
             </span>
             <input
               type="text"
-              placeholder={user?.location ? user.location : "Address ..."}
+              placeholder={
+                user?.location ? user.location : "Residential Address ..."
+              }
               ref={locationRef}
             />
             <span>

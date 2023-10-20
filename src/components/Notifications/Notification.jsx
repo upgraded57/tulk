@@ -29,7 +29,18 @@ export default function Notification({ notification }) {
     getNotificationSender();
   }, [notification]);
 
-  console.log(notification);
+  const setNotificationToViewed = async (id) => {
+    await axiosInstance({
+      method: "put",
+      url: `/notifications/${id}`,
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   switch (notification.type) {
     case "friend_request":
@@ -73,7 +84,10 @@ export default function Notification({ notification }) {
 
     case "accept_friend_request":
       return (
-        <div className="notification">
+        <div
+          className="notification"
+          onClick={() => setNotificationToViewed(notification.id)}
+        >
           <Link to={`/profile/${notification.sender}/`}>
             <div className="notification-user-image">
               <img
@@ -94,7 +108,10 @@ export default function Notification({ notification }) {
 
     case "group_request":
       return (
-        <div className="notification">
+        <div
+          className="notification"
+          onClick={() => setNotificationToViewed(notification.id)}
+        >
           <Link to={`/profile/${notification.sender}/`}>
             <div className="notification-user-image">
               <img
@@ -115,7 +132,10 @@ export default function Notification({ notification }) {
 
     case "group_request_accept":
       return (
-        <div className="notification">
+        <div
+          className="notification"
+          onClick={() => setNotificationToViewed(notification.id)}
+        >
           <Link to={`/profile/${notification.sender}/`}>
             <div className="notification-user-image">
               <img
@@ -136,7 +156,10 @@ export default function Notification({ notification }) {
 
     case "post_comment":
       return (
-        <div className="notification">
+        <div
+          className="notification"
+          onClick={() => setNotificationToViewed(notification.id)}
+        >
           <Link to={`/posts/${notification.object_id}/`}>
             <div className="notification-user-image">
               <img
@@ -157,7 +180,10 @@ export default function Notification({ notification }) {
 
     case "post_like":
       return (
-        <div className="notification">
+        <div
+          className="notification"
+          onClick={() => setNotificationToViewed(notification.id)}
+        >
           <Link to={`/posts/${notification.object_id}/`}>
             <div className="notification-user-image">
               <img
@@ -178,7 +204,10 @@ export default function Notification({ notification }) {
 
     case "post_share":
       return (
-        <div className="notification">
+        <div
+          className="notification"
+          onClick={() => setNotificationToViewed(notification.id)}
+        >
           <Link to={`/posts/${notification.object_id}/`}>
             <div className="notification-user-image">
               <img
@@ -199,7 +228,10 @@ export default function Notification({ notification }) {
 
     default:
       return (
-        <div className="notification">
+        <div
+          className="notification"
+          onClick={() => setNotificationToViewed(notification.id)}
+        >
           <div className="notification-user-image">
             <img
               src={

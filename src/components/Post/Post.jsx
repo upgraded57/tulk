@@ -199,7 +199,6 @@ export default function Post({ post, group }) {
   const [postLikers, setPostLikers] = useState([]);
   useEffect(() => {
     const fetchPostLikers = async () => {
-      // console.log("Fetching post likes...");
       await axiosInstance({
         method: "get",
         url:
@@ -209,19 +208,15 @@ export default function Post({ post, group }) {
       })
         .then((res) => {
           setPostLikers(res.data);
-          // console.log("Post likes response point");
           res.data.map((like) => {
             if (like.user === user.user_id) {
-              // console.log("Post has been liked");
               setPostIsLiked(true);
+              console.log("Likers...");
             }
           });
         })
         .catch((err) => {
           console.log(err);
-        })
-        .finally(() => {
-          console.log("Post likes fetched!");
         });
     };
 
@@ -351,10 +346,7 @@ export default function Post({ post, group }) {
             >
               <FaRegComment className="post-interaction-icon" /> Comment
             </button>
-            <button
-              className="post-interaction-btn"
-              onClick={() => sharePost()}
-            >
+            <button className="post-interaction-btn" onClick={sharePost}>
               <RiShareBoxFill className="post-interaction-icon" /> Share
             </button>
           </div>

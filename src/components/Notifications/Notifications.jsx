@@ -65,14 +65,16 @@ export default function Notifications({ desktop, setNotificationOpen }) {
           <div className="notif-loader">There's nothing to see here yet</div>
         ) : (
           <>
-            {notifications.map((notification) => {
-              return (
-                <Notification
-                  notification={notification}
-                  key={notification.id}
-                />
-              );
-            })}
+            {notifications
+              .filter((notification) => notification.viewed === false)
+              .map((notification) => {
+                return (
+                  <Notification
+                    notification={notification}
+                    key={notification.id}
+                  />
+                );
+              })}
           </>
         )}
       </div>

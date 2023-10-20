@@ -29,15 +29,12 @@ axiosInstance.interceptors.response.use(
         data: { refresh: tokens.refresh },
       })
         .then((res) => {
-          if (localStorage.getItem("tokens")) {
-            localStorage.removeItem("tokens");
-          }
           const access = res.data.access;
           const refresh = res.data.refresh;
           const tokens = { access, refresh };
           localStorage.setItem("tokens", JSON.stringify(tokens));
-          err.config.headers["Authorization"] = "Bearer " + res.data.access;
-          return axiosInstance(err.config), window.location.reload();
+          err.config.headers.Authorization = "Bearer " + res.data.access;
+          return axiosInstance(err.config);
         })
         .catch((err) => {
           console.log(err);
@@ -45,18 +42,19 @@ axiosInstance.interceptors.response.use(
             err.response.status === 401 &&
             err.response.statusText === "Unauthorized"
           ) {
-            toast.error("You need to login first!");
-            localStorage.removeItem("user");
-            localStorage.removeItem("tokens");
-            return (window.location = `${window.location.origin}/login`);
+            window.location.reload();
           }
         });
     } else if (
       err.response.status === 401 &&
-      err.response.statusText === "Unauthorized"
+      err.response.statusText === "Unauthorized" &&
+      err.response.detail === "Token is blacklisted"
     ) {
-      toast.error("You need to login first!");
+      console.log(err);
+      toast.error("Your session expired. Please login!");
       return (window.location = `${window.location.origin}/login`);
+    } else {
+      return err;
     }
   }
 );

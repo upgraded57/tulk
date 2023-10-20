@@ -26,6 +26,8 @@ export default function MessengerItem({
 
   const { data: recipient } = useFetchProfile(chat.participant2);
 
+  console.log(chat);
+
   return (
     <div
       className="messenger-item"
@@ -57,6 +59,9 @@ export default function MessengerItem({
           </small>
         </div>
       </div>
+      {chat.status === "unread" && (
+        <div className="unread-message-bubble"></div>
+      )}
     </div>
   );
 }

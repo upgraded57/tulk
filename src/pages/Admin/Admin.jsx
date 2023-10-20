@@ -110,13 +110,14 @@ export default function Admin() {
                       <p className="text-body">{article.title}</p>
                       <small>
                         {article.category.toUpperCase()} |{" "}
-                        {moment(article.published_date).format("MMM Do YYYY")}|{" "}
-                        {article.status === "draft" ? (
-                          <span className="draft">{article.status}</span>
-                        ) : (
-                          <span className="published">{article.status}</span>
-                        )}
+                        {moment(article.published_date).format("MMM Do YYYY")}
                       </small>
+
+                      {article.status === "draft" ? (
+                        <span className="draft">{article.status}</span>
+                      ) : (
+                        <span className="published">{article.status}</span>
+                      )}
                       <div className="admin-article-action-btns">
                         <button
                           className="btn-secondary"

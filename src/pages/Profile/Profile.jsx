@@ -268,7 +268,7 @@ const Profile = () => {
                   <td>{user?.marital_status}</td>
                 </tr>
               )}
-              {user?.date_of_birth && (
+              {user?.id === currentUser?.user_id && user?.date_of_birth && (
                 <tr>
                   <td>
                     <b>DOB</b>

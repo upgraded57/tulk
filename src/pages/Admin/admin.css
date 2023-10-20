@@ -114,18 +114,19 @@
   }
 }
 
-.admin-article-content small span {
+.admin-article-content span {
   padding: 2px 5px;
   text-transform: uppercase;
   border-radius: 5px;
+  font-size: 10px;
 }
 
-.admin-article-content small span.draft {
+.admin-article-content span.draft {
   background: rgb(247, 198, 40);
   color: white;
 }
 
-.admin-article-content small span.published {
+.admin-article-content span.published {
   background: rgb(9, 173, 23);
   color: white;
 }

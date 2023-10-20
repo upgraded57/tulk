@@ -61,6 +61,8 @@
 
 .notification-action-btns {
   align-self: flex-end;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .notification-action-btns .accept,

@@ -27,8 +27,6 @@ export default function PostModal() {
   // current user
   const user = Userdata();
 
-  console.log(post);
-
   // variable to store state of chat Modal whether active or not
   const [showChatModal, setShowChatModal] = useState(false);
 

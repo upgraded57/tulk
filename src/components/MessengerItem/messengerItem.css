@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  /* margin-block: 10px; */
+  position: relative;
   padding-right: 2vw;
   border-bottom: 1px solid #d9d9d9;
   cursor: pointer;
@@ -55,4 +55,15 @@
   .messenger-item {
     padding-inline: 2vw;
   }
+}
+
+.unread-message-bubble {
+  width: 12px;
+  height: 12px;
+  background: red;
+  border: 2px solid white;
+  border-radius: 50%;
+  position: absolute;
+  top: 12px;
+  left: 12px;
 }
