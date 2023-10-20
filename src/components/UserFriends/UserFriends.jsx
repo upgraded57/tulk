@@ -12,7 +12,7 @@ export default function UserFriends({ friends }) {
     <div className="user-friends-div">
       {friends?.length === 0 ? (
         <>
-          <p>No friends yet. Go make some friends</p>
+          <p>No friends yet.</p>
           <div className="mt-md"></div>
         </>
       ) : (

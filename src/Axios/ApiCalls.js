@@ -7,6 +7,7 @@ import {
   loginUserSuccess,
 } from "../Store/Auth/Action/AuthActions";
 import { getUserDataSuccess } from "../Store/Userdata/Actions/GetUserdata";
+import { axiosInstance } from "./axiosInstance";
 
 // initiate login
 export const loginCall = async (loginCredentials, dispatch, navigate) => {
@@ -61,26 +62,6 @@ export const fetchArticles = async (setArticles) => {
     })
     .catch((err) => {
       console.log(err);
-    });
-};
-
-export const fetchFriendRequests = async (
-  axiosInstance,
-  setFriendRequests,
-  setLoading
-) => {
-  await axiosInstance({
-    method: "get",
-    url: `/friend-requests/?page=1`,
-  })
-    .then((res) => {
-      setFriendRequests(res.data.results);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      setLoading(false);
     });
 };
 
@@ -160,7 +141,7 @@ export const getSinglePost = async (axiosInstance, id, setPost) => {
 };
 
 // send friend request
-export const sendFriendRequest = async (axiosInstance, user_id, friend) => {
+export const sendFriendRequest = async (user_id, friend) => {
   const toastId = toast.loading("Sending friend request ...");
   await axiosInstance({
     method: "post",
@@ -176,8 +157,7 @@ export const sendFriendRequest = async (axiosInstance, user_id, friend) => {
         id: toastId,
       });
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       toast.error("Unable to send friend request!", {
         id: toastId,
       });
@@ -185,8 +165,11 @@ export const sendFriendRequest = async (axiosInstance, user_id, friend) => {
 };
 
 // send friend request
-export const acceptFriendRequest = async (axiosInstance, request) => {
-  console.log(request);
+export const acceptFriendRequest = async (
+  axiosInstance,
+  request,
+  queryClient
+) => {
   await axiosInstance({
     method: "put",
     url: `/friend-requests/${request.id}`,
@@ -197,7 +180,6 @@ export const acceptFriendRequest = async (axiosInstance, request) => {
     },
   })
     .then((res) => {
-      console.log(res);
       toast.success("Request accepted");
       axiosInstance({
         method: "delete",
@@ -206,21 +188,32 @@ export const acceptFriendRequest = async (axiosInstance, request) => {
     })
     .catch(() => {
       toast.error("An error occured!");
+    })
+    .finally(() => {
+      queryClient.invalidateQueries(["friendRequests", "1"]);
+      queryClient.invalidateQueries("Notifications");
     });
 };
 
-export const deleteFriendRequest = async (axiosInstance, request) => {
+export const deleteFriendRequest = async (
+  axiosInstance,
+  request,
+  queryClient
+) => {
   await axiosInstance({
     method: "delete",
     url: `/friend-requests/${request.id}`,
   })
     .then(() => {
       toast.success("Request deleted");
-      window.location.reload();
     })
     .catch((err) => {
       console.log(err);
       toast.error("An error occured");
+    })
+    .finally(() => {
+      queryClient.invalidateQueries(["friendRequests", "1"]);
+      queryClient.invalidateQueries("Notifications");
     });
 };
 

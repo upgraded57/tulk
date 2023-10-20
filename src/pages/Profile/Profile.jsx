@@ -190,7 +190,7 @@ const Profile = () => {
 
             <div className="profile-user-edit-button">
               {profile_id !== currentUser?.user_id &&
-                friends?.includes(profile_id) && (
+                !friends?.includes(profile_id) && (
                   <button
                     className="btn-solid"
                     onClick={() => sendFriendRequest(currentUser.user_id, user)}

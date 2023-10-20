@@ -47,15 +47,25 @@ export default function Notification({ notification, setNotificationOpen }) {
   };
 
   // accept friend request
-  const acceptFriend = (id) => {
-    acceptFriendRequest(axiosInstance, id);
-    setNotificationToViewed(id);
+  const acceptFriend = async (notification) => {
+    await axiosInstance({
+      method: "get",
+      url: `/friend-requests/${notification.object_id}`,
+    }).then((res) => {
+      acceptFriendRequest(axiosInstance, res.data, queryClient);
+      setNotificationToViewed(notification.id);
+    });
   };
 
   // delete friend request
-  const deleteFriend = (id) => {
-    deleteFriendRequest(axiosInstance, id);
-    setNotificationToViewed(id);
+  const deleteFriend = async (notification) => {
+    await axiosInstance({
+      method: "get",
+      url: `/friend-requests/${notification.object_id}`,
+    }).then((res) => {
+      deleteFriendRequest(axiosInstance, res.data, queryClient);
+      setNotificationToViewed(notification.id);
+    });
   };
 
   switch (notification.type) {
@@ -79,13 +89,13 @@ export default function Notification({ notification, setNotificationOpen }) {
             <div className="notification-action-btns">
               <button
                 className="accept"
-                onClick={() => acceptFriend(notification.id)}
+                onClick={() => acceptFriend(notification)}
               >
                 Accept
               </button>
               <button
                 className="reject"
-                onClick={() => deleteFriend(notification.id)}
+                onClick={() => deleteFriend(notification)}
               >
                 Reject
               </button>

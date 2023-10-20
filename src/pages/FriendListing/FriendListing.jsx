@@ -26,9 +26,12 @@ import {
 // data
 import { Userdata } from "../../data/Userdata";
 import { axiosInstance } from "../../Axios/axiosInstance";
+import { useQueryClient } from "react-query";
 
 export default function SearchResult() {
   const currentUser = Userdata();
+
+  const queryClient = useQueryClient();
 
   // function to filter search result (variables)
   const [filter, setFilter] = useState("all");
@@ -171,13 +174,25 @@ export default function SearchResult() {
                               <div className="search-result-main-container-body-list-cta">
                                 <button
                                   className="btn-secondary"
-                                  onClick={() => acceptFriendRequest(request)}
+                                  onClick={() =>
+                                    acceptFriendRequest(
+                                      axiosInstance,
+                                      request,
+                                      queryClient
+                                    )
+                                  }
                                 >
                                   Accept
                                 </button>
                                 <button
                                   className="btn-secondary"
-                                  onClick={() => deleteFriendRequest(request)}
+                                  onClick={() =>
+                                    deleteFriendRequest(
+                                      axiosInstance,
+                                      request,
+                                      queryClient
+                                    )
+                                  }
                                 >
                                   Delete
                                 </button>
