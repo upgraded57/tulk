@@ -25,6 +25,7 @@ import profileIconOutline from "../../images/icons/profile-icon-outline.png";
 import { BsSearch, BsBell } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
 import useFetchProfile from "./../../Hooks/User/useFetchProfile";
+import UseFetchNotifications from "../../Hooks/Notifications/UseFetchNotifications";
 
 export default function Navbar() {
   // toggle sidebar
@@ -56,6 +57,9 @@ export default function Navbar() {
   const currentUser = Userdata();
 
   const { data: user } = useFetchProfile(currentUser?.user_id);
+
+  // fetch user notifications
+  const { data: notifications } = UseFetchNotifications();
 
   return (
     <div className="navbar">
@@ -115,6 +119,9 @@ export default function Navbar() {
           </div>
           <div className="navbar-notification">
             <BsBell onClick={() => setNotificationOpen((prev) => !prev)} />
+            {notifications?.filter(
+              (notification) => notification.viewed === false
+            )?.length > 0 && <div className="notification-bubble"></div>}
           </div>
           <div
             className="navbar-profile-link"
@@ -150,7 +157,12 @@ export default function Navbar() {
         <NavLink to="/">Social</NavLink>
         <NavLink to="/messenger/m">Chat</NavLink>
       </div>
-      {sidebarOpen && <Sidebar setSidebarOpen={setSidebarOpen} />}
+      {sidebarOpen && (
+        <Sidebar
+          setSidebarOpen={setSidebarOpen}
+          notifications={notifications}
+        />
+      )}
       {notificationOpen && (
         <NotificationPopup setNotificationOpen={setNotificationOpen} />
       )}

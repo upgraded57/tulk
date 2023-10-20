@@ -10,32 +10,11 @@ import notifBell from "../../images/icons/notif-bell.png";
 
 import Navbar from "../Navbar/Navbar";
 import Notification from "./Notification";
+import UseFetchNotifications from "./../../Hooks/Notifications/UseFetchNotifications";
 
 export default function Notifications({ desktop, setNotificationOpen }) {
-  const [loadingFetchNotification, setLoadingFetchNotification] =
-    useState(false);
-  const [notifications, setNotifications] = useState([]);
-  const notificationPageCount = 1;
-  const getNotifications = async () => {
-    setLoadingFetchNotification(true);
-    await axiosInstance({
-      method: "get",
-      url: `https://tulk.azurewebsites.net/notifications/?page=${notificationPageCount}`,
-    })
-      .then((res) => {
-        setNotifications(res.data.results);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoadingFetchNotification(false);
-      });
-  };
-
-  useEffect(() => {
-    getNotifications();
-  }, []);
+  const { isLoading: loadingFetchNotification, data: notifications } =
+    UseFetchNotifications();
 
   return (
     <>
@@ -61,17 +40,20 @@ export default function Notifications({ desktop, setNotificationOpen }) {
         {/* Show loader while notifications are being fetched */}
         {loadingFetchNotification ? (
           <div className="notif-loader"> Fetching notifications...</div>
-        ) : notifications.length === 0 ? (
+        ) : notifications?.filter(
+            (notification) => notification.viewed === false
+          )?.length === 0 ? (
           <div className="notif-loader">There's nothing to see here yet</div>
         ) : (
           <>
             {notifications
-              .filter((notification) => notification.viewed === false)
-              .map((notification) => {
+              ?.filter((notification) => notification.viewed === false)
+              ?.map((notification) => {
                 return (
                   <Notification
                     notification={notification}
                     key={notification.id}
+                    setNotificationOpen={setNotificationOpen}
                   />
                 );
               })}

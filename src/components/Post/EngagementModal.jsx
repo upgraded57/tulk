@@ -8,11 +8,9 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { RiShareBoxFill } from "react-icons/ri";
 
 // temp image
-import tempImg from "../../images/Frame 73.png";
 import { axiosInstance } from "../../Axios/axiosInstance";
 import Comment from "./Comment";
 import Like from "./Like";
-import Share from "./Share";
 
 export default function EngagementModal({
   post,
@@ -39,9 +37,6 @@ export default function EngagementModal({
       if (toggleBtns[1].classList.contains("active")) {
         toggleBtns[1].classList.remove("active");
       }
-      if (toggleBtns[2].classList.contains("active")) {
-        toggleBtns[2].classList.remove("active");
-      }
     };
   }
 
@@ -52,23 +47,6 @@ export default function EngagementModal({
       }
       if (toggleBtns[0].classList.contains("active")) {
         toggleBtns[0].classList.remove("active");
-      }
-      if (toggleBtns[2].classList.contains("active")) {
-        toggleBtns[2].classList.remove("active");
-      }
-    };
-  }
-
-  if (toggleBtns[2]) {
-    toggleBtns[2].onclick = () => {
-      if (!toggleBtns[2].classList.contains("active")) {
-        toggleBtns[2].classList.add("active");
-      }
-      if (toggleBtns[0].classList.contains("active")) {
-        toggleBtns[0].classList.remove("active");
-      }
-      if (toggleBtns[1].classList.contains("active")) {
-        toggleBtns[1].classList.remove("active");
       }
     };
   }
@@ -121,30 +99,6 @@ export default function EngagementModal({
     fetchPostLikes();
   }, [postLikeCount]);
 
-  //fetch post likes
-  const [postSharers, setPostSharers] = useState([]);
-  const [postShareCount, setPostShareCount] = useState(0);
-  const fetchPostShares = async () => {
-    await axiosInstance({
-      method: "get",
-      url:
-        group === true
-          ? `/group-posts/${post.id}/share/?page=1`
-          : `/posts/${post.id}/share/?page=1`,
-    })
-      .then((res) => {
-        setPostShareCount(res.data.results.length);
-        setPostSharers(res.data.results);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    fetchPostShares();
-  }, [postShareCount]);
-
   return (
     <>
       <div
@@ -179,13 +133,6 @@ export default function EngagementModal({
             <FaRegComment />
             <p>({postCommentCount})</p>
           </span>
-          <span
-            className="engagement-modal-share-toggle"
-            onClick={() => (engagementToggle.style.left = "-200%")}
-          >
-            <RiShareBoxFill />
-            <p>({postShareCount})</p>
-          </span>
         </div>
 
         <div className="engagement-modal-body">
@@ -202,15 +149,6 @@ export default function EngagementModal({
                 <Comment comment={comment} engagementModal key={comment.id} />
               );
             })}
-          </div>
-          <div className="engament-shares">
-            {postSharers.length < 1 ? (
-              <p>This post hasn't been shared yet</p>
-            ) : (
-              postSharers.map((sharer) => (
-                <Share sharer={sharer} key={sharer.id} />
-              ))
-            )}
           </div>
         </div>
       </div>

@@ -65,7 +65,7 @@
   align-items: center;
   padding: 10px;
   border-radius: var(--inputField-radius);
-  /* margin-bottom: 30px; */
+  position: relative;
 }
 
 .sidebar-link:hover {
@@ -86,4 +86,14 @@
 
 .logout-btn button {
   width: 100%;
+}
+
+.sidebar-notification-bubble {
+  width: 6px;
+  height: 6px;
+  border-radius: 10px;
+  background: red;
+  position: absolute;
+  top: 8px;
+  left: 18px;
 }

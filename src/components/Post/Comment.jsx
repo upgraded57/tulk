@@ -4,7 +4,11 @@ import noAvatar from "../../images/noAvatar.jpeg";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-export default function Comment({ comment, engagementModal }) {
+export default function Comment({
+  comment,
+  engagementModal,
+  setEngagementModal,
+}) {
   const [postCommenter, setPostCommenter] = useState({});
   const fetchPostCommenter = async (postCommenter) => {
     await axiosInstance({
@@ -68,7 +72,12 @@ export default function Comment({ comment, engagementModal }) {
           </Link>
         )}
 
-        <p className="text-body comment">{comment.content}</p>
+        <p
+          className="text-body comment"
+          onClick={() => setEngagementModal(true)}
+        >
+          {comment.content}
+        </p>
       </li>
     );
   }

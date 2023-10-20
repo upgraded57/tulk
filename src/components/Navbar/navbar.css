@@ -107,6 +107,17 @@
 
 .navbar-notification {
   cursor: pointer;
+  position: relative;
+}
+
+.notification-bubble {
+  width: 6px;
+  height: 6px;
+  border-radius: 10px;
+  background: red;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .navbar-profile-link {

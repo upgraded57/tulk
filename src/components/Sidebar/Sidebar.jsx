@@ -17,7 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 // logout user function caller
 import { logoutUser } from "../../Store/Auth/Action/AuthActions";
 
-const Sidebar = ({ setSidebarOpen }) => {
+const Sidebar = ({ setSidebarOpen, notifications }) => {
   const navigate = useNavigate();
 
   // log current user out
@@ -75,6 +75,11 @@ const Sidebar = ({ setSidebarOpen }) => {
             <div className="sidebar-link">
               <img src={notifBell} alt="" />
               <p className="text-body"> Notifications </p>
+              {notifications?.filter(
+                (notification) => notification.viewed === false
+              )?.length > 0 && (
+                <div className="sidebar-notification-bubble"></div>
+              )}
             </div>
           </Link>
           {user.is_staff && (

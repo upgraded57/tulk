@@ -370,7 +370,13 @@ export default function Post({ post, group }) {
                 .slice(0, 1)
                 .reverse()
                 .map((comment) => {
-                  return <Comment key={comment.id} comment={comment} />;
+                  return (
+                    <Comment
+                      key={comment.id}
+                      comment={comment}
+                      setEngagementModal={setEngagementModal}
+                    />
+                  );
                 })}
             </ul>
 
