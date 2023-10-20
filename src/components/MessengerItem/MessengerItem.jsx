@@ -39,7 +39,11 @@ export default function MessengerItem({
         </div>
         <div className="messenger-item-left-center">
           <div className="messenger-name">
-            <h3 className="h-100">{`${recipient?.first_name} ${recipient?.last_name}`}</h3>
+            <h3 className="h-100">
+              {recipient
+                ? `${recipient?.first_name} ${recipient?.last_name}`
+                : "Loading..."}
+            </h3>
             <div className="messenger-last-message">
               <p className="text-body">{chat?.last_message}</p>
             </div>

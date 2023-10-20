@@ -12,7 +12,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 // import required modules
-import { Lazy, Pagination, Navigation } from "swiper/modules";
+import { Pagination, Navigation } from "swiper/modules";
 
 // styles
 import "./post.css";
@@ -39,94 +39,26 @@ export default function Post({ post, group }) {
   // current user
   const user = Userdata();
 
-  // check whether post is liked
-  const [postIsLiked, setPostIsLiked] = useState(false);
-
-  // times post is liked
-  const [postLikeCount, setPostLikeCount] = useState(0);
-  const [postLikers, setPostLikers] = useState([]);
-
-  // like post
-  const likePost = async () => {
-    if (!postIsLiked) {
-      setPostLikeCount((prev) => prev + 1);
-      setPostIsLiked(true);
-      axiosInstance({
-        method: "post",
-        url:
-          group === true
-            ? `/group-posts/${post.id}/like-toggle/`
-            : `/posts/${post.id}/like/`,
+  // fetch post author
+  useEffect(() => {
+    const fetchPostAuthor = async () => {
+      await axiosInstance({
+        method: "get",
+        url: `/userprofiles/${post.author}/`,
       })
-        .then(() => {
-          toast.success(`You liked ${postAuthorData?.first_name}'s post`);
+        .then((res) => {
+          setPostAuthorData(res.data);
         })
         .catch((err) => {
           console.log(err);
-          toast.error("Sorry, couldn't like post");
         });
-    } else {
-      setPostLikeCount((prev) => prev - 1);
-      toast.error(`You disliked ${postAuthorData?.first_name}'s post`);
-      setPostIsLiked(false);
-    }
-  };
+    };
 
-  //fetch post likes
-  const fetchPostLikes = async () => {
-    await axiosInstance({
-      method: "get",
-      url:
-        group === true
-          ? `/group-posts/${post.id}/likes/?page=1`
-          : `/posts/${post.id}/likes/?page=1`,
-    })
-      .then((res) => {
-        setPostLikeCount(res.data.results.length);
-        setPostLikers(res.data.results);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    fetchPostLikes();
-  }, [postLikeCount]);
-
-  // get id of post likers to persist post like state
-  const postLikersId = [];
-  postLikers.forEach((postLiker) => {
-    postLikersId.push(postLiker.user);
-  });
-
-  useEffect(() => {
-    postLikersId.includes(user.user_id)
-      ? setPostIsLiked(true)
-      : setPostIsLiked(false);
-  }, []);
-
-  // fetch post
-  const fetchPostAuthor = async () => {
-    await axiosInstance({
-      method: "get",
-      url: `/userprofiles/${post.author}/`,
-    })
-      .then((res) => {
-        setPostAuthorData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
     fetchPostAuthor();
   }, []);
 
   // make comment box active when comment button is selected
   const commentBoxRef = useRef();
-
   const activateCommentBox = () => {
     commentBoxRef.current.focus();
   };
@@ -175,48 +107,48 @@ export default function Post({ post, group }) {
 
   // fetch post comments
   const [postComments, setPostComments] = useState([]);
-  const fetchPostComments = async () => {
-    await axiosInstance({
-      method: "get",
-      url:
-        group === true
-          ? `/group-posts/${post.id}/comments/`
-          : `/posts/${post.id}/comments/`,
-    })
-      .then((res) => {
-        setPostComments(res.data.results);
-        setPostCommentCount(res.data.results.length);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   useEffect(() => {
+    const fetchPostComments = async () => {
+      await axiosInstance({
+        method: "get",
+        url:
+          group === true
+            ? `/group-posts/${post.id}/comments/`
+            : `/posts/${post.id}/comments/`,
+      })
+        .then((res) => {
+          setPostComments(res.data.results);
+          setPostCommentCount(res.data.results.length);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
     fetchPostComments();
   }, [postCommentCount]);
 
   // fetch post shares
   const [postShares, setPostShares] = useState([]);
   const [postShareCount, setPostShareCount] = useState(0);
-  const fetchPostShares = async () => {
-    await axiosInstance({
-      method: "get",
-      url:
-        group === true
-          ? `/group-posts/${post.id}/share/`
-          : `/posts/${post.id}/share/`,
-    })
-      .then((res) => {
-        setPostShares(res.data.results);
-        setPostShareCount(res.data.results.length);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   useEffect(() => {
+    const fetchPostShares = async () => {
+      await axiosInstance({
+        method: "get",
+        url:
+          group === true
+            ? `/group-posts/${post.id}/share/`
+            : `/posts/${post.id}/share/`,
+      })
+        .then((res) => {
+          setPostShares(res.data.results);
+          setPostShareCount(res.data.results.length);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
     fetchPostShares();
   }, [postShareCount]);
 
@@ -255,6 +187,46 @@ export default function Post({ post, group }) {
         toast.error("Unable to share post");
       });
   };
+
+  // like post
+  const [postIsLiked, setPostIsLiked] = useState(false);
+
+  const likePost = async () => {
+    setPostIsLiked(!postIsLiked);
+  };
+
+  // fetch post likers
+  const [postLikers, setPostLikers] = useState([]);
+  useEffect(() => {
+    const fetchPostLikers = async () => {
+      // console.log("Fetching post likes...");
+      await axiosInstance({
+        method: "get",
+        url:
+          group === true
+            ? `/group-posts/${post.id}/likes/`
+            : `/posts/${post.id}/likes/`,
+      })
+        .then((res) => {
+          setPostLikers(res.data);
+          // console.log("Post likes response point");
+          res.data.map((like) => {
+            if (like.user === user.user_id) {
+              // console.log("Post has been liked");
+              setPostIsLiked(true);
+            }
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          console.log("Post likes fetched!");
+        });
+    };
+
+    fetchPostLikers();
+  }, []);
 
   return (
     <>
@@ -341,7 +313,7 @@ export default function Post({ post, group }) {
                   className="post-like-icon"
                   style={postIsLiked ? { color: "#b4042a" } : ""}
                 />
-                <p className="text-body">{postLikeCount}</p>
+                <p className="text-body">{postLikers.length}</p>
               </div>
 
               <div className="post-like-comment-btn">

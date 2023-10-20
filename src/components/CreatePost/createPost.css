@@ -22,6 +22,7 @@
   min-height: 60px;
   height: 60px;
   border-radius: 50%;
+  border: 1px solid lightgray;
   overflow: hidden;
   margin-right: 10px;
   background-image: url("../../images/noAvatar.jpeg");

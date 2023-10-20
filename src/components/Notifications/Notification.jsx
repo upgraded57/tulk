@@ -4,12 +4,13 @@ import "./notifications.css";
 
 // images
 import noAvatar from "../../images/noAvatar.jpeg";
+import {
+  acceptFriendRequest,
+  deleteFriendRequest,
+} from "./../../Axios/ApiCalls";
+import { axiosInstance } from "../../Axios/axiosInstance";
 
-export default function Notification({
-  notification,
-  axiosInstance,
-  setNotificationOpen,
-}) {
+export default function Notification({ notification }) {
   const [notificationSender, setNotificationSender] = useState({});
   const getNotificationSender = async () => {
     await axiosInstance({
@@ -28,6 +29,8 @@ export default function Notification({
     getNotificationSender();
   }, [notification]);
 
+  console.log(notification);
+
   switch (notification.type) {
     case "friend_request":
       return (
@@ -43,14 +46,28 @@ export default function Notification({
                 alt=""
               />
             </div>
-            <div className="notification-content">
-              <p className="text-body">{notification.message}</p>
-              <div className="notification-action-btns">
-                <button className="accept">Accept</button>
-                <button className="reject">Reject</button>
-              </div>
-            </div>
           </Link>
+          <div className="notification-content">
+            <p className="text-body">{notification.message}</p>
+            <div className="notification-action-btns">
+              <button
+                className="accept"
+                onClick={() =>
+                  acceptFriendRequest(axiosInstance, notification.id)
+                }
+              >
+                Accept
+              </button>
+              <button
+                className="reject"
+                onClick={() =>
+                  deleteFriendRequest(axiosInstance, notification.id)
+                }
+              >
+                Reject
+              </button>
+            </div>
+          </div>
         </div>
       );
 

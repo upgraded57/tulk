@@ -45,11 +45,12 @@ export default function Admin() {
         method: "delete",
         url: `/editor/articles/${id}/`,
       })
-        .then(() => {
+        .then((res) => {
           toast.success("Article deleted", {
             id: toastId,
             icon: "🗑️",
           });
+          console.log(res.data);
           window.location.reload();
         })
         .catch((err) => {
@@ -61,11 +62,12 @@ export default function Admin() {
     }
   };
 
-  const editArticle = async () => {
+  const editArticle = async (id) => {
     toast("Feature coming soon!", {
       icon: "🖐🏼",
     });
   };
+
   return (
     <>
       <Navbar />
@@ -108,16 +110,23 @@ export default function Admin() {
                       <p className="text-body">{article.title}</p>
                       <small>
                         {article.category.toUpperCase()} |{" "}
-                        {moment(article.published_date).format("MMM Do YYYY")}
+                        {moment(article.published_date).format("MMM Do YYYY")}|{" "}
+                        {article.status === "draft" ? (
+                          <span className="draft">{article.status}</span>
+                        ) : (
+                          <span className="published">{article.status}</span>
+                        )}
                       </small>
-                      <div
-                        className="admin-article-action-btns"
-                        onClick={editArticle}
-                      >
-                        <button className="btn-secondary">Edit</button>
+                      <div className="admin-article-action-btns">
                         <button
                           className="btn-secondary"
-                          onClick={() => deleteArticle(article.id)}
+                          onClick={() => editArticle(article.slug)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn-secondary"
+                          onClick={() => deleteArticle(article.slug)}
                         >
                           Delete
                         </button>

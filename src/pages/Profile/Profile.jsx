@@ -209,8 +209,8 @@ const Profile = () => {
                     anchorSelect="#msg-btn"
                     style={{
                       backgroundColor: "#a8a8a8",
-                      padding: "10px",
-                      borderRadius: "var(--inputField-radius)",
+                      padding: "5px",
+                      borderRadius: "15px",
                     }}
                     place="bottom"
                     clickable

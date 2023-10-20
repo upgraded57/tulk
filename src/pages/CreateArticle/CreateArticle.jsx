@@ -38,7 +38,7 @@ export default function CreateArticle() {
   };
 
   // publish article
-  const publishArticle = async () => {
+  const publishArticle = async (status) => {
     if (
       articleCategory.length === 0 ||
       articleContent.length === 0 ||
@@ -52,6 +52,12 @@ export default function CreateArticle() {
     const articleFormData = new FormData();
     articleFormData.append("author", user.user_id);
     articleFormData.append("title", articleTitle);
+    if (status === "draft") {
+      articleFormData.append("status", "draft");
+    }
+    if (status === "publish") {
+      articleFormData.append("status", "published");
+    }
     articleFormData.append("category", articleCategory);
     articleFormData.append("content", articleContent);
     {
@@ -59,67 +65,37 @@ export default function CreateArticle() {
         articleFormData.append("featured_image", articleFeaturedImage);
     }
 
-    const toastId = toast.loading("Publishing post");
+    const toastId =
+      status === "publish"
+        ? toast.loading("Publishing Article")
+        : toast.loading("Saving Article");
     await axiosInstance({
       method: "post",
       url: "/editor/publish-article/",
       data: articleFormData,
     })
       .then(() => {
-        toast.success("Article published", {
-          id: toastId,
-        });
+        status === "publish"
+          ? toast.success("Article published", {
+              id: toastId,
+            })
+          : toast.success("Article saved as draft", {
+              id: toastId,
+            });
         navigate("/admin");
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Unable to publish article", {
-          id: toastId,
-        });
+        status === "publish"
+          ? toast.error("Unable to publish article", {
+              id: toastId,
+            })
+          : toast.error("Unable to save article", {
+              id: toastId,
+            });
       });
   };
 
-  const saveArticleAsDraft = async () => {
-    if (
-      articleCategory.length === 0 ||
-      articleContent.length === 0 ||
-      articleTitle.length === 0
-    ) {
-      toast.error("You haven't filled the required field");
-      return;
-    }
-
-    // prepare article data
-    const articleFormData = new FormData();
-    articleFormData.append("author", user.user_id);
-    articleFormData.append("status", "draft");
-    articleFormData.append("title", articleTitle);
-    articleFormData.append("category", articleCategory);
-    articleFormData.append("content", articleContent);
-    {
-      articleFeaturedImage &&
-        articleFormData.append("featured_image", articleFeaturedImage);
-    }
-
-    const toastId = toast.loading("Saving article");
-    await axiosInstance({
-      method: "post",
-      url: "/editor/publish-article/",
-      data: articleFormData,
-    })
-      .then(() => {
-        toast.success("Article saved as draft", {
-          id: toastId,
-        });
-        navigate("/admin");
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Unable to save article", {
-          id: toastId,
-        });
-      });
-  };
   return (
     <>
       <Navbar />
@@ -141,10 +117,16 @@ export default function CreateArticle() {
         </div>
         <div className="create-article-right">
           <div className="publish-options">
-            <span className="save-draft" onClick={saveArticleAsDraft}>
+            <span
+              className="save-draft"
+              onClick={() => publishArticle("draft")}
+            >
               Save Draft
             </span>
-            <button className="btn-solid" onClick={publishArticle}>
+            <button
+              className="btn-solid"
+              onClick={() => publishArticle("publish")}
+            >
               Publish
             </button>
           </div>

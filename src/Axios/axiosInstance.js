@@ -1,17 +1,19 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-const tokens = JSON.parse(localStorage.getItem("tokens"));
-
 export const axiosInstance = axios.create({
   baseURL: "https://tulk.azurewebsites.net",
-  headers: {
-    Authorization: `Bearer ${tokens?.access}`,
-  },
+});
+
+axiosInstance.interceptors.request.use((config) => {
+  const tokens = JSON.parse(localStorage.getItem("tokens"));
+  config.headers.Authorization = `Bearer ${tokens.access}`;
+  return config;
 });
 
 axiosInstance.interceptors.response.use(
   (res) => res,
+
   async (err) => {
     const originalRequest = err.config;
     if (
@@ -19,6 +21,7 @@ axiosInstance.interceptors.response.use(
       err.response.statusText === "Unauthorized" &&
       !originalRequest._retry
     ) {
+      const tokens = JSON.parse(localStorage.getItem("tokens"));
       originalRequest._retry = true;
       await axios({
         method: "post",

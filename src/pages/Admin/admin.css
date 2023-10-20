@@ -67,6 +67,11 @@
   gap: 10px;
 }
 
+.admin-article-action-btns button:nth-child(2):hover {
+  background: #8a0707;
+  color: white;
+}
+
 /* Tablet Media query */
 @media screen and (max-width: 1300px) {
   .admin-left {
@@ -107,4 +112,20 @@
   .admin-left ul li {
     border-radius: var(--inputField-radius);
   }
+}
+
+.admin-article-content small span {
+  padding: 2px 5px;
+  text-transform: uppercase;
+  border-radius: 5px;
+}
+
+.admin-article-content small span.draft {
+  background: rgb(247, 198, 40);
+  color: white;
+}
+
+.admin-article-content small span.published {
+  background: rgb(9, 173, 23);
+  color: white;
 }

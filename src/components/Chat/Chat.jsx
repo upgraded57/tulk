@@ -5,6 +5,9 @@ import { axiosInstance } from "../../Axios/axiosInstance";
 // styles
 import "./chat.css";
 
+// images
+import noAvatar from "../../images/noAvatar.jpeg";
+
 // icons
 import { MdPermMedia } from "react-icons/md";
 import { RiAttachment2 } from "react-icons/ri";
@@ -128,9 +131,16 @@ export default function Chat({
           onClick={() => navigate(`/profile/${recipient}`)}
         >
           <div className="chat-head-img">
-            <img src={converser?.avatar} alt="" />
+            <img
+              src={converser?.avatar ? converser?.avatar : noAvatar}
+              alt=""
+            />
           </div>
-          <h3 className="h-100">{`${converser?.first_name} ${converser?.last_name}`}</h3>
+          <h3 className="h-100">
+            {converser
+              ? `${converser?.first_name} ${converser?.last_name}`
+              : "Loading name..."}
+          </h3>
         </div>
         {chatModal && (
           <div className="chat-close-btn" onClick={closeChat}>
@@ -147,9 +157,7 @@ export default function Chat({
             </div>
           )}
           {messagesLoading ? (
-            <div className="sending-message-screen">
-              <span className="sending-message-screen-loader"></span>
-            </div>
+            <p style={{ padding: "20px" }}>Loading Messages...</p>
           ) : (
             messages?.map((message, index) =>
               message.sender === recipient ? (

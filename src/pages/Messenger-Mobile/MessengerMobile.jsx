@@ -13,7 +13,7 @@ export default function MessengerMobile() {
   const [conversationActive, setConversationActive] = useState(false);
 
   const { isLoading: loading, data: chats } = UseFetchConversations();
-
+  console.log(chats);
   return (
     <>
       <Navbar />

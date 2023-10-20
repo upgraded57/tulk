@@ -109,8 +109,8 @@ export default function EngagementModal({
           : `/posts/${post.id}/likes/?page=1`,
     })
       .then((res) => {
-        setPostLikeCount(res.data.results.length);
-        setPostLikers(res.data.results);
+        setPostLikeCount(res.data.length);
+        setPostLikers(res.data);
       })
       .catch((err) => {
         console.log(err);
