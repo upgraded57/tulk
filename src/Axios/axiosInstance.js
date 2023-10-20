@@ -40,15 +40,26 @@ axiosInstance.interceptors.response.use(
           console.log(err);
           if (
             err.response.status === 401 &&
-            err.response.statusText === "Unauthorized"
+            err.response.statusText === "Unauthorized" &&
+            err.response.data.detail !== "Token is blacklisted"
           ) {
             window.location.reload();
+          } else if (
+            err.response.status === 401 &&
+            err.response.statusText === "Unauthorized" &&
+            err.response.data.detail === "Token is blacklisted" &&
+            err.response.data.code === "token_not_valid"
+          ) {
+            console.log(err);
+            toast.error("Your session expired. Please login!");
+            return (window.location = `${window.location.origin}/login`);
           }
         });
     } else if (
       err.response.status === 401 &&
       err.response.statusText === "Unauthorized" &&
-      err.response.detail === "Token is blacklisted"
+      err.response.data.detail === "Token is blacklisted" &&
+      err.response.data.code === "token_not_valid"
     ) {
       console.log(err);
       toast.error("Your session expired. Please login!");

@@ -7,19 +7,25 @@ import { IoIosClose } from "react-icons/io";
 import noAvatar from "../../images/noAvatar.jpeg";
 import { Userdata } from "../../data/Userdata";
 import UseFetchUserFriends from "./../../Hooks/User/UseFetchUserFriends";
+import useFetchUsers from "./../../Hooks/Users/useFetchUsers";
 
 export default function InviteModal({ setInviteModal }) {
   const user = Userdata();
 
   const { data: friends } = UseFetchUserFriends(user.user_id);
+  const { data: users } = useFetchUsers("1");
 
-  const inviteesArray = [];
-  const addInvitee = (e) => {
-    if (inviteesArray.includes(e.target.id)) {
-      inviteesArray.pop(e.target.id);
-    } else {
-      inviteesArray.push(e.target.id);
-    }
+  let inviteesArray = [];
+  const addInvitee = (friend) => {
+    inviteesArray.map((invitee) => {
+      if (invitee.id === friend.id) {
+        inviteesArray = inviteesArray.filter(
+          (invitee) => invitee.id !== friend.id
+        );
+      } else {
+        inviteesArray = [...inviteesArray, friend];
+      }
+    });
   };
 
   const inviteFriends = () => {
@@ -44,14 +50,14 @@ export default function InviteModal({ setInviteModal }) {
         </div>
 
         <div className="invite-lists">
-          {friends?.length < 1 ? (
+          {users?.length < 1 ? (
             <p>No Friends to invite. Make friends first</p>
           ) : (
             <>
-              {friends?.map((friend) => {
+              {users?.map((friend) => {
                 return (
                   <div className="invite-list" key={friend.id}>
-                    <label htmlFor={friend.id} onChange={addInvitee}>
+                    <label htmlFor={friend.id}>
                       <div className="invite-list-left">
                         <div className="invite-list-img">
                           <img
@@ -65,6 +71,7 @@ export default function InviteModal({ setInviteModal }) {
                         type="checkbox"
                         className="selectFriendsBox"
                         id={friend.id}
+                        onChange={() => addInvitee(friend)}
                       />
                     </label>
                   </div>

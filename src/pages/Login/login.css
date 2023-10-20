@@ -128,7 +128,7 @@
 
 /* group invite */
 .invite-lists {
-  max-height: 700px;
+  max-height: 500px;
   padding-block: 10px;
   overflow-y: scroll;
 }
