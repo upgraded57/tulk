@@ -56,7 +56,7 @@ export default function SearchResult() {
       <div className="search-result">
         <div className="group-listing-filter">
           <div className="group-listing-filter-header">
-            <h2 className="h-200">Groups</h2>
+            <h2 className="h-200">People</h2>
           </div>
 
           <div className="group-listing-filter-list">

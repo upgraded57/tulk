@@ -64,6 +64,6 @@
   border: 2px solid white;
   border-radius: 50%;
   position: absolute;
-  top: 12px;
+  bottom: 12px;
   left: 12px;
 }

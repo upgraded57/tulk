@@ -230,7 +230,7 @@ export default function Chat({
                 <label htmlFor="sendFile">
                   <MdPermMedia className="chat-body-icon" />
                 </label>
-                <RiAttachment2 className="chat-body-icon" />
+                {/* <RiAttachment2 className="chat-body-icon" /> */}
               </div>
               <button
                 className="chat-body-send-btn btn-solid"
