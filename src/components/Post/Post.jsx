@@ -22,6 +22,9 @@ import { AiFillHeart, AiOutlineHeart, AiOutlineSend } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { RiShareBoxFill } from "react-icons/ri";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import fbIcon from "../../images/icons/facebook.png";
+import waIcon from "../../images/icons/whatsapp.png";
+import twIcon from "../../images/icons/twitter.png";
 
 // data
 import { Userdata } from "../../data/Userdata";
@@ -32,6 +35,7 @@ import Comment from "./Comment";
 import { copyPostLink, deletePost } from "../../Axios/ApiCalls";
 import ImagePopup from "./ImagePopup";
 import EngagementModal from "./EngagementModal";
+import { Tooltip } from "react-tooltip";
 
 export default function Post({ post, group }) {
   // get post author data
@@ -128,30 +132,6 @@ export default function Post({ post, group }) {
     fetchPostComments();
   }, [postCommentCount]);
 
-  // fetch post shares
-  const [postShares, setPostShares] = useState([]);
-  const [postShareCount, setPostShareCount] = useState(0);
-  useEffect(() => {
-    const fetchPostShares = async () => {
-      await axiosInstance({
-        method: "get",
-        url:
-          group === true
-            ? `/group-posts/${post.id}/share/`
-            : `/posts/${post.id}/share/`,
-      })
-        .then((res) => {
-          setPostShares(res.data.results);
-          setPostShareCount(res.data.results.length);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    fetchPostShares();
-  }, [postShareCount]);
-
   // post actions toggle
   const [postActions, setPostActions] = useState(false);
 
@@ -161,32 +141,6 @@ export default function Post({ post, group }) {
 
   // engagement modal
   const [engagementModal, setEngagementModal] = useState(false);
-
-  const sharePost = async () => {
-    const toastId = toast.loading(
-      `Sharing ${postAuthorData?.first_name}'s post`
-    );
-    await axiosInstance({
-      method: "Post",
-      url:
-        group === true
-          ? `/group-posts/${post.id}/share/`
-          : `/posts/${post.id}/share/`,
-      data: {
-        user: user.user_id,
-        post: post.id,
-      },
-    })
-      .then((res) => {
-        setPostShareCount((prev) => prev + 1);
-        toast.success("Post Shared!", {
-          id: toastId,
-        });
-      })
-      .catch((err) => {
-        toast.error("Unable to share post");
-      });
-  };
 
   // like post
   const [postIsLiked, setPostIsLiked] = useState(false);
@@ -222,6 +176,29 @@ export default function Post({ post, group }) {
 
     fetchPostLikers();
   }, []);
+
+  // share post
+  const base_url = window.location.origin;
+
+  // share post link to facebook
+  const sharePostToFb = (post) => {
+    const fbLink = `https://www.facebook.com/sharer/sharer.php?u=${base_url}/posts/${post.id}`;
+    window.open(fbLink, "_blank").focus();
+  };
+
+  // share post link to twitter
+  const sharePostToTw = (post) => {
+    const twLink = `https://twitter.com/intent/tweet?hashtags=tulk&text=${
+      post.content.slice(0, 30) + "..."
+    }&url=${base_url}/posts/${post.id}`;
+    window.open(twLink, "_blank").focus();
+  };
+
+  // share post link to whatsapp
+  const sharePostToWa = (post) => {
+    const twLink = `https://api.whatsapp.com/send?text=${base_url}/posts/${post.id}`;
+    window.open(twLink, "_blank").focus();
+  };
 
   return (
     <>
@@ -317,10 +294,10 @@ export default function Post({ post, group }) {
               </div>
             </div>
 
-            <div className="post-repost">
+            {/* <div className="post-repost">
               <p className="text-body">{postShareCount}</p>
               <RiShareBoxFill className="post-like-icon" />
-            </div>
+            </div> */}
           </div>
 
           <div className="post-interaction">
@@ -346,9 +323,45 @@ export default function Post({ post, group }) {
             >
               <FaRegComment className="post-interaction-icon" /> Comment
             </button>
-            <button className="post-interaction-btn" onClick={sharePost}>
+            <button className="post-interaction-btn" id="sharePost-btn">
               <RiShareBoxFill className="post-interaction-icon" /> Share
             </button>
+            <Tooltip
+              anchorSelect="#sharePost-btn"
+              place="bottom-start"
+              clickable
+              openOnClick
+              style={{
+                backgroundColor: "#ccc",
+                color: "#222222",
+                borderRadius: "5px",
+              }}
+            >
+              <div className="share-post-tooltip">
+                <p className="text-body">Share post to:</p>
+                <span
+                  className="share-post-social-icon"
+                  title="Share post to Facebook"
+                  onClick={() => sharePostToFb(post)}
+                >
+                  <img src={fbIcon} alt="" />
+                </span>
+                <span
+                  className="share-post-social-icon"
+                  title="Share post to X(twitter)"
+                  onClick={() => sharePostToTw(post)}
+                >
+                  <img src={twIcon} alt="" />
+                </span>
+                <span
+                  className="share-post-social-icon"
+                  title="Share post to Whatsapp"
+                  onClick={() => sharePostToWa(post)}
+                >
+                  <img src={waIcon} alt="" />
+                </span>
+              </div>
+            </Tooltip>
           </div>
 
           <div className="post-comments">

@@ -339,6 +339,7 @@
   height: 100dvh;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   position: fixed;
   inset: 0;
   z-index: 9;
@@ -523,4 +524,31 @@
 
 .engagement-like .comment-content-block .comment-timestamp {
   margin-left: 10px;
+}
+
+.share-post-tooltip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.share-post-social-icon {
+  width: 30px;
+  height: 30px;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.share-post-social-icon:hover {
+  transform: scale(1.2);
+}
+
+.share-post-social-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
