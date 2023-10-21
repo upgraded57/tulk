@@ -167,14 +167,18 @@ const Group = () => {
         </div>
 
         <div className="group-info">
-          <h3 className="h-100">
-            <b> Slogan: </b> <br />
-            {groupData?.slogan}
-          </h3>
-          <h3 className="h-100">
-            <b>Group introduction message</b> <br />
-            {groupData?.about}
-          </h3>
+          {groupData?.slogan && (
+            <h3 className="h-100">
+              <b> Slogan: </b> <br />
+              {groupData?.slogan}
+            </h3>
+          )}
+          {groupData?.about && (
+            <h3 className="h-100">
+              <b>Group introduction message</b> <br />
+              {groupData?.about}
+            </h3>
+          )}
         </div>
 
         <div className="group-posts">
@@ -184,7 +188,9 @@ const Group = () => {
           })}
         </div>
       </div>
-      {inviteModal && <InviteModal setInviteModal={setInviteModal} />}
+      {inviteModal && (
+        <InviteModal setInviteModal={setInviteModal} group_id={group_id} />
+      )}
       {settingseModal && (
         <SettingseModal
           setSettingsModal={setSettingsModal}

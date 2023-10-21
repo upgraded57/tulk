@@ -22,7 +22,6 @@ export default function Messenger() {
   const [conversationActive, setConversationActive] = useState(false);
 
   const { isLoading: loading, data: chats } = UseFetchConversations();
-  console.log(conversation);
 
   return (
     <>
