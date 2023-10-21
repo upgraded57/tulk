@@ -56,7 +56,7 @@ export default function MessengerItem({
       <div className="messenger-item-right">
         <div className="messenger-last-message-time">
           <small className="small-text">
-            {moment(chat?.timestamp).fromNow()}{" "}
+            {moment(chat?.timestamp).fromNow("dddd")}
           </small>
         </div>
       </div>
