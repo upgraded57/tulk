@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { axiosInstance } from "../../Axios/axiosInstance";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { useQueryClient } from "react-query";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -36,12 +37,14 @@ import { copyPostLink, deletePost } from "../../Axios/ApiCalls";
 import ImagePopup from "./ImagePopup";
 import EngagementModal from "./EngagementModal";
 import { Tooltip } from "react-tooltip";
+import UseFetchPostLikes from "../../Hooks/Posts/UseFetchPostLikes";
 
 export default function Post({ post, group }) {
   // get post author data
   const [postAuthorData, setPostAuthorData] = useState({});
   // current user
   const user = Userdata();
+  const queryClient = useQueryClient();
 
   // fetch post author
   useEffect(() => {
@@ -142,40 +145,42 @@ export default function Post({ post, group }) {
   // engagement modal
   const [engagementModal, setEngagementModal] = useState(false);
 
+  const { data: postLikers } = UseFetchPostLikes(post.id);
+
   // like post
-  const [postIsLiked, setPostIsLiked] = useState(false);
+  let postIsLiked = false;
+
+  // post likers
+  postLikers?.map((liker) => {
+    if (liker.user === user.user_id) {
+      postIsLiked = true;
+    }
+  });
 
   const likePost = async () => {
-    setPostIsLiked(!postIsLiked);
-  };
-
-  // fetch post likers
-  const [postLikers, setPostLikers] = useState([]);
-  useEffect(() => {
-    const fetchPostLikers = async () => {
-      await axiosInstance({
-        method: "get",
-        url:
-          group === true
-            ? `/group-posts/${post.id}/likes/`
-            : `/posts/${post.id}/likes/`,
-      })
-        .then((res) => {
-          setPostLikers(res.data);
-          res.data.map((like) => {
-            if (like.user === user.user_id) {
-              setPostIsLiked(true);
-              console.log("Likers...");
-            }
-          });
-        })
-        .catch((err) => {
-          console.log(err);
+    const toastId = toast.loading("Liking post...");
+    await axiosInstance({
+      method: "post",
+      url:
+        group === true
+          ? `/group-posts/${post.id}/like/`
+          : `/posts/${post.id}/like/`,
+    })
+      .then(() => {
+        postIsLiked = !postIsLiked;
+        toast.success(`You liked ${postAuthorData.first_name}'s post`, {
+          id: toastId,
         });
-    };
-
-    fetchPostLikers();
-  }, []);
+      })
+      .catch(() => {
+        toast.success("Unable to like post. Please retry", {
+          id: toastId,
+        });
+      })
+      .finally(() => {
+        queryClient.invalidateQueries(["PostLikers", post.id]);
+      });
+  };
 
   // share post
   const base_url = window.location.origin;
@@ -285,7 +290,7 @@ export default function Post({ post, group }) {
                   className="post-like-icon"
                   style={postIsLiked ? { color: "#b4042a" } : ""}
                 />
-                <p className="text-body">{postLikers.length}</p>
+                <p className="text-body">{postLikers?.length}</p>
               </div>
 
               <div className="post-like-comment-btn">
@@ -293,11 +298,6 @@ export default function Post({ post, group }) {
                 <p className="text-body">{postCommentCount}</p>
               </div>
             </div>
-
-            {/* <div className="post-repost">
-              <p className="text-body">{postShareCount}</p>
-              <RiShareBoxFill className="post-like-icon" />
-            </div> */}
           </div>
 
           <div className="post-interaction">
