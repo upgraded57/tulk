@@ -40,16 +40,16 @@ const Sidebar = ({ setSidebarOpen, notifications }) => {
       ></div>
       <div className="sidebar">
         <Link
-          to={`/profile/${user.user_id}`}
+          to={`/profile/${user?.user_id}`}
           onClick={() => setSidebarOpen((prev) => !prev)}
         >
           <div className="profile-link">
             <div className="profile-link-user-image">
-              <img src={user.avatar} alt="" />
+              <img src={user?.avatar} alt="" />
             </div>
 
             <div className="profile-link-display-name">
-              <h3 className="h-100">{user.fullname}</h3>
+              <h3 className="h-100">{user?.fullname}</h3>
               <small className="small-text">My Profile</small>
             </div>
           </div>
@@ -75,14 +75,16 @@ const Sidebar = ({ setSidebarOpen, notifications }) => {
             <div className="sidebar-link">
               <img src={notifBell} alt="" />
               <p className="text-body"> Notifications </p>
-              {notifications?.filter(
-                (notification) => notification.viewed === false
-              )?.length > 0 && (
+              {notifications
+                ?.filter((notification) => notification.viewed === false)
+                ?.filter(
+                  (notification) => notification.sender !== user?.user_id
+                )?.length > 0 && (
                 <div className="sidebar-notification-bubble"></div>
               )}
             </div>
           </Link>
-          {user.is_staff && (
+          {user?.is_staff && (
             <Link to="/admin" onClick={() => setSidebarOpen((prev) => !prev)}>
               <div className="sidebar-link">
                 <img src={adminImg} alt="" style={{ opacity: "0.6" }} />

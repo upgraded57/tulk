@@ -11,10 +11,14 @@ import notifBell from "../../images/icons/notif-bell.png";
 import Navbar from "../Navbar/Navbar";
 import Notification from "./Notification";
 import UseFetchNotifications from "./../../Hooks/Notifications/UseFetchNotifications";
+import { Userdata } from "../../data/Userdata";
 
 export default function Notifications({ desktop, setNotificationOpen }) {
+  const user = Userdata();
   const { isLoading: loadingFetchNotification, data: notifications } =
     UseFetchNotifications();
+
+  console.log(notifications);
 
   return (
     <>
@@ -40,14 +44,16 @@ export default function Notifications({ desktop, setNotificationOpen }) {
         {/* Show loader while notifications are being fetched */}
         {loadingFetchNotification ? (
           <div className="notif-loader"> Fetching notifications...</div>
-        ) : notifications?.filter(
-            (notification) => notification.viewed === false
-          )?.length === 0 ? (
+        ) : notifications
+            ?.filter((notification) => notification.viewed === false)
+            ?.filter((notification) => notification.sender !== user.user_id)
+            ?.length === 0 ? (
           <div className="notif-loader">There's nothing to see here yet</div>
         ) : (
           <>
             {notifications
               ?.filter((notification) => notification.viewed === false)
+              ?.filter((notification) => notification.sender !== user.user_id)
               ?.map((notification) => {
                 return (
                   <Notification

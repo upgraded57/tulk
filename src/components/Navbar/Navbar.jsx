@@ -119,9 +119,10 @@ export default function Navbar() {
           </div>
           <div className="navbar-notification">
             <BsBell onClick={() => setNotificationOpen((prev) => !prev)} />
-            {notifications?.filter(
-              (notification) => notification.viewed === false
-            )?.length > 0 && <div className="notification-bubble"></div>}
+            {notifications
+              ?.filter((notification) => notification.viewed === false)
+              ?.filter((notification) => notification.sender === user?.user_id)
+              ?.length > 0 && <div className="notification-bubble"></div>}
           </div>
           <div
             className="navbar-profile-link"
