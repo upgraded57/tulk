@@ -158,7 +158,10 @@ export default function Post({ post, group }) {
   });
 
   const likePost = async () => {
-    const toastId = toast.loading("Liking post...");
+    const toastId =
+      postIsLiked === false
+        ? toast.loading("Liking post...")
+        : toast.loading("Disliking post...");
     await axiosInstance({
       method: "post",
       url:
@@ -166,11 +169,18 @@ export default function Post({ post, group }) {
           ? `/group-posts/${post.id}/like/`
           : `/posts/${post.id}/like/`,
     })
-      .then(() => {
+      .then((res) => {
+        console.log(res.data.detail);
         postIsLiked = !postIsLiked;
-        toast.success(`You liked ${postAuthorData.first_name}'s post`, {
-          id: toastId,
-        });
+        if (res.data.detail === "Like added successfully.") {
+          toast.success(`You liked ${postAuthorData.first_name}'s post`, {
+            id: toastId,
+          });
+        } else {
+          toast.success(`You disliked ${postAuthorData.first_name}'s post`, {
+            id: toastId,
+          });
+        }
       })
       .catch(() => {
         toast.success("Unable to like post. Please retry", {
