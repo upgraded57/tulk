@@ -78,9 +78,6 @@ export default function SearchResult() {
                         </div>
                       );
                     })}
-                    <div className="load-more-link">
-                      <Link to="#">Load More</Link>
-                    </div>
                   </div>
                 </>
               )}
@@ -118,9 +115,6 @@ export default function SearchResult() {
                         </div>
                       );
                     })}
-                    <div className="load-more-link">
-                      <Link to="#">Load More</Link>
-                    </div>
                   </div>
                 </>
               )}

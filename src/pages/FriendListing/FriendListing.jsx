@@ -120,10 +120,6 @@ export default function SearchResult() {
                         })}
                       </>
                     )}
-
-                    <div className="load-more-link">
-                      <Link to="#">Load More</Link>
-                    </div>
                   </div>
                 </>
               )}
