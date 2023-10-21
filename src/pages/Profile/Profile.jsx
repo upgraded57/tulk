@@ -53,7 +53,7 @@ const Profile = () => {
   const { data: userPosts } = UseFetchUserPosts(profile_id);
 
   // fetch user friends
-  const { data: friends } = UseFetchUserFriends(profile_id);
+  const { data: friends } = UseFetchUserFriends(currentUser.user_id);
 
   // fetch user media
   const { data: userMedia } = UseFetchUserMedia(profile_id, "1");
@@ -190,7 +190,9 @@ const Profile = () => {
 
             <div className="profile-user-edit-button">
               {profile_id !== currentUser?.user_id &&
-                !friends?.includes(profile_id) && (
+                friends
+                  ?.map((friend) => friend.id !== profile_id)
+                  .includes(true) && (
                   <button
                     className="btn-solid"
                     onClick={() => sendFriendRequest(currentUser.user_id, user)}
