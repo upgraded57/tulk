@@ -14,12 +14,15 @@ import Navbar from "../../components/Navbar/Navbar";
 import UseFetchConversations from "./../../Hooks/Chat/UseFetchConversations";
 import { FiSearch } from "react-icons/fi";
 import Loader from "./../../components/Loader/Loader";
+import { Userdata } from "../../data/Userdata";
 
 export default function Messenger() {
+  const user = Userdata();
   const [conversation, setConversation] = useState(null);
   const [conversationActive, setConversationActive] = useState(false);
 
   const { isLoading: loading, data: chats } = UseFetchConversations();
+  console.log(conversation);
 
   return (
     <>
@@ -51,7 +54,13 @@ export default function Messenger() {
         </div>
         {conversationActive ? (
           <div className="messages">
-            <Chat recipient={conversation.participant2} />
+            <Chat
+              recipient={
+                conversation.participant2 === user.user_id
+                  ? conversation.participant1
+                  : conversation.participant2
+              }
+            />
           </div>
         ) : (
           <div className="empty-conversation">

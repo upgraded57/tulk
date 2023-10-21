@@ -110,7 +110,7 @@ export default function Chat({
   const messageScreen = document.querySelector(".chat-container-messages");
 
   useEffect(() => {
-    messageScreen && messageScreen.lastElementChild.scrollIntoView();
+    messageScreen && messageScreen?.lastElementChild?.scrollIntoView();
   }, [messages]);
 
   return (
