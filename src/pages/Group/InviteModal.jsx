@@ -36,7 +36,6 @@ export default function InviteModal({ setInviteModal, group_id }) {
             toast.success("Selected users will be invited", {
               id: toastId,
             });
-            // setInviteModal(false);
           })
           .catch((err) => {
             toast.error("Unable to send invite", {

@@ -88,13 +88,13 @@ export default function Notification({ notification, setNotificationOpen }) {
             <p className="text-body">{notification.message}</p>
             <div className="notification-action-btns">
               <button
-                className="accept"
+                className="Accept"
                 onClick={() => acceptFriend(notification)}
               >
                 Accept
               </button>
               <button
-                className="reject"
+                className="Reject"
                 onClick={() => deleteFriend(notification)}
               >
                 Reject
@@ -132,7 +132,7 @@ export default function Notification({ notification, setNotificationOpen }) {
       return (
         <div className="notification">
           <Link
-            to={`/profile/${notification.sender}/`}
+            to={`/group/${notification?.object_id}/`}
             onClick={() => setNotificationToViewed(notification.id)}
           >
             <div className="notification-user-image">
@@ -147,6 +147,10 @@ export default function Notification({ notification, setNotificationOpen }) {
             </div>
             <div className="notification-content">
               <p className="text-body">{notification.message}</p>
+              <div className="notification-action-btns">
+                <button className="Accept">Accept</button>
+                <button className="Reject">Reject</button>
+              </div>
             </div>
           </Link>
         </div>

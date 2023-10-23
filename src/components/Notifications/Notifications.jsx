@@ -1,6 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { axiosInstance } from "../../Axios/axiosInstance";
-
 // styles
 import "./notifications.css";
 
@@ -12,9 +9,11 @@ import Navbar from "../Navbar/Navbar";
 import Notification from "./Notification";
 import UseFetchNotifications from "./../../Hooks/Notifications/UseFetchNotifications";
 import { Userdata } from "../../data/Userdata";
+import { useState } from "react";
 
 export default function Notifications({ desktop, setNotificationOpen }) {
   const user = Userdata();
+  const [status, setStatus] = useState("read");
   const { isLoading: loadingFetchNotification, data: notifications } =
     UseFetchNotifications();
 
@@ -41,18 +40,41 @@ export default function Notifications({ desktop, setNotificationOpen }) {
           )}
         </div>
 
+        <div className="notification-nav">
+          <span
+            onClick={() => setStatus("read")}
+            className={status === "read" ? "active" : ""}
+          >
+            Unread
+          </span>
+          <span
+            onClick={() => setStatus("unread")}
+            className={status === "unread" ? "active" : ""}
+          >
+            Read
+          </span>
+        </div>
+
         {/* Show loader while notifications are being fetched */}
         {loadingFetchNotification ? (
           <div className="notif-loader"> Fetching notifications...</div>
         ) : notifications
-            ?.filter((notification) => notification.viewed === false)
+            ?.filter((notification) =>
+              status === "read"
+                ? notification.viewed === false
+                : notification.viewed === true
+            )
             ?.filter((notification) => notification.sender !== user.user_id)
             ?.length === 0 ? (
           <div className="notif-loader">There's nothing to see here yet</div>
         ) : (
           <>
             {notifications
-              ?.filter((notification) => notification.viewed === false)
+              ?.filter((notification) =>
+                status === "read"
+                  ? notification.viewed === false
+                  : notification.viewed === true
+              )
               ?.filter((notification) => notification.sender !== user.user_id)
               ?.map((notification) => {
                 return (

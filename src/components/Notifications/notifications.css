@@ -7,6 +7,7 @@
   padding-bottom: 10px;
   border-bottom: 1px solid #00000030;
   position: sticky;
+  position: -webkit-sticky;
   top: 0;
   padding-top: 10px;
   display: flex;
@@ -65,25 +66,23 @@
   flex-wrap: nowrap;
 }
 
-.notification-action-btns .accept,
-.notification-action-btns .reject {
+.notification-action-btns button {
   padding: 4px 15px;
   border-radius: var(--inputField-radius);
   outline: none;
   border: 1px solid #00000030;
 }
 
-.notification-action-btns .accept:hover,
-.notification-action-btns .reject:hover {
+.notification-action-btns button:hover {
   background: #00000030;
 }
 
-.notification-action-btns .accept {
+.notification-action-btns button.Accept {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.notification-action-btns .reject {
+.notification-action-btns button.Reject {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -126,4 +125,29 @@
 
 .notification-close-btn:hover {
   background: #a8a8a8;
+}
+
+.notification-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-block: 10px;
+}
+
+.notification-nav span {
+  position: relative;
+  cursor: pointer;
+  padding-bottom: 5px;
+}
+
+.notification-nav span.active::before {
+  content: "";
+  width: 120%;
+  height: 4px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gradient-clr);
+  border-radius: 4px 4px 0 0;
 }

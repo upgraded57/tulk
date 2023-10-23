@@ -5,12 +5,9 @@ import UseFetchConversations from "../../Hooks/Chat/UseFetchConversations";
 import { FiSearch } from "react-icons/fi";
 import Loader from "./../../components/Loader/Loader";
 import MessengerItem from "../../components/MessengerItem/MessengerItem";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Userdata } from "../../data/Userdata";
 
 export default function MessengerMobile() {
-  const user = Userdata();
   const [conversation, setConversation] = useState(null);
   const [conversationActive, setConversationActive] = useState(false);
 
