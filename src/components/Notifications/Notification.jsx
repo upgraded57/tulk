@@ -10,6 +10,7 @@ import {
 } from "./../../Axios/ApiCalls";
 import { axiosInstance } from "../../Axios/axiosInstance";
 import { useQueryClient } from "react-query";
+import toast from "react-hot-toast";
 
 export default function Notification({ notification, setNotificationOpen }) {
   const queryClient = useQueryClient();
@@ -68,6 +69,42 @@ export default function Notification({ notification, setNotificationOpen }) {
     });
   };
 
+  // accept group invite
+  const acceptGroupInvite = async (notification) => {
+    await axiosInstance({
+      method: "post",
+      url: `/groups/${notification.object_id}`,
+      data: { is_accepted: true },
+    })
+      .then(() => {
+        toast.success("Group invite accepted");
+      })
+      .catch(() => {
+        toast.error("Something went wrong!");
+      })
+      .finally(() => {
+        setNotificationToViewed(notification.id);
+      });
+  };
+
+  // reject group invite
+  const rejectGroupInvite = async (notification) => {
+    await axiosInstance({
+      method: "post",
+      url: `/groups/${notification.object_id}`,
+      data: { is_accepted: false },
+    })
+      .then(() => {
+        toast.success("Group invite rejected");
+      })
+      .catch(() => {
+        toast.error("Something went wrong!");
+      })
+      .finally(() => {
+        setNotificationToViewed(notification.id);
+      });
+  };
+
   switch (notification.type) {
     case "friend_request":
       return (
@@ -86,20 +123,22 @@ export default function Notification({ notification, setNotificationOpen }) {
           </Link>
           <div className="notification-content">
             <p className="text-body">{notification.message}</p>
-            <div className="notification-action-btns">
-              <button
-                className="Accept"
-                onClick={() => acceptFriend(notification)}
-              >
-                Accept
-              </button>
-              <button
-                className="Reject"
-                onClick={() => deleteFriend(notification)}
-              >
-                Reject
-              </button>
-            </div>
+            {notification.viewed === false && (
+              <div className="notification-action-btns">
+                <button
+                  className="Accept"
+                  onClick={() => acceptFriend(notification)}
+                >
+                  Accept
+                </button>
+                <button
+                  className="Reject"
+                  onClick={() => deleteFriend(notification)}
+                >
+                  Reject
+                </button>
+              </div>
+            )}
           </div>
         </div>
       );
@@ -131,28 +170,33 @@ export default function Notification({ notification, setNotificationOpen }) {
     case "group_request":
       return (
         <div className="notification">
-          <Link
-            to={`/group/${notification?.object_id}/`}
-            onClick={() => setNotificationToViewed(notification.id)}
-          >
-            <div className="notification-user-image">
-              <img
-                src={
-                  notificationSender.avatar
-                    ? notificationSender.avatar
-                    : noAvatar
-                }
-                alt=""
-              />
-            </div>
-            <div className="notification-content">
-              <p className="text-body">{notification.message}</p>
+          <div className="notification-user-image">
+            <img
+              src={
+                notificationSender.avatar ? notificationSender.avatar : noAvatar
+              }
+              alt=""
+            />
+          </div>
+          <div className="notification-content">
+            <p className="text-body">{notification.message}</p>
+            {notification.viewed === false && (
               <div className="notification-action-btns">
-                <button className="Accept">Accept</button>
-                <button className="Reject">Reject</button>
+                <button
+                  className="Accept"
+                  onClick={() => acceptGroupInvite(notification)}
+                >
+                  Accept
+                </button>
+                <button
+                  className="Reject"
+                  onClick={() => rejectGroupInvite(notification)}
+                >
+                  Reject
+                </button>
               </div>
-            </div>
-          </Link>
+            )}
+          </div>
         </div>
       );
 
