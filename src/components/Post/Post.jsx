@@ -176,10 +176,6 @@ export default function Post({ post, group }) {
           toast.success(`You liked ${postAuthorData.first_name}'s post`, {
             id: toastId,
           });
-        } else {
-          toast.success(`You disliked ${postAuthorData.first_name}'s post`, {
-            id: toastId,
-          });
         }
       })
       .catch(() => {
