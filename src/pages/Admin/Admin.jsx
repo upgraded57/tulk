@@ -8,6 +8,7 @@ import Loader from "./../../components/Loader/Loader";
 // hooks
 import UseFetchArticles from "./../../Hooks/Articles/UseFetchArticles";
 import { axiosInstance } from "../../Axios/axiosInstance";
+import { useQueryClient } from "react-query";
 
 // utils
 import { Link } from "react-router-dom";
@@ -18,6 +19,8 @@ import moment from "moment";
 import newsImg from "../../images/newsImg.jpg";
 
 export default function Admin() {
+  const queryClient = useQueryClient();
+
   const {
     isLoading: articlesLoading,
     data: articles,
@@ -62,11 +65,36 @@ export default function Admin() {
     }
   };
 
+  const postArticle = async (slug) => {
+    const toastId = toast.loading("Publishing article...");
+    await axiosInstance({
+      method: "put",
+      url: `/editor/articles/${slug}/`,
+      data: { status: "published" },
+    })
+      .then(() => {
+        toast.success("Article posted successfully", {
+          id: toastId,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something went wrong! Please retry", {
+          id: toastId,
+        });
+      })
+      .finally(() => {
+        // queryClient.invalidateQueries("articles");
+      });
+  };
+
   const editArticle = async (id) => {
     toast("Feature coming soon!", {
       icon: "🖐🏼",
     });
   };
+
+  console.log(articles);
 
   return (
     <>
@@ -119,12 +147,22 @@ export default function Admin() {
                         <span className="published">{article.status}</span>
                       )}
                       <div className="admin-article-action-btns">
-                        <button
-                          className="btn-secondary"
-                          onClick={() => editArticle(article.slug)}
-                        >
-                          Edit
-                        </button>
+                        {article.status === "published" && (
+                          <button
+                            className="btn-secondary"
+                            onClick={() => editArticle(article.slug)}
+                          >
+                            Edit
+                          </button>
+                        )}
+                        {article.status === "draft" && (
+                          <button
+                            className="btn-secondary"
+                            onClick={() => postArticle(article.slug)}
+                          >
+                            Post
+                          </button>
+                        )}
                         <button
                           className="btn-secondary"
                           onClick={() => deleteArticle(article.slug)}

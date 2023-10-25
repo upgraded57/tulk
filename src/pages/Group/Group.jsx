@@ -94,6 +94,7 @@ const Group = () => {
     userGroupIds.push(userGroup.id);
   });
 
+  console.log(groupData);
   return (
     <>
       <Navbar />

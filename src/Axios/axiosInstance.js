@@ -37,7 +37,7 @@ axiosInstance.interceptors.response.use(
           return axiosInstance(err.config);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           if (
             err.response.status === 401 &&
             err.response.statusText === "Unauthorized" &&
@@ -50,8 +50,7 @@ axiosInstance.interceptors.response.use(
             err.response.data.detail === "Token is blacklisted" &&
             err.response.data.code === "token_not_valid"
           ) {
-            console.log(err);
-            toast.error("Your session expired. Please login!");
+            // console.log(err);
             return (window.location = `${window.location.origin}/login`);
           }
         });

@@ -34,7 +34,7 @@ export default function SettingseModal({ setSettingsModal, groupData }) {
     };
     await axiosInstance({
       method: "put",
-      url: `/groups/${groupData.id}/`,
+      url: `/groups/${groupData.id}/update/`,
       data: newGroupData,
     })
       .then((res) => {
