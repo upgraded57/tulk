@@ -7,7 +7,6 @@ import { IoIosClose } from "react-icons/io";
 import noAvatar from "../../images/noAvatar.jpeg";
 import { Userdata } from "../../data/Userdata";
 import UseFetchUserFriends from "./../../Hooks/User/UseFetchUserFriends";
-import useFetchUsers from "./../../Hooks/Users/useFetchUsers";
 import { axiosInstance } from "../../Axios/axiosInstance";
 import toast from "react-hot-toast";
 

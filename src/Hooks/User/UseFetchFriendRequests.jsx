@@ -1,18 +1,14 @@
 import { useQuery } from "react-query";
 import { axiosInstance } from "../../Axios/axiosInstance";
 
-export default function UseFetchFriendRequests(pageNum) {
-  const fetchUserFriendRequests = (pageNum) => {
+export default function UseFetchFriendRequests() {
+  const fetchUserFriendRequests = () => {
     return axiosInstance({
       method: "get",
-      url: `/friend-requests/?page=${pageNum}`,
+      url: `/friend-requests/`,
     });
   };
-  return useQuery(
-    ["friendRequests", pageNum],
-    () => fetchUserFriendRequests(pageNum),
-    {
-      select: (data) => data.data.results,
-    }
-  );
+  return useQuery("friendRequests", fetchUserFriendRequests, {
+    select: (data) => data.data,
+  });
 }

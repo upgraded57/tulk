@@ -13,10 +13,10 @@ export default function NewPeople() {
   const getNewPeople = async () => {
     await axiosInstance({
       method: "get",
-      url: "/userprofiles/?page=1",
+      url: "/userprofiles/",
     })
       .then((res) => {
-        setNewPeople(res.data.results);
+        setNewPeople(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -40,33 +40,33 @@ export default function NewPeople() {
       <div className="newPeople">
         {newPeople[0] && (
           <Link
-            to={`profile/${newPeople[0].id}/`}
-            title={`${newPeople[0].first_name} ${newPeople[0].last_name}`}
+            to={`profile/${newPeople[0]?.id}/`}
+            title={`${newPeople[0]?.first_name} ${newPeople[0]?.last_name}`}
           >
             <div className="newPerson">
-              <img src={newPeople[0].avatar || noAvatar} alt="" />
+              <img src={newPeople[0]?.avatar || noAvatar} alt="" />
             </div>
           </Link>
         )}
 
         {newPeople[1] && (
           <Link
-            to={`profile/${newPeople[1].id}/`}
-            title={`${newPeople[1].first_name} ${newPeople[1].last_name}`}
+            to={`profile/${newPeople[1]?.id}/`}
+            title={`${newPeople[1]?.first_name} ${newPeople[1]?.last_name}`}
           >
             <div className="newPerson">
-              <img src={newPeople[1].avatar || noAvatar} alt="" />
+              <img src={newPeople[1]?.avatar || noAvatar} alt="" />
             </div>
           </Link>
         )}
 
         {newPeople[2] && (
           <Link
-            to={`profile/${newPeople[2].id}/`}
-            title={`${newPeople[2].first_name} ${newPeople[2].last_name}`}
+            to={`profile/${newPeople[2]?.id}/`}
+            title={`${newPeople[2]?.first_name} ${newPeople[2]?.last_name}`}
           >
             <div className="newPerson">
-              <img src={newPeople[2].avatar || noAvatar} alt="" />
+              <img src={newPeople[2]?.avatar || noAvatar} alt="" />
             </div>
           </Link>
         )}

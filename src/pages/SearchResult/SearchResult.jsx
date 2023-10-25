@@ -35,7 +35,6 @@ export default function SearchResult() {
   const user = Userdata();
 
   // search for people
-  // const { data: searchedPeople } = useFetchUsers("1");
   const { data: searchedPeople } = UseSearchPeople(search_query);
 
   // search for groups

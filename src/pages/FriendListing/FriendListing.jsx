@@ -40,10 +40,10 @@ export default function SearchResult() {
     currentUser.user_id
   );
 
-  const { isLoading: usersLoading, data: users } = useFetchUsers("1");
+  const { isLoading: usersLoading, data: users } = useFetchUsers();
 
   const { isLoading: friendRequestsLoading, data: friendRequests } =
-    UseFetchFriendRequests("1");
+    UseFetchFriendRequests();
 
   const friendsId = [];
   friends?.forEach((friend) => {

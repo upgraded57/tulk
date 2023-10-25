@@ -190,7 +190,7 @@ export const acceptFriendRequest = async (
       toast.error("An error occured!");
     })
     .finally(() => {
-      queryClient.invalidateQueries(["friendRequests", "1"]);
+      queryClient.invalidateQueries("friendRequests");
       queryClient.invalidateQueries("Notifications");
     });
 };
@@ -212,7 +212,7 @@ export const deleteFriendRequest = async (
       toast.error("An error occured");
     })
     .finally(() => {
-      queryClient.invalidateQueries(["friendRequests", "1"]);
+      queryClient.invalidateQueries("friendRequests");
       queryClient.invalidateQueries("Notifications");
     });
 };
