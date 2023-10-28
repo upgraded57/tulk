@@ -17,8 +17,6 @@ export default function Notifications({ desktop, setNotificationOpen }) {
   const { isLoading: loadingFetchNotification, data: notifications } =
     UseFetchNotifications();
 
-  console.log(notifications);
-
   return (
     <>
       {!desktop && <Navbar />}

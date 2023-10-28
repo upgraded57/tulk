@@ -18,6 +18,7 @@ export default function SearchResult() {
 
   const { data: userGroups } = UseFetchUserGroups();
 
+  console.log(userGroups);
   return (
     <>
       <Navbar />
@@ -88,7 +89,7 @@ export default function SearchResult() {
           {(filter === "all" || filter === "unjoined") && (
             <div className="search-result-main-container">
               <div className="search-result-main-container-header">
-                <h3 className="h-100">New Groups</h3>
+                <h3 className="h-100">All Groups</h3>
               </div>
 
               {groups?.length < 1 ? (

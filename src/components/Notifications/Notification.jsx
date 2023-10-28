@@ -170,33 +170,37 @@ export default function Notification({ notification, setNotificationOpen }) {
     case "group_request":
       return (
         <div className="notification">
-          <div className="notification-user-image">
-            <img
-              src={
-                notificationSender.avatar ? notificationSender.avatar : noAvatar
-              }
-              alt=""
-            />
-          </div>
-          <div className="notification-content">
-            <p className="text-body">{notification.message}</p>
-            {notification.viewed === false && (
-              <div className="notification-action-btns">
-                <button
-                  className="Accept"
-                  onClick={() => acceptGroupInvite(notification)}
-                >
-                  Accept
-                </button>
-                <button
-                  className="Reject"
-                  onClick={() => rejectGroupInvite(notification)}
-                >
-                  Reject
-                </button>
-              </div>
-            )}
-          </div>
+          <Link to={`/groups/${notification.other_fields}`}>
+            <div className="notification-user-image">
+              <img
+                src={
+                  notificationSender.avatar
+                    ? notificationSender.avatar
+                    : noAvatar
+                }
+                alt=""
+              />
+            </div>
+            <div className="notification-content">
+              <p className="text-body">{notification.message}</p>
+              {notification.viewed === false && (
+                <div className="notification-action-btns">
+                  <button
+                    className="Accept"
+                    onClick={() => acceptGroupInvite(notification)}
+                  >
+                    Accept
+                  </button>
+                  <button
+                    className="Reject"
+                    onClick={() => rejectGroupInvite(notification)}
+                  >
+                    Reject
+                  </button>
+                </div>
+              )}
+            </div>
+          </Link>
         </div>
       );
 

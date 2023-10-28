@@ -30,5 +30,7 @@
 }
 
 .see-all-user-photos-btn {
-  text-align: right;
+  margin-left: auto;
+  cursor: pointer;
+  max-width: max-content;
 }

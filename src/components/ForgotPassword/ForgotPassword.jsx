@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // styles
-import "./forgotPassword.css";
+import "../Signup/Signup";
 
 // icons
 import { IoIosClose } from "react-icons/io";

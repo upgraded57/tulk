@@ -6,8 +6,8 @@ import Navbar from "../../components/Navbar/Navbar";
 import { Userdata } from "../../data/Userdata";
 import { axiosInstance } from "../../Axios/axiosInstance";
 import InviteModal from "./InviteModal";
-import SettingseModal from "./SettingsModal";
 import { toast } from "react-hot-toast";
+import SettingsModal from "./SettingsModal";
 
 // styles
 import "./group.css";
@@ -94,7 +94,6 @@ const Group = () => {
     userGroupIds.push(userGroup.id);
   });
 
-  console.log(groupData);
   return (
     <>
       <Navbar />
@@ -190,10 +189,10 @@ const Group = () => {
         </div>
       </div>
       {inviteModal && (
-        <InviteModal setInviteModal={setInviteModal} group_id={group_id} />
+        <InviteModal setInviteModal={setInviteModal} group={groupData} />
       )}
       {settingseModal && (
-        <SettingseModal
+        <SettingsModal
           setSettingsModal={setSettingsModal}
           groupData={groupData}
         />

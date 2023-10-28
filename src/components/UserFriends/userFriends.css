@@ -24,7 +24,7 @@
 
 .user-friend-image {
   width: 100%;
-  aspect-ratio: 1/1;
+  height: 100px;
   overflow: hidden;
   margin-inline: auto;
   border-radius: var(--inputField-radius);
@@ -37,5 +37,7 @@
 }
 
 .profile-see-all-friends-btn {
-  text-align: right;
+  margin-left: auto;
+  max-width: max-content;
+  cursor: pointer;
 }

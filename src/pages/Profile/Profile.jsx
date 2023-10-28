@@ -42,6 +42,7 @@ import UseFetchUserGroups from "./../../Hooks/User/UseFetchUserGroups";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import MessageTooltip from "./MessageTooltip";
+import MediaModal from "./MediaModal";
 
 const Profile = () => {
   const currentUser = Userdata();
@@ -53,7 +54,7 @@ const Profile = () => {
   const { data: userPosts } = UseFetchUserPosts(profile_id);
 
   // fetch user friends
-  const { data: friends } = UseFetchUserFriends(currentUser.user_id);
+  const { data: friends } = UseFetchUserFriends(profile_id);
 
   // fetch user media
   const { data: userMedia } = UseFetchUserMedia(profile_id, "1");
@@ -325,12 +326,19 @@ const Profile = () => {
                 className={showModal === "groups" ? "active" : ""}
                 onClick={() => setShowModal("groups")}
               >
-                {user && currentUser && user.id === currentUser.user_id && "My"}{" "}
+                {user &&
+                  currentUser &&
+                  user.id === currentUser.user_id &&
+                  "My "}
                 Groups
               </p>
             </div>
-            {showModal === "photos" && <UserPhotos photos={userMedia} />}
-            {showModal === "friends" && <UserFriends friends={friends} />}
+            {showModal === "photos" && (
+              <UserPhotos photos={userMedia} user={user} />
+            )}
+            {showModal === "friends" && (
+              <UserFriends friends={friends} user={user} />
+            )}
             {showModal === "groups" && <UserGroups groups={userGroups} />}
           </div>
           <div className="profile-bottom-page-right">

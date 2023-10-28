@@ -10,7 +10,7 @@ import UseFetchUserFriends from "./../../Hooks/User/UseFetchUserFriends";
 import { axiosInstance } from "../../Axios/axiosInstance";
 import toast from "react-hot-toast";
 
-export default function InviteModal({ setInviteModal, group_id }) {
+export default function InviteModal({ setInviteModal, group }) {
   const user = Userdata();
 
   const { data: friends } = UseFetchUserFriends(user.user_id);
@@ -27,7 +27,7 @@ export default function InviteModal({ setInviteModal, group_id }) {
       async (invitee) =>
         await axiosInstance({
           method: "post",
-          url: `/groups/${group_id}/invite/`,
+          url: `/groups/${group.id}/invite/`,
           data: { user_id: invitee },
         })
           .then((res) => {

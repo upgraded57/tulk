@@ -250,11 +250,7 @@ export default function SearchResult() {
                                 <button
                                   className="btn-secondary"
                                   onClick={() =>
-                                    sendFriendRequest(
-                                      axiosInstance,
-                                      currentUser.user_id,
-                                      user
-                                    )
+                                    sendFriendRequest(currentUser.user_id, user)
                                   }
                                 >
                                   Add Friend
